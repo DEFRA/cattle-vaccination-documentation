@@ -1,0 +1,32 @@
+views {
+
+    view cvac_domain_current_context {
+        title "CVAC Subdomain / Context Diagrams / Current"
+        description "Shows the bounded contexts that make up the cattle vaccination domain and the actors and external systems they interact with"
+        include
+            cattleVaccinationBoundedContext,
+            salesforceBoundedContext,
+            aphaBoundedContext,
+            livestockBoundedContext,
+            vet,
+            aphaOfficer
+    }
+
+    view cvac_domain_current_container {
+        // Used in solution-overview.md; changes to the view name affect the published document.
+        title "CVAC Subdomain / Container Diagrams / Current"
+        description "Shows all containers across the cattle vaccination domain — frontend, backend BFF and external systems"
+        include cattleVaccinationBoundedContext.*
+        include salesforceBoundedContext.*
+        include aphaBoundedContext.*
+        include livestockBoundedContext.*
+    }
+
+    deployment view cvac_domain_current_deployment {
+        // Used in solution-overview.md; changes to the view name affect the published document.
+        title "CVAC Subdomain / Deployment Diagrams / Current"
+        description "Shows the deployment of the Cattle Vaccination service on CDP"
+        include defra, defra.prod, defra.prod.**
+    }
+
+}

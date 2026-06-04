@@ -1,0 +1,39 @@
+{
+  "name": "cattle-vaccination-docs",
+  "version": "0.1.0",
+  "description": "A solution for recording and regulating cattle vaccination compliance.",
+  "type": "module",
+  "scripts": {
+    "serve": "likec4 serve",
+    "validate:structure-view": "likec4 validate technology/current-state-views/structure-view",
+    "test:structure-view": "vitest run test/structure-view.spec.ts",
+    "export:structure-view": "likec4 export png technology/current-state-views/structure-view --outdir technology/current-state-views/structure-view/images",
+    "snapshot:solution-overview": "node scripts/snapshot-solution-overview.js",
+    "confluence:publish": "node scripts/publish-to-confluence.js",
+    "confluence:publish:with-delivery-passport": "node scripts/publish-to-confluence.js --include-delivery-passport",
+    "slides:solution-overview": "node scripts/process-mermaid-in-markdown.js technology/quality-assurance-view/solution-overview/solution-overview.md technology/quality-assurance-view/solution-overview/solution-overview-processed.md && marp --no-stdin --allow-local-files --theme ./technology/quality-assurance-view/solution-overview/assets/defra-marp-theme.css ./technology/quality-assurance-view/solution-overview/solution-overview-processed.md --pdf --output output/cattle-vaccination-solution-overview.pdf && node -e \"require('fs').rmSync('./technology/quality-assurance-view/solution-overview/solution-overview-processed.md', { force: true })\"",
+    "site:install": "npm --prefix astro install",
+    "site:dev": "npm --prefix astro run dev",
+    "site:build": "npm --prefix astro run build",
+    "site:preview": "npm --prefix astro run preview"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "^4.4.0",
+    "@mermaid-js/mermaid-cli": "^11.15.0",
+    "likec4": "^1.56.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3",
+    "vite-node": "^6.0.0",
+    "vitest": "^4.1.7"
+  },
+  "dependencies": {
+    "@likec4/core": "^1.56.0",
+    "dotenv": "^17.4.2"
+  },
+  "overrides": {
+    "lodash-es": "^4.18.1"
+  },
+  "engines": {
+    "node": ">=22.22.1"
+  }
+}

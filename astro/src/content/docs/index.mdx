@@ -1,0 +1,90 @@
+---
+title: Cattle Vaccination
+description: Architecture documentation and interactive C4 diagrams for the Cattle Vaccination solution.
+template: splash
+hero:
+  title: Cattle Vaccination
+  tagline: The single source of truth for the architecture of the Cattle Vaccination solution — decisions, structures, data flows and integrations, with interactive C4 diagrams generated from the same model.
+---
+
+import { LinkButton, CardGrid, LinkCard, Card, Aside, Badge } from "@astrojs/starlight/components";
+import LikeC4View from "../../components/LikeC4View.astro";
+
+<div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin:1.5rem 0;">
+  <LinkButton href={`${import.meta.env.BASE_URL}technology/`} icon="right-arrow">
+    Technology
+  </LinkButton>
+  <LinkButton href="https://github.com/DEFRA/cattle-vaccination-docs" variant="secondary" icon="external">
+    GitHub
+  </LinkButton>
+</div>
+
+## About the Solution
+
+Cattle Vaccination is a worked reference architecture that teams can adapt to their own service domain. It demonstrates a common **Applicant → Submission → Regulator** flow where users submit information, an internal team assesses and decides, and notifications keep participants informed as work moves through its lifecycle.
+
+The model is organised into three delivery contexts: **Submission** (the external journey and API), **Regulation** (internal case handling and decisioning), and **Notifications** (event-driven communications). A planned **Post-decision self-service** context is included to show how the architecture can evolve beyond an initial release.
+
+## One Model, Every View
+
+These docs are generated from a single [LikeC4](https://likec4.dev/) model that lives next to the code. Every container, component, deployment node and journey on this site is rendered from that one source — so the diagrams stay in step with each other, and with reality, by construction.
+
+- **Click into anything.** Containers open into components; components reveal the relationships they take part in.
+- **Filter by time.** Each structural view has Current, Future and Evolution tabs driven by `#legacy` and `#future` tags on individual elements.
+- **Trace a flow.** Journey diagrams are dynamic views over the same static model, so a renamed component updates everywhere it appears.
+
+Try it on the domain container view below — pick any container and drill in.
+
+<LikeC4View viewId="licensing_domain_current_container" />
+
+## Find Your Way Around
+
+The Technology section is organised as three lenses on the same service, plus a quality assurance area for stage-gate artefacts.
+
+<CardGrid>
+  <LinkCard
+    title="How is the system built?"
+    href={`${import.meta.env.BASE_URL}technology/current-state-views/`}
+    description="Containers, components, deployment footprint on CDP, and end-to-end journeys across bounded contexts."
+  />
+  <LinkCard
+    title="What data does it own?"
+    href={`${import.meta.env.BASE_URL}technology/data-architecture/`}
+    description="Logical entities, where bytes physically live, how data flows through the lifecycle, and how the data landscape evolves."
+  />
+  <LinkCard
+    title="How does it talk to other systems?"
+    href={`${import.meta.env.BASE_URL}technology/integration-architecture/`}
+    description="Interfaces with Defra-shared platforms, GOV.UK services and so on."
+  />
+  <LinkCard
+    title="Is it ready for live?"
+    href={`${import.meta.env.BASE_URL}technology/quality-assurance-view/`}
+    description="Stage-gate checklists and the Solution Overview living document."
+  />
+</CardGrid>
+
+## Service Snapshot
+
+<CardGrid>
+  <Card title="Bounded contexts" icon="puzzle">
+    **License Submission** — applicant-facing frontend and API for submitting licence applications.
+
+    **License Regulation** — internal case-management platform (e.g. Dynamics 365) where regulators assess and decide on applications.
+
+    **License Notifications** — event-driven integrations that dispatch emails and other notifications when application status changes.
+  </Card>
+  <Card title="Planned" icon="seti:plan">
+    **Permit Holder** actor and self-service portal — closing the loop so licence holders can manage renewals, variations and ongoing obligations.
+  </Card>
+  <Card title="Runs on" icon="seti:config">
+    Defra **Core Delivery Platform** (CDP) on AWS — public VPC for the applicant UI, protected VPC for backend APIs and the regulation platform, with an ALB and API Gateway at the boundary.
+  </Card>
+  <Card title="Integrates with" icon="seti:cog">
+    **Defra ID** for OIDC authentication, **GOV.UK Notify** for email and SMS notifications, and a legacy **Azure-hosted third-party API** being phased out as the service matures.
+  </Card>
+</CardGrid>
+
+<Aside type="tip" title="New here?">
+Start at [Technology](./technology/) for the map of the three lenses plus assurance, then jump into the [Current State Views](./technology/current-state-views/) for the architecture model and the journeys traced through it.
+</Aside>

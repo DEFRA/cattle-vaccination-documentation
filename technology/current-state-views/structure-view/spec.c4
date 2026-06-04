@@ -1,0 +1,180 @@
+specification {
+
+    element context {
+        notation "Context, Bounded Context"
+        style {
+            opacity 10%
+            border dashed
+        }
+    }
+
+    element container {
+        notation "System - Uncategorised"
+        description "System - not yet been fully refined"
+        style {
+            color amber
+        }
+    }
+
+    element frontend {
+        notation 'Frontend Application, Web Interface'
+        style {
+            shape browser
+            icon tech:javascript
+            color indigo
+        }
+      }
+
+    element backend {
+        notation 'Backend Service, API'
+        style {
+            shape rectangle
+            icon tech:nodejs
+        }
+    }
+
+    element component {
+        notation 'Internal Component, Module'
+        style {
+            shape component
+            color green
+        }
+    }
+
+    element storage {
+        notation 'Data Storage, Database or File System'
+        style {
+            shape storage
+        }
+    }
+
+    element snsTopic {
+        notation "SNS Topic"
+        description "SNS topic for pub/sub messaging"
+        style {
+            shape queue
+            icon aws:simple-notification-service
+        }
+    }
+
+    element sqsQueue {
+        notation "SQS Queue"
+        style {
+            shape queue
+            icon aws:simple-queue-service
+        }
+    }
+
+    element externalSystem {
+        notation "External System"
+        description "Third-party service (e.g. GOV.UK Notify)"
+        style {
+            color gray
+        }
+    }
+
+    element internalPerson {
+        notation "Internal Person"
+        description "Staff of the organisation that owns the service"
+        style {
+            shape person
+        }
+    }
+
+    element externalPerson {
+        notation "External Person"
+        description "Third-party / public user (e.g. applicant, permit holder, integrator)"
+        style {
+            shape person
+            color gray
+        }
+    }
+
+    relationship uses
+
+    // Producer enqueues a message to a queue (e.g. SQS send). The receiver is a queue element, not an event topic.
+    relationship publishesTo {
+        line dotted
+        color indigo
+    }
+
+    // Consumer pulls messages from a queue (e.g. SQS worker). Pair with .publishesTo on the same queue.
+    relationship subscribesTo {
+        line dotted
+        color indigo
+    }
+
+    // Producer emits events to a pub/sub topic or stream (e.g. SNS, EventBridge, Kafka).
+    relationship publishesEventsTo {
+        line dotted
+        color indigo
+    }
+
+    // Broker / relay re-emits received events onto a downstream topic or stream.
+    relationship forwardsEventsTo {
+        line dotted
+        color indigo
+    }
+
+    // Subscriber consumes events from a pub/sub topic or stream. Pair with .publishesEventsTo or .forwardsEventsTo.
+    relationship consumesEventsFrom {
+        line dotted
+        color indigo
+    }
+
+    // Queue routes unprocessable messages to a dead-letter queue. Source is a queue, target is its DLQ.
+    relationship deadLettersTo {
+        line dotted
+        color indigo
+    }
+
+      // Lifecycle tags used to describe architectural evolution
+
+    // Element existed in a previous architecture but has already been removed
+    tag legacy {
+        color #FF0000
+    }
+
+    // Relationship used to show legacy / historical interactions
+    relationship legacyRelationship {
+        line dotted
+        color red
+    }
+
+    // Element is planned for the target architecture but is not yet present
+    tag future {
+        color #19FF00
+    }
+
+    // Relationship used to show future / planned interactions
+    relationship futureRelationship {
+        line dotted
+        color green
+    }
+
+    deploymentNode node
+    deploymentNode awsVpc {
+        notation 'AWS VPC'
+    }
+    deploymentNode awsRegion {
+        notation 'AWS Region'
+    }
+    deploymentNode awsAccount {
+        notation 'AWS Account'
+    }
+    deploymentNode azureSubscription {
+        notation 'Azure Subscription'
+    }
+    deploymentNode azureRegion {
+        notation 'Azure Region'
+    }
+    deploymentNode azureResourceGroup {
+        notation 'Azure Resource Group'
+    }
+    deploymentNode environment {
+        style {
+            color gray
+        }
+    }
+
+}

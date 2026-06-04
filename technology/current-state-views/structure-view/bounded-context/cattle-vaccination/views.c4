@@ -1,0 +1,35 @@
+views {
+    view cattle_vaccination_bounded_context_context of cattleVaccinationBoundedContext {
+        title "CVAC Bounded Contexts / Cattle Vaccination / Context Diagram"
+        description "Shows the Cattle Vaccination bounded context and its relationships with actors and external systems"
+        include * <-> cattleVaccinationBoundedContext
+    }
+
+    view cattle_vaccination_bounded_context_container of cattleVaccinationBoundedContext {
+        title "CVAC Bounded Contexts / Cattle Vaccination / Container Diagram"
+        description "Shows the containers within the Cattle Vaccination bounded context"
+        include *
+    }
+
+    view cattle_vaccination_backend_component of cattleVaccinationBoundedContext.cattleVaccinationBackend {
+        title "CVAC Bounded Contexts / Cattle Vaccination / Component / Backend"
+        description "Shows the route components within the Cattle Vaccination Backend BFF and their external dependencies"
+        include * <-> cattleVaccinationBoundedContext.cattleVaccinationBackend
+        include cattleVaccinationBoundedContext.cattleVaccinationBackend.*
+    }
+
+    deployment view deployment_production_cattle_vaccination {
+        title "CVAC Bounded Contexts / Cattle Vaccination / Deployment Diagram"
+        description "Deployment diagram of the Cattle Vaccination service on CDP"
+        include
+            defra,
+            defra.prod,
+            defra.prod.eu,
+            defra.prod.eu.publicVpc.alb,
+            defra.prod.eu.publicVpc.publicFargate,
+            defra.prod.eu.publicVpc.cattleVaccinationFrontend,
+            defra.prod.eu.publicVpc.apiGateway,
+            defra.prod.eu.protectedVpc.protectedFargate,
+            defra.prod.eu.protectedVpc.cattleVaccinationBackend
+    }
+}

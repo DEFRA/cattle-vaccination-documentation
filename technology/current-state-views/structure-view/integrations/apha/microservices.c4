@@ -1,0 +1,18 @@
+model {
+    extend aphaBoundedContext {
+        externalSystem aphaIntegrationBridge {
+            title "APHA Integration Bridge"
+            description "CDP-hosted proxy service bridging the cattle vaccination backend to the APHA holdings and workorders APIs"
+            aphaIntegrationBridge .uses aphaApiSystem "proxies requests to APHA" { technology 'HTTPS' }
+        }
+        externalSystem awsCognito {
+            title "AWS Cognito"
+            description "OAuth2 token issuer for APHA Integration Bridge authentication; client credentials flow with automatic token caching and refresh"
+            icon aws:cognito
+        }
+        externalSystem aphaApiSystem {
+            title "APHA API"
+            description "APHA's holdings lookup (/holdings/find POST) and workorders (/workorders GET) APIs, proxied via the APHA Integration Bridge"
+        }
+    }
+}

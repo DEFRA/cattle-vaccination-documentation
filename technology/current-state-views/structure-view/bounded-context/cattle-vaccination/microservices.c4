@@ -1,0 +1,58 @@
+model {
+    extend cattleVaccinationBoundedContext {
+        frontend cattleVaccinationFrontend {
+            title "Cattle Vaccination Frontend"
+            description "Web interface for vets to view TB workorders and submit skin test results"
+            technology "Node.js"
+            metadata {
+                github "https://github.com/DEFRA/cattle-vaccination-prototype"
+            }
+            cattleVaccinationFrontend .uses cattleVaccinationBackend "API requests" { technology 'HTTPS' }
+        }
+
+        backend cattleVaccinationBackend {
+            title "Cattle Vaccination Backend"
+            description "Stateless BFF proxying requests to APHA, Livestock and Salesforce APIs"
+            technology "Node.js / Hapi"
+            metadata {
+                github "https://github.com/DEFRA/cattle-vaccination-backend"
+            }
+
+            component holdingsRoute {
+                title "Holdings Route"
+                description "POST /holdings — bulk lookup of holdings by ID via the APHA Integration Bridge"
+                technology "Node.js / Hapi"
+                this .uses aphaBoundedContext.aphaIntegrationBridge "fetches holdings data" { technology 'HTTPS' }
+            }
+            component workordersRoute {
+                title "Workorders Route"
+                description "GET /workorders — retrieves TB testing workorders by date range and country"
+                technology "Node.js / Hapi"
+                this .uses aphaBoundedContext.aphaIntegrationBridge "fetches workorders" { technology 'HTTPS' }
+            }
+            component cattleOnHoldingRoute {
+                title "Cattle on Holding Route"
+                description "GET /cattle-on-holding — returns live cattle at a given holding via the Livestock API"
+                technology "Node.js / Hapi"
+                this .uses livestockBoundedContext.livestockApi "fetches cattle data" { technology 'HTTPS' }
+            }
+            component casesRoute {
+                title "Cases Route"
+                description "GET|POST /cases, GET /cases/{id} — creates and retrieves TB test cases in Salesforce"
+                technology "Node.js / Hapi"
+                this .uses salesforceBoundedContext.salesforceOrg "manages cases" { technology 'HTTPS' }
+            }
+            component testPartsRoute {
+                title "Test Parts Route"
+                description "POST /cases/{id}/test-parts and /results — submits test parts and individual animal measurements"
+                technology "Node.js / Hapi"
+                this .uses salesforceBoundedContext.salesforceOrg "creates test parts and results" { technology 'HTTPS' }
+            }
+
+            cattleVaccinationBackend .uses aphaBoundedContext.awsCognito "obtains OAuth2 bearer token for APHA auth" { technology 'HTTPS' }
+            cattleVaccinationBackend .uses aphaBoundedContext.aphaIntegrationBridge "fetches holdings and workorders" { technology 'HTTPS' }
+            cattleVaccinationBackend .uses livestockBoundedContext.livestockApi "fetches cattle on holding" { technology 'HTTPS' }
+            cattleVaccinationBackend .uses salesforceBoundedContext.salesforceOrg "manages TB test cases and results" { technology 'HTTPS' }
+        }
+    }
+}

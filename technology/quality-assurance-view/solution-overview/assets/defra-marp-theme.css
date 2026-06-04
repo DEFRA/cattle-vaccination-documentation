@@ -1,0 +1,280 @@
+/* @theme defra */
+
+@import "default";
+
+ol {
+  counter-reset: item;
+}
+ol li {
+  display: block;
+}
+ol li:before {
+  content: counters(item, ".") ". ";
+  counter-increment: item;
+}
+
+h1 {
+  color: rgb(0, 176, 80);
+  font-weight: normal;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: rgb(0, 176, 80);
+  font-weight: normal;
+  margin-top: 0;
+}
+
+section {
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  line-height: 140%;
+  align-content: start;
+}
+
+/*
+ * Mermaid PNGs from process-mermaid-in-markdown.js must keep intrinsic aspect ratio.
+ * Marp/Chromium PDF often combines slide-width constraints with fixed heights from
+ * directives - that distorts images. Never set both axes in the markdown directive.
+ */
+section img[alt*="Mermaid diagram"] {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0.35em auto;
+}
+
+/*
+ * Tall Mermaid PNGs (e.g. long sequenceDiagram) overflow the fixed slide height in PDF.
+ * Add `<!-- _class: mermaid-fit-slide -->` on that slide. Tweak the cap by editing
+ * `--mermaid-fit-max-height` here or adding a more specific rule in this file.
+ */
+section.mermaid-fit-slide {
+  --mermaid-fit-max-height: min(50vh, 460px);
+}
+
+section.mermaid-fit-slide img[alt*="Mermaid diagram"] {
+  max-height: var(--mermaid-fit-max-height);
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0.35em auto;
+}
+
+.contents {
+  font-size: 12px;
+  line-height: 135%;
+  column-count: 2;
+}
+
+footer {
+  font-size: 1em;
+  display: flex;
+  justify-content: space-between;
+
+  border-top: 1px solid rgb(0, 176, 80);
+  padding: 1em 0 0 0;
+  width: 100%;
+  color: rgb(0, 176, 80);
+
+  .sensitivity {
+    color: black;
+    width: 150px;
+  }
+
+  text-align: center;
+
+  .footer-summary {
+    color: rgb(0, 176, 80);
+    width: 100%;
+  }
+}
+
+section::after {
+  font-size: 1em;
+  color: rgb(0, 176, 80);
+}
+
+.border {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 2%;
+}
+
+table,
+tr,
+td,
+th {
+  /* Override contextual styling */
+  border: 3px white solid !important;
+}
+
+table {
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: rgb(0, 175, 65);
+  color: white;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: rgb(203, 227, 207);
+}
+
+tr:nth-child(odd) {
+  background-color: rgb(231, 242, 232);
+}
+
+.title-page-main {
+  font-size: 2em;
+  color: white;
+}
+
+.title-page-sub {
+  font-size: 1.5em;
+  color: white;
+}
+
+/*
+ * Split slides: same `section` padding as Marp default (marp-core themes/default.scss).
+ * Title and both columns share that inset - do not outdent `.ldiv` or the grid shifts
+ * left of the title.
+ *
+ * Column width: set `--split-ldiv` and `--split-rdiv` to fr units whose ratio matches
+ * the desired % split (e.g. 40% / 60% → `40fr` and `60fr`). Or add a second class
+ * alongside `split` (see presets below) and define a rule in this file, e.g.:
+ *   section.split.my-slide { --split-ldiv: 40fr; --split-rdiv: 60fr; }
+ * then `<!-- _class: split my-slide -->` on that slide.
+ */
+section.split {
+  --split-col-gap: 20px;
+  --split-ldiv: 50fr;
+  --split-rdiv: 50fr;
+  overflow: visible;
+  display: grid;
+  grid-template-columns: minmax(0, var(--split-ldiv)) minmax(0, var(--split-rdiv));
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "slideheading slideheading"
+    "leftpanel rightpanel";
+  box-sizing: border-box;
+  column-gap: var(--split-col-gap);
+  /*
+   * Marp default `section` uses `place-content: safe center center`. Our theme
+   * only overrides `align-content` on `section`, so `justify-content` stays
+   * `center`. On a grid (`display: grid` here) that centres the 1000px track
+   * group in the content box - extra space on the left looks like title padding.
+   * Non-split slides use `display: block`, so titles stay flush left.
+   */
+  place-content: start;
+  justify-items: stretch;
+}
+
+/* Preset ratios (add one class next to `split` in `<!-- _class: ... -->`) */
+section.split.split-50-50 {
+  --split-ldiv: 50fr;
+  --split-rdiv: 50fr;
+}
+
+section.split.split-40-60 {
+  --split-ldiv: 40fr;
+  --split-rdiv: 60fr;
+}
+
+section.split.split-60-40 {
+  --split-ldiv: 60fr;
+  --split-rdiv: 40fr;
+}
+
+section.split.split-35-65 {
+  --split-ldiv: 35fr;
+  --split-rdiv: 65fr;
+}
+
+section.split.split-30-70 {
+  --split-ldiv: 30fr;
+  --split-rdiv: 70fr;
+}
+
+section.split.split-65-35 {
+  --split-ldiv: 65fr;
+  --split-rdiv: 35fr;
+}
+
+section.split.split-25-75 {
+  --split-ldiv: 25fr;
+  --split-rdiv: 75fr;
+}
+
+section.split > h1 {
+  grid-area: slideheading;
+  align-self: start;
+  justify-self: stretch;
+  margin: 0;
+  padding-inline: 0;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+section.split .ldiv {
+  grid-area: leftpanel;
+  padding: 0;
+  margin: 0;
+  align-self: start;
+}
+
+/* Markdown wraps block images in <p>; strip spacing so the panel has no inset */
+section.split .ldiv p {
+  margin: 0;
+  padding: 0;
+}
+
+section.split .rdiv {
+  grid-area: rightpanel;
+  position: relative;
+  align-self: start;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+/* Faint dotted rule centred in the gutter between `.ldiv` and `.rdiv` */
+section.split .rdiv::before {
+  content: "";
+  position: absolute;
+  left: calc(-0.5 * var(--split-col-gap) - 0.5px);
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 1px dotted rgb(210, 210, 210);
+  pointer-events: none;
+}
+
+section.split .rdiv p {
+  margin: 0 0 0.65em 0;
+}
+
+section.split .rdiv p:last-child {
+  margin-bottom: 0;
+}
+
+/* Centre diagram PNGs horizontally without vertical gap */
+section.split .ldiv img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}

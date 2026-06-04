@@ -1,0 +1,56 @@
+deployment {
+
+    defra = awsAccount 'Defra account' {
+        icon tech:aws
+        summary 'Account boundary for this service; VPCs and resources are created here'
+
+        environment prod 'Production Environment' {
+            summary 'Live production on CDP'
+
+            eu = awsRegion 'EU Region' {
+                icon tech:aws
+                summary 'AWS region hosting this CDP stack'
+
+                publicVpc = awsVpc 'Public VPC' {
+                    icon aws:virtual-private-cloud
+                    description 'CDP public hosting zone: public-facing Fargate cluster for the cattle vaccination frontend. Reachable from the internet via ALB.'
+                    style { color red }
+
+                    alb = node 'Application Load Balancer' {
+                        icon aws:elastic-load-balancing
+                        description 'Internet entry point; forwards traffic to the frontend Fargate cluster'
+                    }
+                    apiGateway = node 'API Gateway' {
+                        icon aws:api-gateway
+                        description 'Managed CDP API Gateway — routes frontend API calls to the protected backend'
+                    }
+                    publicFargate = node 'ECS Fargate' {
+                        icon aws:fargate
+                        description 'Public zone Fargate cluster hosting the cattle vaccination frontend'
+                        instanceOf cattleVaccinationBoundedContext.cattleVaccinationFrontend {
+                            style { multiple true }
+                        }
+                    }
+                }
+
+                protectedVpc = awsVpc 'Protected VPC' {
+                    icon aws:virtual-private-cloud
+                    description 'CDP protected hosting zone: private Fargate cluster for the backend BFF. Not directly reachable from the internet.'
+                    style { color green }
+
+                    protectedFargate = node 'ECS Fargate' {
+                        icon aws:fargate
+                        description 'Protected zone Fargate cluster hosting the cattle vaccination backend BFF'
+                        instanceOf cattleVaccinationBoundedContext.cattleVaccinationBackend {
+                            style { multiple true }
+                        }
+                    }
+                }
+
+                publicVpc.alb .uses publicVpc.publicFargate 'Ingress to frontend' { technology 'HTTPS' }
+                publicVpc.publicFargate .uses publicVpc.apiGateway 'API calls from frontend to backend' { technology 'HTTPS' }
+                publicVpc.apiGateway .uses protectedVpc.protectedFargate.cattleVaccinationBackend 'Forwards to BFF after routing and policy' { technology 'HTTPS' }
+            }
+        }
+    }
+}

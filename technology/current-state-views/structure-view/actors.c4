@@ -1,0 +1,12 @@
+model {
+    externalPerson vet {
+        title "Field Vet"
+        description "Veterinary surgeon who performs TB skin tests, records cattle measurements and submits test results"
+        vet .uses cattleVaccinationBoundedContext.cattleVaccinationFrontend "views workorders and submits test results via" { technology 'HTTPS' }
+    }
+    internalPerson aphaOfficer {
+        title "APHA Officer"
+        description "APHA staff member who manages TB testing workorders and reviews completed test cases"
+        aphaOfficer .uses salesforceBoundedContext.salesforceOrg "reviews and manages TB test cases via" { technology 'HTTPS' }
+    }
+}

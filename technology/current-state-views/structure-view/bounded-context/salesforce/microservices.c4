@@ -1,0 +1,8 @@
+model {
+    extend salesforceBoundedContext {
+        externalSystem salesforceOrg {
+            title "Salesforce Org"
+            description "Salesforce CRM instance storing Case, APHA_TestPart__c and APHA_TestPartResult__c records (API v62.0)"
+        }
+    }
+}

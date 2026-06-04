@@ -1,0 +1,29 @@
+views {
+    dynamic view cattle_vaccination_case_creation {
+        // Used in solution-overview.md; changes to the view name affect the published document.
+        title "CVAC Bounded Contexts / Cattle Vaccination / Workflow / Case Creation"
+        description "Flow when a vet creates a new TB skin test case"
+
+        include cattleVaccinationBoundedContext.cattleVaccinationFrontend
+        include cattleVaccinationBoundedContext.cattleVaccinationBackend
+        include salesforceBoundedContext.salesforceOrg
+
+        vet .uses cattleVaccinationBoundedContext.cattleVaccinationFrontend "initiates case creation"
+        cattleVaccinationBoundedContext.cattleVaccinationFrontend .uses cattleVaccinationBoundedContext.cattleVaccinationBackend "POST /cases"
+        cattleVaccinationBoundedContext.cattleVaccinationBackend .uses salesforceBoundedContext.salesforceOrg "creates case record in Salesforce"
+    }
+
+    dynamic view cattle_vaccination_test_submission {
+        // Used in solution-overview.md; changes to the view name affect the published document.
+        title "CVAC Bounded Contexts / Cattle Vaccination / Workflow / Test Result Submission"
+        description "Flow when a vet submits TB skin test measurements and results for a case"
+
+        include cattleVaccinationBoundedContext.cattleVaccinationFrontend
+        include cattleVaccinationBoundedContext.cattleVaccinationBackend
+        include salesforceBoundedContext.salesforceOrg
+
+        vet .uses cattleVaccinationBoundedContext.cattleVaccinationFrontend "submits test measurements"
+        cattleVaccinationBoundedContext.cattleVaccinationFrontend .uses cattleVaccinationBoundedContext.cattleVaccinationBackend "POST /cases/{id}/test-parts"
+        cattleVaccinationBoundedContext.cattleVaccinationBackend .uses salesforceBoundedContext.salesforceOrg "stores test parts and individual animal results"
+    }
+}

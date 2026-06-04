@@ -1,0 +1,6 @@
+model {
+    context salesforceBoundedContext {
+        title "Salesforce Bounded Context"
+        description "Salesforce CRM hosting TB skin test cases, test parts and test results. Used by APHA officers to manage and review TB testing workorders."
+    }
+}

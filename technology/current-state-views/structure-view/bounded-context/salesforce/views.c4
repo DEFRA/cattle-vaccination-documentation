@@ -1,0 +1,13 @@
+views {
+    view salesforce_bounded_context_context of salesforceBoundedContext {
+        title "CVAC Bounded Contexts / Salesforce / Context Diagram"
+        description "Shows Salesforce and its relationships with other systems in the cattle vaccination domain"
+        include * <-> salesforceBoundedContext
+    }
+
+    view salesforce_bounded_context_container of salesforceBoundedContext {
+        title "CVAC Bounded Contexts / Salesforce / Container Diagram"
+        description "Shows the Salesforce org and its connections"
+        include *
+    }
+}

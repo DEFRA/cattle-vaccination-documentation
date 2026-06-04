@@ -1,0 +1,25 @@
+{
+  "name": "cattle-vaccination-docs-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "//": "bootstrap is chained explicitly into dev/build/start (not a predev/prebuild hook) because npm skips pre/post lifecycle scripts when ignore-scripts=true; a hook would silently no-op, leaving technology/ unsynced and /technology/* 404ing. Do not convert it back to a pre* hook.",
+    "sync": "node scripts/sync-content.mjs",
+    "bootstrap": "npm install && npm run sync && node scripts/build-likec4.mjs",
+    "dev": "npm run bootstrap && astro dev",
+    "start": "npm run bootstrap && astro dev",
+    "build": "npm run bootstrap && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^5.0.5",
+    "@astrojs/starlight": "^0.39.2",
+    "astro": "^6.3.6",
+    "likec4": "^1.56.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "sharp": "^0.34.5"
+  }
+}

@@ -1,0 +1,125 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate-likec4-syntax:
+    name: Validate LikeC4 syntax
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+
+      - name: Setup node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22.22.1"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Run validate:structure-view
+        run: npm run validate:structure-view
+
+  test-architecture-rules:
+    name: Test architecture rules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+
+      - name: Setup node
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22.22.1"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Run test:structure-view
+        run: npm run test:structure-view
+
+  build-docs-site:
+    name: Build docs site
+    needs: [validate-likec4-syntax, test-architecture-rules]
+    if: ${{ github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      # Private GitHub Pages serves from the root of a randomized subdomain, so
+      # the build needs PAGES_SITE_URL to emit root-relative asset paths. Without
+      # it, the deploy succeeds but every page loads unstyled (assets 404).
+      - name: Verify PAGES_SITE_URL is set
+        env:
+          PAGES_SITE_URL: ${{ vars.PAGES_SITE_URL }}
+        run: |
+          if [ -z "$PAGES_SITE_URL" ]; then
+            echo "::error::PAGES_SITE_URL repo variable is not set. Find the URL in Settings → Pages and set it under Settings → Secrets and variables → Actions → Variables."
+            exit 1
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "22.22.1"
+          cache: "npm"
+          cache-dependency-path: astro/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+        working-directory: ./astro
+
+      - name: Sync technology content
+        run: npm run sync
+        working-directory: ./astro
+
+      - name: Build site
+        env:
+          BASE_PATH: "/${{ github.event.repository.name }}"
+          PAGES_SITE_URL: ${{ vars.PAGES_SITE_URL }}
+        run: npm run build
+        working-directory: ./astro
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+        with:
+          path: ./astro/dist
+
+  publish-docs-to-github-pages:
+    name: Publish docs to GitHub Pages
+    needs: build-docs-site
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    # Serialize deploys across workflow runs so concurrent pushes don't fight
+    # over the single GitHub Pages deployment slot.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5
