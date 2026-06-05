@@ -11,9 +11,9 @@
      Title: ${2}
      Body: ${3} -->
 
-# APHA Integration Bridge
+# APHA Integration Bridge API
 
-**APHA Integration Bridge** is a CDP-hosted proxy service that bridges the cattle vaccination backend to APHA's holdings and workorders APIs.
+**APHA Integration Bridge API** is a CDP-hosted proxy service that bridges the cattle vaccination backend to APHA's holdings and workorders APIs.
 
 ## Purpose
 

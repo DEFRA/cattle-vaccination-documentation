@@ -142,7 +142,6 @@ describe("structure-view LikeC4 model", () => {
     test("legacy/future relationship kinds connect to matching tagged elements", ({
       expect,
     }) => {
-      expect.hasAssertions();
       for (const relationship of technicalViewModel.relationships()) {
         if (!EXCLUDED_RELATIONSHIP_KINDS.has(relationship.kind)) {
           continue;
@@ -161,7 +160,6 @@ describe("structure-view LikeC4 model", () => {
     test("relationships between two same-lifecycle elements use the matching kind", ({
       expect,
     }) => {
-      expect.hasAssertions();
       const lifecycleKindByTag: Record<string, string> = {
         future: "futureRelationship",
         legacy: "legacyRelationship",

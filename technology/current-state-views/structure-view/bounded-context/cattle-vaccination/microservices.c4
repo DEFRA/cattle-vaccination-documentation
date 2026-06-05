@@ -4,6 +4,9 @@ model {
             title "Cattle Vaccination Frontend"
             description "Web interface for vets to view TB workorders and submit skin test results"
             technology "Node.js"
+            style {
+                icon tech:nodejs
+            }
             metadata {
                 github "https://github.com/DEFRA/cattle-vaccination-prototype"
             }
