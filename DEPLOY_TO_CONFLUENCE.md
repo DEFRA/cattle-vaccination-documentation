@@ -21,7 +21,7 @@ The publish script runs `mark` in a container — no local install needed.
 ## Running
 
 ```sh
-# Generate C4 diagram images (required before publishing — images are not committed to git)
+# Generate C4 diagram images (required before publishing if you have new images to be generated)
 npm run export:structure-view
 
 # Publish all default sections (technology/, product-outcomes/, users/, service-design/, service-homepage/)
