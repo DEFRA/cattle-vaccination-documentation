@@ -10,24 +10,12 @@ An _evolution view_ describes legacy, current and target architecture over time.
 
 ## Legacy Architecture
 
-This legacy container view shows the former runtime decomposition used as the migration baseline.
-
-![Licensing Domain Legacy Container](../structure-view/images/licensing_domain_legacy_container.png)
+_Evolution diagrams will be added here once legacy, current and target-state C4 views are defined in the structure-view model._
 
 ## Current Architecture
 
-This current container view shows the present service decomposition and ownership boundaries.
-
-![Licensing Domain Current Container](../structure-view/images/licensing_domain_current_container.png)
+_See [Software Structure View](../structure-view/README.md) for the current container and context diagrams._
 
 ## Future Architecture
 
-This future container view shows the expected steady-state decomposition and integration boundaries.
-
-![Licensing Domain Future Container](../structure-view/images/licensing_domain_future_container.png)
-
-## Evolution Architecture
-
-This evolution container view highlights interim service boundaries during phased transition.
-
-![Licensing Domain Evolution Container](../structure-view/images/licensing_domain_evolution_container.png)
+_Future-state architecture diagrams will be added here once target-state views are defined._

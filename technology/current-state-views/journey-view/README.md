@@ -8,20 +8,14 @@
 A _journey view_ describes key flows and scenarios across components.
 <!-- Include: ac:toc -->
 
-## License Submission Creation Journey
+## Case Creation Journey
 
-This journey shows the end-to-end flow for creating a new license submission, from user initiation through frontend/backend processing, persistence, and event publication.
+This journey shows the end-to-end flow for creating a new TB skin test case, from vet initiation through the backend BFF to Salesforce.
 
-![License Submission Creation Journey](../structure-view/images/bounded-context/license-submission/license_submission_creation.png)
+![Case Creation Workflow](../structure-view/images/bounded-context/cattle-vaccination/cattle_vaccination_case_creation.png)
 
-## License Submission Update Journey
+## Test Result Submission Journey
 
-This journey shows how an existing submission is retrieved, updated, validated, and persisted, including the integration points used to propagate change events.
+This journey shows how a vet submits TB skin test measurements and results for a case, including the integration points used to store data in Salesforce.
 
-![License Submission Update Journey](../structure-view/images/bounded-context/license-submission/license_submission_update.png)
-
-## Submission-to-Notifications Event Journey
-
-This journey shows how submission events are consumed by the notifications context and forwarded to downstream integrations, including queue-mediated handoff boundaries.
-
-![License Submission Notifications Journey](../structure-view/images/bounded-context/license-notifications/license_submission_notifications.png)
+![Test Result Submission Workflow](../structure-view/images/bounded-context/cattle-vaccination/cattle_vaccination_test_submission.png)
