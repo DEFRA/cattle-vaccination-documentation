@@ -8,6 +8,8 @@
 A _lifecycle view_ is the data counterpart of [Software Journey View](../../current-state-views/journey-view/README.md), showing how data is created, transformed, shared, archived and deleted.
 <!-- Include: ac:toc -->
 
+**BOILERPLATE BELOW - NEEDS UPDATING**
+
 ## Submission Data Lifecycle
 
 This lifecycle shows the primary stages for submission data from initial capture to archive or removal.

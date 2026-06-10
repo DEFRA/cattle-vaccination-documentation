@@ -14,20 +14,12 @@ This conceptual view shows the primary data domains and ownership boundaries acr
 
 ```mermaid
 flowchart LR
-  Vet(FieldVet)
-  TestCaseDomain(TestCaseDomain)
-  WorkorderDomain(WorkorderDomain)
-  CattleDomain(CattleDomain)
-  SalesforceOrg(SalesforceOrg)
-  AphaApi(AphaApi)
-  LivestockApi(LivestockApi)
+  Case(Case)
+  TestPart("Test Part")
+  TestPartResult("Test Part Result")
 
-  Vet -->|"submits TB test data"| TestCaseDomain
-  TestCaseDomain -->|"persisted in"| SalesforceOrg
-  WorkorderDomain -->|"owned by"| AphaApi
-  CattleDomain -->|"owned by"| LivestockApi
-  Vet -->|"reads workorders"| WorkorderDomain
-  Vet -->|"reads cattle on holding"| CattleDomain
+  Case -->|"Is carried out in one or more"| TestPart
+  TestPart -->|"has individual results for each animal"| TestPartResult
 ```
 
 ## Logical Data Model
@@ -36,59 +28,77 @@ This logical view describes how core entities relate across the TB skin test wor
 
 ```mermaid
 flowchart LR
-  Vet(FieldVet)
-  Workorder(Workorder)
-  Holding(Holding)
-  Cattle(CattleOnHolding)
-  Case(TbTestCase)
-  TestPart(TestPart)
-  TestResult(TestResult)
+  Case(Case)
+  TestPart("Test Part")
+  TestPartResult("Test Part Result")
 
-  Vet -->|"assigned"| Workorder
-  Workorder -->|"covers"| Holding
-  Holding -->|"has"| Cattle
-  Vet -->|"creates"| Case
-  Case -->|"linked to"| Workorder
-  Case -->|"contains"| TestPart
-  TestPart -->|"has"| TestResult
+  Case -->|"owns"| TestPart
+  TestPart -->|"owns"| TestPartResult
 ```
 
 ## Salesforce Data Model
 
-This section defines the core Salesforce objects, their key fields and relationships. These are the only persistent records owned by the cattle vaccination domain.
+This section defines the core Salesforce objects, their key fields and relationships in an ERD-style view.
+The current model as from the **alpha prototype** and we know it needs to change.
 
 ```mermaid
 erDiagram
   Case {
-    string Id
-    string CaseNumber
-    string Status
-    string WorkorderId
+    Lookup(CPH) APHA_CPH__c
+    Picklist APHA_ReasonForTest__c
+    Picklist Status
+    Date APHA_TestWindowEndDate__c
+    Date APHA_TestWindowStartDate__c
+    RollUpSummary(SUM_Test_Part) Total_Number_Not_Tested__c
+    RollUpSummary(SUM_Test_Part) APHA_TotalNumberOfInconclusiveReactors__c
+    RollUpSummary(SUM_Test_Part) APHA_TotalNumberOfReactors__c
+    RollUpSummary(SUM_Test_Part) APHA_TotalNumberOfTested__c
   }
 
-  APHA_TestPart__c {
-    string Id
-    string CaseId
-    string AnimalId
-    datetime TestDate
+  TestPart {
+    Master-Detail(Case) Case_c
+    Date APHA_Day1__c
+    Date APHA_Day2__c
+    Time Test_Start_Time__c
+    Text(255) APHA_IdentityOfCertifyingVet__c
+    Lookup(User) APHA_IdentityOfReviewer__c
+    Text(255) APHA_IdentityOfTester__c
+    RollUpSummary(COUNT_Test_Part_Result) Number_Not_Tested__c
+    RollUpSummary(COUNT_Test_Part_Result) APHA_NumberOfInconclusiveReactors__c
+    RollUpSummary(COUNT_Test_Part_Result) APHA_NumberOfReactors__c
+    RollUpSummary(COUNT_Test_Part_Result) APHA_NumberTested__c
   }
 
-  APHA_TestPartResult__c {
-    string Id
-    string TestPartId
-    string Measurement
-    string Outcome
+  TestPartResult {
+    Master-Detail(Test_Part) APHA_TestPart__c
+    Lookup(Case) Case__c
+    Text(20) APHA_BatchAvian__c
+    Text(20) APHA_BatchBovine__c
+    Text(20) APHA_BatchDIVA__c
+    Text(20) APHA_EarTagNo__c
+    Picklist Not_Tested_Reason__c
+    Picklist APHA_ResultAfterReview__c
+    Formula(Text) APHA_ResultCalculated__c
+    Number(3_0) APHA_TestDay1Avian__c
+    Number(3_0) APHA_TestDay1Bovine__c
+    Number(3_0) APHA_TestDay1DIVA__c
+    Number(3_0) APHA_TestDay2Avian__c
+    Number(3_0) APHA_TestDay2Bovine__c
+    Number(3_0) APHA_TestDay2DIVA__c
+    Picklist APHA_TestType__c
   }
 
-  Case ||--o{ APHA_TestPart__c : "has test parts"
-  APHA_TestPart__c ||--o{ APHA_TestPartResult__c : "has results"
+  Case ||--o{ TestPart : "part of"
+  TestPart ||--o{ TestPartResult : "part of"
 ```
 
 ## Data Exchange Boundaries
 
 This exchange view maps the data contracts and transfer mechanisms between bounded contexts. All exchanges are synchronous HTTPS — there are no events, queues or topics.
 
-```mermaid
+TBD
+
+<!-- ```mermaid
 flowchart LR
   Backend(CattleVaccinationBackend)
   AphaBridge(AphaIntegrationBridge)
@@ -101,3 +111,4 @@ flowchart LR
   Backend -->|"GET /cattle-on-holding"| LivestockApi
   Backend -->|"REST API v62.0 — Case, APHA_TestPart__c, APHA_TestPartResult__c"| SalesforceOrg
 ```
+-->
