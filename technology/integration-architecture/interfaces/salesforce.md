@@ -13,13 +13,15 @@
 
 # Salesforce
 
-**Salesforce** is the CRM used to store and manage TB skin test cases, test parts and individual animal results.
+**Salesforce** is the CRM that will be used in the future to store and manage TB skin test and vaccination cases and records, and to view historical testing records.
 
 ## Purpose
 
-Salesforce is the system of record for all TB test case data. The cattle vaccination backend creates and retrieves cases, submits test parts (visits) and records per-animal measurements and results via the Salesforce REST API.
+Salesforce is APHA's strategic case management and workflow system. it will be the system of record for all TB vaccination data. It will become the system of record for testing data eventually.
 
 ## Custom Objects
+
+NOTE: Correct for alpha prototype only.
 
 | Object | Description |
 |---|---|
@@ -43,6 +45,8 @@ OAuth2 **client credentials** flow. The backend posts to `/services/oauth2/token
 
 ## Configuration
 
+NOTE: Correct for alpha prototype only.
+
 | Variable | Description |
 |---|---|
 | `SALESFORCE_URL` | Salesforce org instance URL |
@@ -53,7 +57,7 @@ OAuth2 **client credentials** flow. The backend posts to `/services/oauth2/token
 
 Before production release, this integration path should have:
 
-- [x] Salesforce API failure alerts configured
-- [x] token caching and auto-refresh validated
-- [x] composite request error handling tested
+- [ ] Salesforce API failure alerts configured
+- [ ] token caching and auto-refresh validated
+- [ ] composite request error handling tested
 - [ ] Salesforce org DR runbook documented

@@ -15,6 +15,8 @@
 
 **AWS Cognito** provides OAuth2 token issuance for authenticating the cattle vaccination backend to the **APHA Integration Bridge**.
 
+NOTE: At the time of writing this is correct for the alpha prototype only.
+
 ## Purpose
 
 The backend uses the OAuth2 **client credentials** flow against the Cognito `/oauth2/token` endpoint to obtain a bearer token. That token is then attached as an `Authorization: Bearer` header on all outbound calls to the APHA Integration Bridge.

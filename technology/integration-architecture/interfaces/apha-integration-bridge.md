@@ -11,15 +11,16 @@
      Title: ${2}
      Body: ${3} -->
 
-# APHA Integration Bridge API
+# APHA Integration Bridge
 
-**APHA Integration Bridge API** is a CDP-hosted proxy service that bridges the cattle vaccination backend to APHA's holdings and workorders APIs.
+**APHA Integration Bridge** is a CDP-hosted service intended to expose a consistent view of data from a variety of sources within APHA.
 
 ## Purpose
 
-The cattle vaccination backend calls the Integration Bridge rather than APHA APIs directly. The bridge handles APHA-specific transport concerns (SOAP wrapping, internal routing) so the cattle vaccination service deals only with clean REST JSON.
+For Cattle Vaccination, the APHA Integratino Bridge plays a key role in making data from Sam available, at least read-only, to view within Salesforce.
 
 ## Endpoints Used
+NOTE: At the timing of writing this is from the alpha prototype only.
 
 | Method | Path | Description |
 |---|---|---|
@@ -42,7 +43,7 @@ A `x-api-key` header is injected in local/dev environments via the `DEV_API_KEY`
 
 Before production release, this integration path should have:
 
-- [x] APHA API failure alerts configured
-- [x] correlation IDs propagated in requests and logs
-- [x] retry behaviour documented
+- [ ] APHA API failure alerts configured
+- [ ] correlation IDs propagated in requests and logs
+- [ ] retry behaviour documented
 - [ ] APHA integration DR test scheduled
