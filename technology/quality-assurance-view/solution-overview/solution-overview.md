@@ -28,9 +28,9 @@ backgroundColor: #fff
 </div>
 <br/><br/>
 <div class="title-page-sub">
-  <p>Version 0.1</p>
-  <p>Rob Catton</p>
-  <p>31/01/2026</p>
+  <p>Version 0.2</p>
+  <p>Chris Barrett</p>
+  <p>10/06/2026</p>
 </div>
 
 ![bg](assets/defra-title-page.png)
@@ -100,9 +100,10 @@ footer: '<span class="sensitivity">Official</span><span class="footer-summary">C
 
 # 2. Version Control
 
-| Version | Date       | Description   | Owner       | Reviewer(s) |
-|---------|------------|---------------|-------------|-------------|
-| 0.1     | 31/01/2026 | Draft version | Rob Catton  | TBD         |
+| Version | Date       | Description                                  | Owner         | Reviewer(s) |
+|---------|------------|----------------------------------------------|---------------|-------------|
+| 0.1     | 09/06/2026 | Initial draft to go with alpha document pack​ | Chris Barrett | TBD         |
+| 0.2     | In-progress | Post-alpha                                   | Chris Barrett | TBD         |
 
 <div class="guidance">📌 <strong>Action:</strong> Assign reviewer(s).</div>
 
@@ -112,13 +113,21 @@ footer: '<span class="sensitivity">Official</span><span class="footer-summary">C
 
 ## 3.1 Summary and Scope
 
-**Summary:** Field vets need a digital service to view their assigned TB testing workorders, look up cattle at a holding, record skin measurement readings for each animal and submit completed test results to APHA. APHA officers need to review and manage those test cases in Salesforce.
 
-**Challenge:** TB skin test data is currently managed through fragmented manual processes. Vets need a streamlined digital journey to reduce administrative burden, improve data accuracy and remove the need for paper-based recording. The service needs to integrate reliably with APHA workorder data, the national livestock register and Salesforce case management.
+### Summary
 
-**Solution:** A digital TB skin test recording service hosted on the Core Delivery Platform (CDP). A web frontend enables vets to view workorders and submit results; a stateless BFF backend orchestrates calls to the APHA Integration Bridge (for holdings and workorders), the W3SI Livestock API (for cattle data) and Salesforce (for case and result storage). Authentication to APHA uses OAuth2 client credentials via AWS Cognito; Salesforce uses its own OAuth2 client credentials flow.
+APHA cannot control bovine tuberculosis without a way to​:
+- assign & track which cattle have been vaccinated​
+- assign DIVA testing to vaccinates​
+- assign SICCT testing to non-vaccinates​
+- record and review vaccinations and test results. 
 
-**Scope:** Cattle vaccination frontend, cattle vaccination backend BFF, integration with APHA Integration Bridge (holdings, workorders), Livestock API (cattle on holding) and Salesforce (cases, test parts, test results).
+This prevents vaccine administration, DIVA testing and assurance activities.​
+
+### Challenge
+
+TB skin test data is currently managed through an end-of-life system (Sam) which can not be updated to support or be aware of vaccination. 
+
 
 <div class="guidance">📌 <strong>Action:</strong> Align with the endorsed Delivery Group Roadmap and confirm scope boundaries with the programme.</div>
 
@@ -128,20 +137,23 @@ footer: '<span class="sensitivity">Official</span><span class="footer-summary">C
 
 Outcomes, enterprise design principles, measurable objectives and constraints for this programme.
 
-### 3.2.1 Goals
 
-These goals state the business outcomes for this programme - described from a business perspective, without solution detail that belongs in later sections.
+### 3.2.1 Business​ Goals
 
-- **User-centred service** — Make it straightforward for field vets to complete TB testing workflows with minimal friction and clear status.
-- **Data Integrity** — Keep TB test case data accurate, consistent and auditable across systems.
-- **Compliance by design** — Meet statutory, assurance and privacy expectations without last-minute retrofit.
-- **Interoperability** — Share data safely with APHA, Salesforce and the livestock register through stable, well-governed interfaces.
-- **Operational Efficiency** — Reduce manual re-keying and speed up routine TB test data submission.
-- **Resilience and continuity** — Keep core submission paths dependable; reduce single points of failure and manual workarounds.
-- **Cost and sustainability** — Prefer reuse of corporate platforms (CDP, Cognito, Salesforce) over bespoke capability.
-- **Future Proof** — Use GDS-aligned services and CDP so the solution can evolve with policy and technology.
+1. Assign & track which cattle have been vaccinated against bTB​
+    1. Vets must be able to record which cattle have been vaccinated, along with the relevant details such as dates and batch numbers​
+    1. APHA must be able to use bTB vaccination data when investigating breakdowns​
+    1. APHA must be able to use bTB vaccination data in epidemiological and other scientific studies​
+    1. Potential buyers and other interested parties must be able to determine if, and how recently, an animal has been vaccinated​
+1. Assign DIVA testing to vaccinates​
+    1. A new type of skin test (DIVA) for bTB will be needed, and must be applied to vaccinated cattle​
+    1. APHA must be able to use DIVA skin test data when investigating breakdowns​
+    1. APHA must be able to use DIVA skin test data in epidemiological and other scientific studies​
+1. Assign SICCT testing to non-vaccinates​
+    1. The existing SICCT skin test for bTB will remain in use for unvaccinated herds​
+    1. The existing SICCT skin test should not be applied to vaccinated cattle since it will result in false positives​
 
-<div class="guidance">📌 <strong>Action:</strong> Replace or extend these goals with ones aligned to your Delivery Group roadmap.</div>
+Record and review vaccinations and test results​
 
 ---
 
@@ -166,6 +178,8 @@ These are taken from the [Strategic Architecture Principles](https://defra.share
 
 ### 3.2.3 Objectives
 
+TBD
+
 - **Objective 1 name** - Objective 1 description.
 - **Objective 2 name** - Objective 2 description.
 - **Objective 3 name** - Objective 3 description.
@@ -174,15 +188,16 @@ These are taken from the [Strategic Architecture Principles](https://defra.share
 
 ### 3.2.4 Constraints
 
-- **Constraint 1 name** - Constraint 1 description.
-- **Constraint 2 name** - Constraint 2 description.
-- **Constraint 3 name** - Constraint 3 description.
+1. It is not considered feasible to make changes to the existing system Sam which is currently used to manage and review bTB testing as well as for wider surveillance and post-breakdown case-working activities​
+1. The strategic case-working system chosen by APHA is Salesforce
 
-<div class="guidance">📌 <strong>Action:</strong> Document real constraints (regulatory, technical, vendor, timeline).</div>
 
 ---
 
 ## 3.3 Requirements Summary
+
+Detailed requirements will be developed during the initial phases of beta based on the goals and
+objectives listed previously along with the prototypes that have been tested during alpha.​
 
 | ID | Description                                                                                                                              |
 |----|------------------------------------------------------------------------------------------------------------------------------------------|
@@ -210,12 +225,13 @@ These are taken from the [Strategic Architecture Principles](https://defra.share
 
 The following assurance deliverables will be created for the solution:
 
-- NCSC principles
+TBC
+<!-- - NCSC principles
 - OWASP ASVS
 - ITHC
 - Accreditation Packs – initial and pre-go-live
 - Protective Monitoring
-- GDPR & Data Privacy
+- GDPR & Data Privacy -->
 
 ---
 
@@ -224,13 +240,10 @@ The following assurance deliverables will be created for the solution:
 
 <div class="ldiv">
 
-The cattle vaccination service is a single delivery bounded context — **Cattle Vaccination** — composed of a web frontend and a stateless BFF backend, hosted on CDP (AWS).
-
-**Cattle Vaccination Frontend** — web interface for field vets; views workorders and drives the test submission journey.
-
-**Cattle Vaccination Backend** — stateless Node.js/Hapi BFF; orchestrates calls to three external systems: APHA Integration Bridge (workorders, holdings), Livestock API (cattle data) and Salesforce (case management).
-
-**External integrations** — APHA Integration Bridge (authenticated via AWS Cognito), W3SI Livestock API (bearer token), Salesforce CRM (OAuth2 client credentials).
+- Current TB processes are centered around Sam, a PEGA-based system which has reached a point where it is not economical to make further changes.
+- Non-APHA users access a subset of the Sam screens via a Government Gateway login, this is known as iSam​
+- Up-to-date holdings data is requested when needed from CTS and ScotEID via the Livestock Integration Layer​
+- TB data is extracted via ETL to the cattleTbData database and to the RADAR reporting system​
 
 </div>
 
@@ -255,7 +268,7 @@ The diagram shows the current architecture for the cattle vaccination domain. Th
 
 <div class="rdiv">
 
-![Cattle Vaccination Domain Containers](./images/cvac_domain_current_container.png)
+![Cattle Vaccination Domain Containers](./images/cvac_domain_proposed_container.png)
 
 </div>
 
@@ -266,43 +279,51 @@ The diagram shows the current architecture for the cattle vaccination domain. Th
 This diagram presents a _capability realisation view_, illustrating how key business capabilities are supported and delivered across the solution.
 
 ```mermaid
-%% Capability Realisation View
-flowchart BT
-    subgraph capabilities["Capabilities - what the organisation can do"]
-        C1("Workorder Management (Capability)")
-        C2("Cattle Lookup (Capability)")
-        C3("TB Test Recording (Capability)")
-        C4("Case Management (Capability)")
+%% Business Architecture
+flowchart LR
+
+    subgraph onboarding["Livestock keeper onboarding"]
+        GovLed("Government led")
+        KeeperLed("Livestock keeper led")
     end
 
-    subgraph resources["Resources - competencies and tools assigned to realise capabilities"]
-        R1("Web interface for vets (Resource)")
-        R2("Livestock data gateway (Resource)")
-        R3("Test submission API (Resource)")
-        R4("Case management platform (Resource)")
+    subgraph operationProp["Operational preparation"]
+        VetOfficeOps("Vet office")
     end
 
-    subgraph realisation["Realisation - the systems and teams that realise the resources"]
-        S1("Cattle Vaccination Frontend")
-        S2("Cattle Vaccination Backend BFF")
-        S3("APHA Integration Bridge")
-        S4("Livestock API")
-        S5("Salesforce Org")
+    subgraph onsite["On-site"]
+        TbTest("TB test")
+        TbVax("TB Vaccination")
+        Combined("Vaccination & test")
     end
 
-    R1 -->|assignment| C1
-    R2 -->|assignment| C2
-    R3 -->|assignment| C3
-    R4 -->|assignment| C4
+    subgraph reporting["Reporting"]
+        VetOfficeReport("Vet office")
+    end
 
-    S1 -.->|realisation| R1
-    S2 -.->|realisation| R3
-    S3 -.->|realisation| R1
-    S4 -.->|realisation| R2
-    S5 -.->|realisation| R4
+    subgraph dataConsumption["Data consumption"]
+        TbInvestigation("TB investigation")
+        TbFurtherTesting("TB testing")
+        OtherUses("Other uses, e.g.\ndomestic trade\ninternational trade")
+    end
+
+
+    GovLed --> VetOfficeOps
+    KeeperLed --> VetOfficeOps
+
+    VetOfficeOps --> TbTest
+    VetOfficeOps --> TbVax
+    VetOfficeOps --> Combined
+
+    TbTest --> VetOfficeReport
+    TbVax --> VetOfficeReport
+    Combined --> VetOfficeReport
+
+    VetOfficeReport --> TbInvestigation
+    VetOfficeReport --> TbFurtherTesting
+    VetOfficeReport --> OtherUses
+
 ```
-
-<div class="guidance">📌 <strong>Action:</strong> Tailor the diagram above to your programme — capabilities, resources and implementing systems should reflect your realisation model.</div>
 
 ---
 
@@ -313,7 +334,7 @@ flowchart BT
 
 ### 4.3.1 Data Design
 
-The logical data model for the cattle vaccination solution.
+The logical data model for the cattle vaccination **alpha prototype**.
 
 A **Case** represents a TB test event for a holding. It is linked to a CPH number (`APHA_CPH__c`) and records the reason for test and test window dates.
 
@@ -426,7 +447,7 @@ For more details, see [CDP Architectural Overview](https://portal.cdp-int.defra.
 
 <div class="rdiv">
 
-![Cattle Vaccination Domain Containers](./images/cvac_domain_current_container.png)
+![Cattle Vaccination Domain Containers](./images/cvac_domain_proposed_container.png)
 
 </div>
 
@@ -439,7 +460,7 @@ For more details, see [CDP Architectural Overview](https://portal.cdp-int.defra.
 
 The cattle vaccination backend integrates with three external systems:
 
-**APHA Integration Bridge** — A CDP-hosted proxy authenticated via AWS Cognito (OAuth2 client credentials). Used for holdings lookup (`POST /holdings/find`) and workorders retrieval (`GET /workorders`). Tokens are cached and auto-refreshed.
+**APHA Integration Bridge** — A CDP-hosted proxy authenticated via AWS Cognito (OAuth2 client credentials). Used to access data from Sam.
 
 **Livestock API** — W3SI Defra gateway accessed with a static bearer token. Returns live cattle at a given CPH holding (`GET /cattle-on-holding`).
 
@@ -451,7 +472,7 @@ For CDP network and platform context, see [CDP Architectural Overview](https://p
 
 <div class="rdiv">
 
-![Cattle Vaccination Backend Component](./images/bounded-context/cattle-vaccination/cattle_vaccination_backend_component.png)
+![Cattle Vaccination Backend Component](./images/integrations/apha/apha_bounded_context_container.png)
 
 </div>
 
@@ -504,7 +525,7 @@ Environments: dev, test, perf-test, ext-test, prod — each with its own Cognito
 
 <div class="rdiv">
 
-![Cattle Vaccination Deployment](./images/cvac_domain_current_deployment.png)
+![Cattle Vaccination Deployment](./images/cvac_domain_proposed_deployment.png)
 
 </div>
 

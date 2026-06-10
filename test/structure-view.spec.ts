@@ -60,7 +60,7 @@ describe("structure-view LikeC4 model", () => {
     test("current frontends/backends include a GitHub source link", ({
       expect,
     }) => {
-      // expect.hasAssertions(); // TODO put this back once we have something "current"
+      expect.hasAssertions();
       const kinds = ["frontend", "backend"];
       for (const kind of kinds) {
         for (const element of technicalViewModel.elementsOfKind(kind)) {

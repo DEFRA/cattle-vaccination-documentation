@@ -48,6 +48,8 @@ model {
             title 'Case - bTB Skin Testing'
             bTbSkinTestCase .futureRelationship svocBoundedContext.CPH 'Relates to'
             bTbSkinTestCase .futureRelationship livestockBoundedContext.livestockApi 'GET cattleOnHolding'
+            bTbSkinTestCase .futureRelationship aphaBoundedContext.cattleTbData 'Provide data'
+            bTbSkinTestCase .futureRelationship aphaBoundedContext.RADAR 'Provide data'
         }
     }
 }

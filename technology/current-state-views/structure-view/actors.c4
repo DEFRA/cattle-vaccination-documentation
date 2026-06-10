@@ -4,11 +4,13 @@ model {
         description "Veterinary surgeon who performs TB skin tests and vaccinations on behalf of the livestock keeper"
         privateVet .futureRelationship animalTestingBoundedContext.bTbSkinTestingBoundedContext.tbSkinTestFrontend "submit test results via" { technology 'HTTPS' }
         privateVet .futureRelationship vaccinationBoundedContext.tbVaxFrontend "submit vaccination records via" { technology 'HTTPS' }
+        privateVet .uses aphaBoundedContext.sam 'Prepare and record TB testing'  { technology 'HTTPS' }
     }
     externalPerson vdpVet {
         title "VDP Vet"
         description "Veterinary surgeon who performs TB skin testing on behalf of APHA"
         vdpVet .uses vdpBoundedContext.vdpSystems "views workorders and submits test results" { technology '<external>'}
+        vdpVet .uses aphaBoundedContext.sam 'Prepare and record TB testing'  { technology 'HTTPS' }
     }
     internalPerson aphaVet {
         title "APHA Vet"
@@ -17,11 +19,19 @@ model {
         aphaVet .futureRelationship vaccinationBoundedContext.tbVaxFrontend 'prepare for and record TB vaccination site visits' { technology 'HTTPS' }
         aphaVet .futureRelationship animalTestingBoundedContext.bTbSkinTestCasePage "reviews and manages TB test cases via" { technology 'HTTPS' }
         aphaVet .futureRelationship animalTestingBoundedContext.tbSkinTestFrontend 'prepare for and record TB testing site visits' { technology 'HTTPS' }
+        aphaVet .uses aphaBoundedContext.sam 'Prepare, record and review TB testing'  { technology 'HTTPS' }
     }
     internalPerson aphaAdmin {
         title "APHA Admin"
         description "APHA staff member who manages TB aspects of TB testing"
         aphaAdmin .futureRelationship vaccinationBoundedContext.bTbVaxCasePage "reviews and manages TB vaccination via" { technology 'HTTPS' }
         aphaAdmin .futureRelationship animalTestingBoundedContext.bTbSkinTestCasePage "reviews and manages TB testing via" { technology 'HTTPS' }
+        aphaAdmin .uses aphaBoundedContext.sam 'Arrange and follow up from TB testing'  { technology 'HTTPS' }
+    }
+    internalPerson aphaEpidemiologist {
+        title 'APHA Epidemiologist'
+        description 'APHA staff member supporting science and policy'
+        aphaEpidemiologist .uses aphaBoundedContext.cattleTbData 'Query data for science and reporting' {technology: 'SQL'}
+        aphaEpidemiologist .uses aphaBoundedContext.RADAR 'Query data for science and reporting' {technology: 'Business Objects'}
     }
 }

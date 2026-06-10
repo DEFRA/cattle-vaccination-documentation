@@ -1,9 +1,15 @@
 model {
     extend aphaBoundedContext {
-        externalSystem aphaIntegrationBridge {
+        backend aphaIntegrationBridge {
             title "APHA Integration Bridge"
             description "CDP-hosted proxy service bridging the cattle vaccination backend to the APHA holdings and workorders APIs"
+            technology "Node.js / Hapi"
+            metadata {
+                github 'https://github.com/DEFRA/apha-integration-bridge'
+            }
+
             aphaIntegrationBridge .uses sam "Queries" { technology 'SQL' }
+
 
             component syncCph {
                 #future
@@ -22,6 +28,22 @@ model {
         externalSystem sam {
             title "Sam"
             description "APHA's legacy CRM and disease management system"
+            this .uses LIMS 'Manage laboratory samples and results' { technology: '?' }
+            this .uses livestockBoundedContext.livestockApi 'GET cattleOnHolding' { technology: 'HTTPS' }
+            this .uses cattleTbData 'Snapshot latest data' { technology: 'ETL' }
+            this .uses RADAR 'Provide data' { technology: 'ETL' }
+        }
+        externalSystem LIMS {
+            title 'LIMS'
+            description 'Laboratory Information Management System'
+        }
+        externalSystem cattleTbData {
+            title 'Cattle TB Data'
+            description 'Database used by epidemiologists, supporting science and policy making.'
+        }
+        externalSystem RADAR {
+            title 'RADAR'
+            description 'Reporting system used by epidemiologists, supporting science and policy making.'
         }
     }
 }

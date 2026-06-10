@@ -1,6 +1,52 @@
 views {
 
+
     view cvac_domain_current_context {
+        title "CVAC Subdomain / Context Diagrams / Current"
+        description "Shows the bounded contexts that make up the cattle vaccination domain and the actors and external systems they interact with"
+        include
+            aphaBoundedContext,
+            aphaBoundedContext.sam,
+            aphaBoundedContext.LIMS,
+            aphaBoundedContext.cattleTbData,
+            aphaBoundedContext.RADAR,
+            livestockBoundedContext,
+            livestockBoundedContext.livestockApi,
+            privateVet,
+            vdpVet,
+            aphaVet,
+            aphaAdmin,
+            aphaEpidemiologist
+    }
+
+    view cvac_domain_current_container {
+        // Used in solution-overview.md; changes to the view name affect the published document.
+        title "CVAC Subdomain / Container Diagrams / Current"
+        description "Shows all containers across the cattle vaccination domain"
+            include aphaBoundedContext.*
+            include aphaBoundedContext.sam.*
+            include aphaBoundedContext.LIMS.*
+            include aphaBoundedContext.cattleTbData.*
+            include aphaBoundedContext.RADAR.*
+            include livestockBoundedContext.*
+            include livestockBoundedContext.livestockApi.*
+            include privateVet.*
+            include vdpVet.*
+            include aphaVet.*
+            include aphaAdmin.*
+            include aphaEpidemiologist.*
+    }
+
+    deployment view cvac_domain_current_deployment {
+        // Used in solution-overview.md; changes to the view name affect the published document.
+        title "CVAC Subdomain / Deployment Diagrams / Current"
+        description "Shows the deployments owned by the Cattle Vaccination team and closely related ones"
+        
+        include samProd, samProd.sam
+        include limsProd, limsProd.LIMS
+    }
+
+    view cvac_domain_proposed_context {
         title "CVAC Subdomain / Context Diagrams / Proposed"
         description "Shows the bounded contexts that make up the cattle vaccination domain and the actors and external systems they interact with"
         include
@@ -19,10 +65,10 @@ views {
             aphaAdmin
     }
 
-    view cvac_domain_current_container {
+    view cvac_domain_proposed_container {
         // Used in solution-overview.md; changes to the view name affect the published document.
         title "CVAC Subdomain / Container Diagrams / Proposed"
-        description "Shows all containers across the cattle vaccination domain — frontend, backend BFF and external systems"
+        description "Shows all containers across the cattle vaccination domain"
             include vaccinationBoundedContext.*
             include vaccinationBoundedContext.bTbVaccinationBoundedContext.*
             include animalTestingBoundedContext.*
@@ -36,12 +82,16 @@ views {
             include vdpVet.*
             include aphaVet.*
             include aphaAdmin.*
+
+            exclude aphaBoundedContext.sam
+            exclude aphaBoundedContext.LIMS
     }
 
-    deployment view cvac_domain_current_deployment {
+    deployment view cvac_domain_proposed_deployment {
         // Used in solution-overview.md; changes to the view name affect the published document.
         title "CVAC Subdomain / Deployment Diagrams / Proposed"
-        description "Shows the deployment of the Cattle Vaccination service on CDP"
+        description "Shows the deployments owned by the Cattle Vaccination team and closely related ones"
+
         include defra, defra.prod, defra.prod.**
         include aphaSalesforce, aphaSalesforce.gb, aphaSalesforce.gb.salesforce, aphaSalesforce.gb.salesforce.**, aphaSalesforce.gb.salesforce.cattleVaxApp.**
     }

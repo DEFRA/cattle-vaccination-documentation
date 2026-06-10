@@ -46,6 +46,8 @@ model {
             title 'Case - bTB Vaccination'
             bTbVaxCase .futureRelationship svocBoundedContext.CPH 'Relates to'
             bTbVaxCase .futureRelationship livestockBoundedContext.livestockApi 'GET cattleOnHolding'
+            bTbVaxCase .futureRelationship aphaBoundedContext.cattleTbData 'Provide data'
+            bTbVaxCase .futureRelationship aphaBoundedContext.RADAR 'Provide data'
         }
     }
 

@@ -88,4 +88,13 @@ deployment {
             }
         }
     }
+
+    samProd = node 'Sam Production' {
+        description 'production environment for Sam'
+        instanceOf aphaBoundedContext.sam
+    }
+    limsProd = node 'LIMS Production' {
+        description 'production environment for LIMS'
+        instanceOf aphaBoundedContext.LIMS
+    }
 }
