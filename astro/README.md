@@ -55,7 +55,7 @@ The LikeC4 Vite plugin reads `.c4` sources from `../technology/software-architec
 ```mdx
 import LikeC4View from "../../components/LikeC4View.astro";
 
-<LikeC4View viewId="licensing_domain_current_container" />
+<LikeC4View viewId="cvac_domain_current_container" />
 ```
 
 **Auto-swap from static images.** You usually don't need to write the component manually. The PNG export uses `<viewId>.png` as the filename, so any markdown image reference whose basename matches a known view ID is swapped for `<LikeC4View>` at sync time. The same source file then renders static PNGs in Confluence and interactive views on the Astro site, with no per-target authoring. Files that get an injected component are written as `.mdx` (with the import added automatically) and have HTML comments converted to MDX expression comments so Marp directives don't break the parser.
@@ -69,11 +69,11 @@ Wrap a sequence of headings in `<!-- Tabs:start -->` / `<!-- Tabs:end -->` to re
 
 ### Current
 
-![Domain (current)](images/licensing_domain_current_container.png)
+![Domain (current)](images/cvac_domain_current_container.png)
 
 ### Future
 
-![Domain (future)](images/licensing_domain_future_container.png)
+![Domain (future)](images/cvac_domain_current_context.png)
 
 <!-- Tabs:end -->
 ```
