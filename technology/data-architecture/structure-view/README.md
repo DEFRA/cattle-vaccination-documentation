@@ -10,102 +10,94 @@ A _structure view_ covers how information is organised: domains, conceptual and 
 
 ## Conceptual Data Domains
 
-This conceptual view shows the primary data domains and ownership boundaries across the licensing landscape.
+This conceptual view shows the primary data domains and ownership boundaries across the cattle vaccination landscape.
 
 ```mermaid
 flowchart LR
-  Applicant(Applicant)
-  SubmissionDomain(LicenseSubmissionDomain)
-  NotificationsDomain(LicenseNotificationsDomain)
-  RegulationDomain(LicenseRegulationDomain)
-  DefraIdentity(DefraIdentity)
-  GovUkNotify(GovUkNotify)
+  Vet(FieldVet)
+  TestCaseDomain(TestCaseDomain)
+  WorkorderDomain(WorkorderDomain)
+  CattleDomain(CattleDomain)
+  SalesforceOrg(SalesforceOrg)
+  AphaApi(AphaApi)
+  LivestockApi(LivestockApi)
 
-  Applicant -->|"submits application data"| SubmissionDomain
-  SubmissionDomain -->|"publishes submission events"| NotificationsDomain
-  NotificationsDomain -->|"forwards notification events"| GovUkNotify
-  SubmissionDomain -->|"shares case data"| RegulationDomain
-  SubmissionDomain -->|"verifies identity token"| DefraIdentity
+  Vet -->|"submits TB test data"| TestCaseDomain
+  TestCaseDomain -->|"persisted in"| SalesforceOrg
+  WorkorderDomain -->|"owned by"| AphaApi
+  CattleDomain -->|"owned by"| LivestockApi
+  Vet -->|"reads workorders"| WorkorderDomain
+  Vet -->|"reads cattle on holding"| CattleDomain
 ```
 
 ## Logical Data Model
 
-This logical view describes how core entities relate across the submission and regulation process.
+This logical view describes how core entities relate across the TB skin test workflow.
 
 ```mermaid
 flowchart LR
-  ApplicantEntity(Applicant)
-  SubmissionEntity(LicenseSubmission)
-  DocumentEntity(SupportingDocument)
-  CaseEntity(RegulatoryCase)
-  DecisionEntity(RegulatoryDecision)
-  NotificationEntity(NotificationEvent)
+  Vet(FieldVet)
+  Workorder(Workorder)
+  Holding(Holding)
+  Cattle(CattleOnHolding)
+  Case(TbTestCase)
+  TestPart(TestPart)
+  TestResult(TestResult)
 
-  ApplicantEntity -->|"owns"| SubmissionEntity
-  SubmissionEntity -->|"contains"| DocumentEntity
-  SubmissionEntity -->|"creates or updates"| CaseEntity
-  CaseEntity -->|"results in"| DecisionEntity
-  SubmissionEntity -->|"emits"| NotificationEntity
+  Vet -->|"assigned"| Workorder
+  Workorder -->|"covers"| Holding
+  Holding -->|"has"| Cattle
+  Vet -->|"creates"| Case
+  Case -->|"linked to"| Workorder
+  Case -->|"contains"| TestPart
+  TestPart -->|"has"| TestResult
 ```
 
-## Collection and Attribute Model
+## Salesforce Data Model
 
-This section defines the core Mongo collections, their key attributes and relationships in an ERD-style view.
+This section defines the core Salesforce objects, their key fields and relationships. These are the only persistent records owned by the cattle vaccination domain.
 
 ```mermaid
 erDiagram
-  licenseSubmissions {
-    ObjectId _id
-    string submissionReference
-    string applicantId
-    string status
-    datetime submittedAt
-    datetime updatedAt
-    object answers
-    string[] documentIds
+  Case {
+    string Id
+    string CaseNumber
+    string Status
+    string WorkorderId
   }
 
-  regulatoryCases {
-    ObjectId _id
-    ObjectId submissionId
-    string caseReference
-    string assignedTeam
-    string decisionStatus
-    datetime decisionAt
-    object[] notes
-    datetime updatedAt
+  APHA_TestPart__c {
+    string Id
+    string CaseId
+    string AnimalId
+    datetime TestDate
   }
 
-  notificationEvents {
-    ObjectId _id
-    ObjectId submissionId
-    string eventType
-    string channel
-    string recipient
-    string providerStatus
-    datetime publishedAt
-    datetime processedAt
+  APHA_TestPartResult__c {
+    string Id
+    string TestPartId
+    string Measurement
+    string Outcome
   }
 
-  licenseSubmissions ||--o{ regulatoryCases : "drives case creation"
-  licenseSubmissions ||--o{ notificationEvents : "emits events for"
-  regulatoryCases ||--o{ notificationEvents : "may trigger additional"
+  Case ||--o{ APHA_TestPart__c : "has test parts"
+  APHA_TestPart__c ||--o{ APHA_TestPartResult__c : "has results"
 ```
 
 ## Data Exchange Boundaries
 
-This exchange view maps the main data contracts and transfer mechanisms between bounded contexts.
+This exchange view maps the data contracts and transfer mechanisms between bounded contexts. All exchanges are synchronous HTTPS — there are no events, queues or topics.
 
 ```mermaid
 flowchart LR
-  SubmissionApi(SubmissionApi)
-  SubmissionEvents(SubmissionEventContract)
-  NotificationsQueue(NotificationsQueue)
-  RegulationApi(RegulationApi)
-  NotifyApi(NotifyApi)
+  Backend(CattleVaccinationBackend)
+  AphaBridge(AphaIntegrationBridge)
+  AphaApi(AphaApi)
+  LivestockApi(LivestockApi)
+  SalesforceOrg(SalesforceOrg)
 
-  SubmissionApi -->|"writes submission data via api"| SubmissionEvents
-  SubmissionEvents -->|"event payload via sns or sqs"| NotificationsQueue
-  NotificationsQueue -->|"consumed events"| RegulationApi
-  NotificationsQueue -->|"notification request payload"| NotifyApi
+  Backend -->|"POST /holdings/find, GET /workorders"| AphaBridge
+  AphaBridge -->|"proxies HTTPS"| AphaApi
+  Backend -->|"GET /cattle-on-holding"| LivestockApi
+  Backend -->|"REST API v62.0 — Case, APHA_TestPart__c, APHA_TestPartResult__c"| SalesforceOrg
 ```

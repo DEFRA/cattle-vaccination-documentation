@@ -10,66 +10,65 @@ A _physical view_ is the data counterpart of [Software Deployment View](../../cu
 
 ## Current Data Stores
 
-This physical view shows where operational licensing data is persisted and how storage responsibilities are split across bounded contexts.
+The cattle vaccination backend is stateless — it owns no database, queue or topic. All persistent state lives in Salesforce, which acts as the system of record for TB test cases, test parts and results. APHA and Livestock data is read-only at the point of request and is not cached or replicated.
 
 ```mermaid
 flowchart LR
-  SubmissionSvc(LicenseSubmissionService)
-  RegulationSvc(LicenseRegulationService)
-  NotificationsSvc(LicenseNotificationsService)
-  MongoDb(MongoDbCluster)
-  S3Store(S3DocumentStore)
-  EventTopic(SnsTopic)
-  EventQueue(SqsQueue)
+  Backend(CattleVaccinationBackend)
+  SalesforceOrg(SalesforceOrg)
+  AphaApi(AphaApi)
+  LivestockApi(LivestockApi)
 
-  SubmissionSvc -->|"writes and reads submission data"| MongoDb
-  SubmissionSvc -->|"stores document binaries"| S3Store
-  SubmissionSvc -->|"publishes events"| EventTopic
-  EventTopic -->|"fan out events"| EventQueue
-  EventQueue -->|"consumed by notifications"| NotificationsSvc
-  EventQueue -->|"consumed by regulation"| RegulationSvc
+  Backend -->|"reads workorders and holdings"| AphaApi
+  Backend -->|"reads cattle on holding"| LivestockApi
+  Backend -->|"creates and reads cases, test parts, results"| SalesforceOrg
 ```
 
-## Data Movement and Replication
+## Data Ownership
 
-This movement view highlights how data flows between stores and integration channels, including internal replication and asynchronous handoff.
+This view shows which system owns each class of data and the direction of writes.
 
 ```mermaid
 flowchart LR
-  SubmissionDb(SubmissionMongoPrimary)
-  ReplicaNode(SubmissionMongoReplica)
-  EventTopic(SubmissionEventsTopic)
-  NotificationsQueue(NotificationsProcessingQueue)
-  RegulationQueue(RegulationProcessingQueue)
-  NotifyBridge(GovUkNotifyBridge)
+  SalesforceOrg(SalesforceOrg)
+  AphaApi(AphaApi)
+  LivestockApi(LivestockApi)
 
-  SubmissionDb -->|"replicates data"| ReplicaNode
-  SubmissionDb -->|"emits domain events"| EventTopic
-  EventTopic -->|"routes event copies"| NotificationsQueue
-  EventTopic -->|"routes event copies"| RegulationQueue
-  NotificationsQueue -->|"notification payloads"| NotifyBridge
+  CaseRecord(Case)
+  TestPartRecord(APHA_TestPart__c)
+  TestResultRecord(APHA_TestPartResult__c)
+  WorkorderData(WorkorderData)
+  HoldingData(HoldingData)
+  CattleData(CattleOnHoldingData)
+
+  SalesforceOrg -->|"owns"| CaseRecord
+  SalesforceOrg -->|"owns"| TestPartRecord
+  SalesforceOrg -->|"owns"| TestResultRecord
+  AphaApi -->|"owns"| WorkorderData
+  AphaApi -->|"owns"| HoldingData
+  LivestockApi -->|"owns"| CattleData
 ```
 
-## Backup and Recovery Boundaries
+## Access and Boundaries
 
-This recovery view shows backup ownership and restore boundaries for critical data platforms.
+The BFF runs in a protected VPC and reaches all external data stores over HTTPS. There is no data replication, caching layer or message bus.
 
 ```mermaid
 flowchart LR
-  MongoPrimary(MongoDataStore)
-  MongoBackups(MongoLogicalBackups)
-  EbsSnapshots(EbsSnapshots)
-  S3BackupVault(S3BackupVault)
-  RestoreRunbook(RestoreRunbookProcess)
-  ServiceTeam(ServiceTeam)
-  PlatformTeam(PlatformTeam)
+  Vet(FieldVet)
+  Frontend(CattleVaccinationFrontend)
+  Backend(CattleVaccinationBackend)
+  Cognito(AwsCognito)
+  AphaBridge(AphaIntegrationBridge)
+  AphaApi(AphaApi)
+  LivestockApi(LivestockApi)
+  SalesforceOrg(SalesforceOrg)
 
-  MongoPrimary -->|"hourly logical backups"| MongoBackups
-  MongoPrimary -->|"nightly snapshot backups"| EbsSnapshots
-  MongoBackups -->|"stored in"| S3BackupVault
-  EbsSnapshots -->|"copied to"| S3BackupVault
-  S3BackupVault -->|"restore procedure"| RestoreRunbook
-  ServiceTeam -->|"requests break glass"| PlatformTeam
-  PlatformTeam -->|"authorises restore execution"| RestoreRunbook
+  Vet -->|"HTTPS"| Frontend
+  Frontend -->|"HTTPS via API Gateway"| Backend
+  Backend -->|"OAuth2 client credentials"| Cognito
+  Backend -->|"HTTPS"| AphaBridge
+  AphaBridge -->|"HTTPS"| AphaApi
+  Backend -->|"HTTPS"| LivestockApi
+  Backend -->|"HTTPS REST API v62.0"| SalesforceOrg
 ```
-

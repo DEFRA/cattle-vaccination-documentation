@@ -10,72 +10,69 @@ An _evolution view_ describes the data landscape over time with legacy sources, 
 
 ## Legacy Data Landscape
 
-This legacy view represents older submission and case data pathways prior to domain separation and event-driven integration patterns.
+Prior to the current service, TB skin test data was recorded outside Salesforce — workorder assignment and result submission were handled through separate, disconnected tools with no direct integration between the vet-facing workflow and APHA case management.
 
 ```mermaid
 flowchart LR
-  LegacyUi(LegacyUi)
-  LegacyDb(LegacyRelationalDb)
-  LegacyBatch(LegacyBatchExports)
-  LegacyCaseTool(LegacyCaseTool)
+  Vet(FieldVet)
+  LegacyTool(LegacyVetTool)
+  AphaManual(AphaManualProcess)
+  SalesforceOrg(SalesforceOrg)
 
-  LegacyUi -->|"stores application data"| LegacyDb
-  LegacyDb -->|"nightly extract files"| LegacyBatch
-  LegacyBatch -->|"imports case data"| LegacyCaseTool
+  Vet -->|"records test data manually"| LegacyTool
+  LegacyTool -->|"data transferred manually"| AphaManual
+  AphaManual -->|"cases created manually"| SalesforceOrg
 ```
 
 ## Current Data Landscape
 
-This current-state view reflects the active licensing data topology with submission storage and asynchronous downstream sharing.
+The current service connects field vets directly to Salesforce and APHA through a stateless BFF. Salesforce is the system of record; all TB test cases, test parts and results are written there in real time by the vet during the test visit.
 
 ```mermaid
 flowchart LR
-  SubmissionApi(SubmissionApi)
-  MongoCurrent(SubmissionMongo)
-  EventTopic(SubmissionEventsTopic)
-  NotificationsQueue(NotificationsQueue)
-  RegulationQueue(RegulationQueue)
+  Vet(FieldVet)
+  Backend(CattleVaccinationBackend)
+  SalesforceOrg(SalesforceOrg)
+  AphaApi(AphaApi)
+  LivestockApi(LivestockApi)
 
-  SubmissionApi -->|"writes submission records"| MongoCurrent
-  SubmissionApi -->|"publishes change events"| EventTopic
-  EventTopic -->|"event subscription"| NotificationsQueue
-  EventTopic -->|"event subscription"| RegulationQueue
+  Vet -->|"submits test data via frontend"| Backend
+  Backend -->|"reads workorders and holdings"| AphaApi
+  Backend -->|"reads cattle on holding"| LivestockApi
+  Backend -->|"creates cases, test parts, results"| SalesforceOrg
 ```
 
 ## Target Data Landscape
 
-This target-state view shows the intended steady-state model with clearer ownership boundaries, canonical events, and governed archival paths.
+The intended steady state retains Salesforce as the system of record but introduces cleaner ownership boundaries as the APHA API surface matures — reducing reliance on the Integration Bridge proxy as APHA exposes APIs directly consumable by the BFF.
 
 ```mermaid
 flowchart LR
-  SubmissionDomain(SubmissionDomainStore)
-  RegulationDomain(RegulationDomainStore)
-  CanonicalEvents(CanonicalEventContracts)
-  AnalyticsStore(AnalyticsDataProduct)
-  ArchiveStore(LongTermArchive)
+  Vet(FieldVet)
+  Backend(CattleVaccinationBackend)
+  SalesforceOrg(SalesforceOrg)
+  AphaApiDirect(AphaApiDirect)
+  LivestockApi(LivestockApi)
 
-  SubmissionDomain -->|"publishes canonical events"| CanonicalEvents
-  CanonicalEvents -->|"drives case processing"| RegulationDomain
-  CanonicalEvents -->|"feeds curated analytics"| AnalyticsStore
-  SubmissionDomain -->|"policy based archiving"| ArchiveStore
-  RegulationDomain -->|"policy based archiving"| ArchiveStore
+  Vet -->|"submits test data via frontend"| Backend
+  Backend -->|"reads workorders and holdings"| AphaApiDirect
+  Backend -->|"reads cattle on holding"| LivestockApi
+  Backend -->|"creates cases, test parts, results"| SalesforceOrg
 ```
 
-## Transition and Dual-Run
+## Transition
 
-This transition view shows coexistence and reconciliation while legacy pathways are progressively decommissioned.
+The transition period covers moving from the proxied APHA Integration Bridge to direct API consumption. During this phase both routes may be active and the BFF configuration determines which is used per endpoint.
 
 ```mermaid
 flowchart LR
-  LegacyDb(LegacyDataStore)
-  SubmissionNew(SubmissionMongo)
-  MigrationJob(MigrationReconciliationJob)
-  DualReadApi(DualReadApiLayer)
-  Decommission(LegacyDecommission)
+  Backend(CattleVaccinationBackend)
+  AphaBridge(AphaIntegrationBridge)
+  AphaApiDirect(AphaApiDirect)
+  SalesforceOrg(SalesforceOrg)
 
-  LegacyDb -->|"historical backfill"| MigrationJob
-  MigrationJob -->|"writes mapped records"| SubmissionNew
-  LegacyDb -->|"temporary fallback reads"| DualReadApi
-  SubmissionNew -->|"primary reads and writes"| DualReadApi
-  MigrationJob -->|"reconciliation complete"| Decommission
+  Backend -->|"current path via bridge"| AphaBridge
+  Backend -->|"target path direct"| AphaApiDirect
+  AphaBridge -->|"proxies to"| AphaApiDirect
+  Backend -->|"unchanged"| SalesforceOrg
 ```
