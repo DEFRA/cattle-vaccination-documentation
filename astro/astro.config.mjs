@@ -24,9 +24,10 @@ const mermaidInitScript = `
 // Extract its pathname as the base so asset paths are root-relative to the
 // correct sub-path, rather than hardcoding "/" which breaks sub-directory deploys.
 const pagesUrl = process.env.PAGES_SITE_URL;
-const basePath = pagesUrl
+const rawBase = pagesUrl
   ? new URL(pagesUrl).pathname
   : process.env.BASE_PATH || "/cattle-vaccination-docs/";
+const basePath = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
 
 export default defineConfig({
   site: pagesUrl || `https://defra.github.io${process.env.BASE_PATH || "/cattle-vaccination-docs"}`,
