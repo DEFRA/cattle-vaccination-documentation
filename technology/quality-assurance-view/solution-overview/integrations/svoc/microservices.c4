@@ -1,0 +1,9 @@
+model {
+    extend svocBoundedContext {
+        externalSystem CPH {
+            title "CPH (County Parish Holding)"
+            description "Salesforce representation of CPH"
+            CPH .futureRelationship aphaBoundedContext.aphaIntegrationBridge.syncCph "Sync from Sam" { technology 'TBD' }
+        }
+    }
+}

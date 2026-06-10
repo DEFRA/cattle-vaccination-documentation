@@ -1,0 +1,6 @@
+model {
+    context svocBoundedContext {
+        title 'Single View of Customer'
+        description 'APHA single view of customer'
+    }
+}

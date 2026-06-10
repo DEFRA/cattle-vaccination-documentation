@@ -1,0 +1,8 @@
+model {
+    extend livestockBoundedContext {
+        externalSystem livestockApi {
+            title "Livestock API"
+            description "W3SI Defra livestock gateway — GET /cattle-on-holding returns live cattle at a given holding (LocationID), excluding dead animals"
+        }
+    }
+}

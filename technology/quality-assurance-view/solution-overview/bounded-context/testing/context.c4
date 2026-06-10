@@ -1,0 +1,16 @@
+model {
+    context animalTestingBoundedContext {
+        title "Animal Testing Bounded Context"
+        description "The animal testing service"
+
+        context bTbTestingBoundedContext {
+            title "Bovine Tuberculosis Testing Bounded Context"
+            description "Testing for Bovine Tuberculosis"
+
+            context bTbSkinTestingBoundedContext {
+                title 'Bovine Tuberculosis Skin Testing Bounded Context'
+                description 'Managing and recording skin tests for tuberculosis in cattle'
+            }
+        }
+    }
+}

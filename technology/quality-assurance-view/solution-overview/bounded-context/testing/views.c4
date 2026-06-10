@@ -1,0 +1,43 @@
+views {
+    view animal_testing_bounded_context_context of animalTestingBoundedContext {
+        title 'CVAC Bounded Contexts / Animal Testing / Context Diagram'
+        include * <-> animalTestingBoundedContext
+        include animalTestingBoundedContext.bTbTestingBoundedContext
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext
+    }
+
+    view bTb_testing_bounded_context_context of animalTestingBoundedContext.bTbTestingBoundedContext {
+        title 'CVAC Bounded Contexts / Animal Testing / Bovine TB Testing / Context Diagram'
+        include * <-> bTbTestingBoundedContext
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext
+    }
+
+    view bTb_skin_testing_bounded_context_context of animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext {
+        title 'CVAC Bounded Contexts / Animal Testing / Bovine TB Testing / Bovine TB Skin Testing / Context Diagram'
+        include * <-> bTbSkinTestingBoundedContext
+    }
+
+
+    deployment view deployment_production_tb-testing {
+        title "CVAC Bounded Contexts / Animal Testing / Bovine TB Testing / Bovine TB Skin Testing / Deployment Diagram"
+        description "Deployment diagram of the TB Testing service on CDP"
+        include
+            defra,
+            defra.prod,
+            defra.prod.eu,
+            defra.prod.eu.publicVpc.alb,
+            defra.prod.eu.publicVpc.publicFargate,
+            defra.prod.eu.publicVpc.tbSkinTestFrontend,
+            defra.prod.eu.publicVpc.apiGateway,
+            defra.prod.eu.protectedVpc.protectedFargate,
+            defra.prod.eu.protectedVpc.tbSkinTestBackend
+
+        include
+            aphaSalesforce,
+            aphaSalesforce.gb,
+            aphaSalesforce.gb.salesforce,
+            aphaSalesforce.gb.salesforce.cattleVaxApp,
+            aphaSalesforce.gb.salesforce.bTbSkinTestCasePage,
+            aphaSalesforce.gb.salesforce.bTbSkinTestCase
+    }
+}

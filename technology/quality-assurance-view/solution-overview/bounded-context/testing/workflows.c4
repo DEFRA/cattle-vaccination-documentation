@@ -1,0 +1,43 @@
+views {
+    dynamic view skin_test_case_creation {
+        // Used in solution-overview.md; changes to the view name affect the published document.
+        title "CVAC Bounded Contexts / Animal Testing / Bovine TB Testing / Bovine TB Skin Testing / Workflow / Case Creation"
+        description "Flow when a vet creates a new TB skin test case"
+
+        include animalTestingBoundedContext.bTbSkinTestCasePage
+        include animalTestingBoundedContext.bTbSkinTestCase
+
+        aphaAdmin .uses animalTestingBoundedContext.bTbSkinTestCasePage "initiates case creation"
+        animalTestingBoundedContext.bTbSkinTestCasePage .uses animalTestingBoundedContext.bTbSkinTestCase "Create"
+    }
+
+    dynamic view skin_test_preparation {
+        title 'CVAC Bounded Contexts / Animal Testing / Bovine TB Testing / Bovine TB Skin Testing / Workflow / Test Preparation'
+        description 'Flow when a vet prepares for a test'
+
+        include aphaVet
+        include animalTestingBoundedContext.tbSkinTestFrontend
+        include animalTestingBoundedContext.tbSkinTestBackend
+        include animalTestingBoundedContext.bTbSkinTestCase
+
+        aphaVet .uses animalTestingBoundedContext.tbSkinTestFrontend "prepare for test"
+        animalTestingBoundedContext.tbSkinTestFrontend .uses animalTestingBoundedContext.tbSkinTestBackend "POST /cases/{id}/prepare"
+        animalTestingBoundedContext.tbSkinTestBackend .uses animalTestingBoundedContext.bTbSkinTestCase "Prepare"
+        animalTestingBoundedContext.bTbSkinTestCase .uses livestockBoundedContext.livestockApi "GET cattleOnHolding"
+    }
+
+    dynamic view skin_test_submission {
+        // Used in solution-overview.md; changes to the view name affect the published document.
+        title "CVAC Bounded Contexts / Animal Testing / Bovine TB Testing / Bovine TB Skin Testing / Workflow / Test Result Submission"
+        description "Flow when a vet submits TB skin test measurements and results for a case"
+
+        include aphaVet
+        include animalTestingBoundedContext.tbSkinTestFrontend
+        include animalTestingBoundedContext.tbSkinTestBackend
+        include animalTestingBoundedContext.bTbSkinTestCase
+
+        aphaVet .uses animalTestingBoundedContext.tbSkinTestFrontend "submits test measurements"
+        animalTestingBoundedContext.tbSkinTestFrontend .uses animalTestingBoundedContext.tbSkinTestBackend "POST /cases/{id}/measurements"
+        animalTestingBoundedContext.tbSkinTestBackend .uses animalTestingBoundedContext.bTbSkinTestCase "create measurements"
+    }
+}

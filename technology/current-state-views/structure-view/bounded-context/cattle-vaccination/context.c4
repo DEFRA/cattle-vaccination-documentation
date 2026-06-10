@@ -1,6 +1,0 @@
-model {
-    context cattleVaccinationBoundedContext {
-        title "Cattle Vaccination Bounded Context"
-        description "The cattle vaccination service — enables field vets to view TB testing workorders and submit TB skin test results."
-    }
-}

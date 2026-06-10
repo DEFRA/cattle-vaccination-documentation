@@ -38,7 +38,7 @@ backgroundColor: #fff
 ---
 
 <!--
-footer: '<span class="sensitivity">Official Sensitive</span><span class="footer-summary">Cattle Vaccination Solution Overview v0.1</span>'
+footer: '<span class="sensitivity">Official</span><span class="footer-summary">Cattle Vaccination Solution Overview v0.1</span>'
 -->
 
 <!-- Macro: \!\[.*\]\((.+)\)\<\!\-\- width=(.*) \-\-\>
@@ -236,7 +236,7 @@ The cattle vaccination service is a single delivery bounded context — **Cattle
 
 <div class="rdiv">
 
-![Cattle Vaccination Domain Containers](../../../current-state-views/structure-view/images/cvac_domain_current_container.png)
+![Cattle Vaccination Domain Containers](./images/cvac_domain_current_container.png)
 
 </div>
 
@@ -255,7 +255,7 @@ The diagram shows the current architecture for the cattle vaccination domain. Th
 
 <div class="rdiv">
 
-![Cattle Vaccination Domain Containers](../../../current-state-views/structure-view/images/cvac_domain_current_container.png)
+![Cattle Vaccination Domain Containers](./images/cvac_domain_current_container.png)
 
 </div>
 
@@ -374,7 +374,7 @@ erDiagram
 
 The diagram shows how data flows when a vet creates a new TB skin test case.
 
-![Case Creation Workflow](../../../current-state-views/structure-view/images/bounded-context/cattle-vaccination/cattle_vaccination_case_creation.png)
+![Case Creation Workflow](./images/bounded-context/testing/skin_test_case_creation.png)
 
 ---
 
@@ -382,7 +382,7 @@ The diagram shows how data flows when a vet creates a new TB skin test case.
 
 The diagram shows how data flows when a vet submits TB skin test measurements.
 
-![Test Result Submission Workflow](../../../current-state-views/structure-view/images/bounded-context/cattle-vaccination/cattle_vaccination_test_submission.png)
+![Test Result Submission Workflow](./images/bounded-context/testing/skin_test_submission.png)
 
 ---
 
@@ -426,7 +426,7 @@ For more details, see [CDP Architectural Overview](https://portal.cdp-int.defra.
 
 <div class="rdiv">
 
-![Cattle Vaccination Domain Containers](../../../current-state-views/structure-view/images/cvac_domain_current_container.png)
+![Cattle Vaccination Domain Containers](./images/cvac_domain_current_container.png)
 
 </div>
 
@@ -451,7 +451,7 @@ For CDP network and platform context, see [CDP Architectural Overview](https://p
 
 <div class="rdiv">
 
-![Cattle Vaccination Backend Component](../../../current-state-views/structure-view/images/bounded-context/cattle-vaccination/cattle_vaccination_backend_component.png)
+![Cattle Vaccination Backend Component](./images/bounded-context/cattle-vaccination/cattle_vaccination_backend_component.png)
 
 </div>
 
@@ -504,7 +504,7 @@ Environments: dev, test, perf-test, ext-test, prod — each with its own Cognito
 
 <div class="rdiv">
 
-![Cattle Vaccination Deployment](../../../current-state-views/structure-view/images/cvac_domain_current_deployment.png)
+![Cattle Vaccination Deployment](./images/cvac_domain_current_deployment.png)
 
 </div>
 

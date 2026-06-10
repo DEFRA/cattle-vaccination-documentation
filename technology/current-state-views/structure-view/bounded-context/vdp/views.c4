@@ -1,0 +1,6 @@
+views {
+    view vdp_bounded_context_context of vdpBoundedContext {
+        title 'CVAC Bounded Contexts / Vetinary Delivery Partners / Context Diagram'
+        include * <-> vdpBoundedContext
+    }
+}

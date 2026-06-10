@@ -1,0 +1,14 @@
+views {
+    view svoc_bounded_context_context of svocBoundedContext {
+        title "CVAC Integrations / Single View of Customer / Context"
+        description "Shows the Single View of Customer bounded context and its relationships with other systems"
+        include * <-> svocBoundedContext
+    }
+
+    view svoc_bounded_context_container of svocBoundedContext {
+        title "CVAC Integrations / Single View of Customer / Container"
+        description "Shows the Single View of Customer"
+        include *
+        include aphaBoundedContext.aphaIntegrationBridge.syncCph
+    }
+}

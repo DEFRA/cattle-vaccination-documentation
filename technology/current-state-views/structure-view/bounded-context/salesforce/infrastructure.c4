@@ -1,3 +1,0 @@
-model {
-    // Salesforce is a SaaS platform — no CDP-hosted infrastructure in this bounded context.
-}

@@ -1,0 +1,11 @@
+model {
+     extend vdpBoundedContext {
+        component vdpSystems {
+            title 'VDP Systems'
+            description 'Systems use by VDPs, such as UK FarmCare TOM'
+            technology 'External'
+
+            vdpSystems .futureRelationship animalTestingBoundedContext.bTbSkinTestingBoundedContext.tbSkinTestExternalApi 'Retrieve and manage work orders, submit results'
+        }
+     }
+}

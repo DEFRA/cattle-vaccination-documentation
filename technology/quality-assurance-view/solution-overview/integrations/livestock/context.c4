@@ -1,0 +1,6 @@
+model {
+    context livestockBoundedContext {
+        title "Livestock Bounded Context"
+        description "The W3SI Defra livestock gateway providing cattle-on-holding data"
+    }
+}

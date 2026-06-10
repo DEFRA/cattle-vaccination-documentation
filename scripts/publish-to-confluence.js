@@ -32,9 +32,13 @@ const REPO_ROOT = path.resolve(__dirname, '..');
  * flag is passed. This protects pages that teams may already curate in Confluence outside
  * of this repository from being overwritten by an unintended bulk publish.
  */
-const DEFAULT_ROOTS = ['service-homepage', 'product-outcomes', 'users', 'service-design', 'technology'];
+const DEFAULT_ROOTS = ['technology'];
 const OPTIONAL_ROOTS = {
   '--include-delivery-passport': 'delivery-passport',
+  '--include-service-homepage': 'service-homepage',
+  '--include-product-outcomes': 'product-outcomes',
+  '--include-users': 'users',
+  '--include-service-design': 'service-design'
 };
 const KNOWN_FLAGS = new Set(Object.keys(OPTIONAL_ROOTS));
 
