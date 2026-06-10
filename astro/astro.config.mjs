@@ -20,16 +20,18 @@ const mermaidInitScript = `
 `;
 
 // Deployment URL configuration.
-// Use PAGES_SITE_URL for a custom/private GitHub Pages URL, otherwise fall back
-// to https://defra.github.io/<repo>/ via BASE_PATH.
-export default defineConfig({
-  site:
-    process.env.PAGES_SITE_URL ||
-    `https://defra.github.io${process.env.BASE_PATH || "/cattle-vaccination-docs"}`,
+// PAGES_SITE_URL is the full public URL (e.g. https://defra.github.io/cattle-vaccination-documentation/).
+// Extract its pathname as the base so asset paths are root-relative to the
+// correct sub-path, rather than hardcoding "/" which breaks sub-directory deploys.
+const pagesUrl = process.env.PAGES_SITE_URL;
+const basePath = pagesUrl
+  ? new URL(pagesUrl).pathname
+  : process.env.BASE_PATH || "/cattle-vaccination-docs/";
 
-  base: process.env.PAGES_SITE_URL
-    ? "/"
-    : process.env.BASE_PATH || "/cattle-vaccination-docs/",
+export default defineConfig({
+  site: pagesUrl || `https://defra.github.io${process.env.BASE_PATH || "/cattle-vaccination-docs"}`,
+
+  base: basePath,
 
   markdown: {
     remarkPlugins: [remarkMermaid],
