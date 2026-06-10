@@ -35,7 +35,7 @@ These docs are generated from a single [LikeC4](https://likec4.dev/) model that 
 
 Try it on the domain container view below — pick any container and drill in.
 
-<LikeC4View viewId="licensing_domain_current_container" />
+<LikeC4View viewId="cvac_domain_current_container" />
 
 ## Find Your Way Around
 
@@ -68,14 +68,13 @@ The Technology section is organised as three lenses on the same service, plus a 
 
 <CardGrid>
   <Card title="Bounded contexts" icon="puzzle">
-    **License Submission** — applicant-facing frontend and API for submitting licence applications.
+    **Cattle Vaccination** — field-facing frontend and BFF API enabling vets to view TB testing workorders and submit skin test results.
 
-    **License Regulation** — internal case-management platform (e.g. Dynamics 365) where regulators assess and decide on applications.
+    **Salesforce** — internal case-management platform (Salesforce CRM) where APHA officers manage and review TB skin test cases.
 
-    **License Notifications** — event-driven integrations that dispatch emails and other notifications when application status changes.
-  </Card>
-  <Card title="Planned" icon="seti:plan">
-    **Permit Holder** actor and self-service portal — closing the loop so licence holders can manage renewals, variations and ongoing obligations.
+    **APHA Integration** — APHA integration systems including the Integration Bridge, AWS Cognito auth, and the underlying APHA holdings and workorders APIs.
+
+    **Livestock** — Defra W3SI livestock gateway providing cattle-on-holding data used to populate workorders.
   </Card>
   <Card title="Runs on" icon="seti:config">
     Defra **Core Delivery Platform** (CDP) on AWS — public VPC for the applicant UI, protected VPC for backend APIs and the regulation platform, with an ALB and API Gateway at the boundary.
