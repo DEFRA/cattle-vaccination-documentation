@@ -1,6 +1,6 @@
 <!-- Space: CVAC -->
-<!-- Parent: Cattle Vaccination Service -->
-<!-- Parent: Technology -->
+<!-- Parent: Delivery Passport -->
+<!-- Parent: Technology View -->
 <!-- Parent: Integration Architecture -->
 <!-- Parent: Integration Architecture Scratchpad -->
 

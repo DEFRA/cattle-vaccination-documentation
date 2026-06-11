@@ -1,7 +1,7 @@
 <!-- Space: CVAC -->
-<!-- Parent: Cattle Vaccination Service -->
+<!-- Parent: Delivery Passport -->
 
-# Technology
+# Technology View
 
 The Technology area is the entry point for the architecture of the Cattle Vaccination service. It is organised as three lenses on the same service — each holding the diagrams, narrative and decisions for that lens — plus a quality assurance area for stage-gate artefacts.
 

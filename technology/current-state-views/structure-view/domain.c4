@@ -8,6 +8,7 @@ views {
             aphaBoundedContext,
             aphaBoundedContext.sam,
             aphaBoundedContext.LIMS,
+            aphaBoundedContext.LIMS.SampleManager,
             aphaBoundedContext.cattleTbData,
             aphaBoundedContext.RADAR,
             livestockBoundedContext,
@@ -43,7 +44,7 @@ views {
         description "Shows the deployments owned by the Cattle Vaccination team and closely related ones"
         
         include samProd, samProd.sam
-        include limsProd, limsProd.LIMS
+        include limsProd, limsProd.SampleManager
     }
 
     view cvac_domain_proposed_context {

@@ -1,6 +1,6 @@
 <!-- Space: CVAC -->
-<!-- Parent: Cattle Vaccination Service -->
-<!-- Parent: Technology -->
+<!-- Parent: Delivery Passport -->
+<!-- Parent: Technology View -->
 <!-- Parent: Quality Assurance -->
 
 <!-- Macro: :box:([^:]+):([^:]*):(.+):
@@ -190,7 +190,15 @@ TBD
 
 1. It is not considered feasible to make changes to the existing system Sam which is currently used to manage and review bTB testing as well as for wider surveillance and post-breakdown case-working activities​
 1. The strategic case-working system chosen by APHA is Salesforce
+1. Policy is unlikely to be aligned across the devolved nations - see table below for probable scenarios
 
+| Nation | Policy |
+|--------|--------|
+| England | Initial APHA-led and -funded rollout to specific herds (keepers can opt out) in parallel with and moving to a keeper-led and -funded model. |
+| Wales | No government funding; keepers must arrange and pay for their own vaccinations and vet |
+| Scotland | Officially TB-free; individual farmers may still vaccinate at their own cost |
+
+The obligation to record vaccinations is expected to exist in all nations.
 
 ---
 
@@ -533,10 +541,13 @@ Environments: dev, test, perf-test, ext-test, prod — each with its own Cognito
 
 ## 4.9 User Roles
 
-| Role Type    | Brief Description                                                              | Usage of the product                                                                                              |
-|--------------|--------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| Field Vet    | Veterinary surgeon who conducts TB skin tests on cattle                        | Views assigned workorders, looks up cattle at a holding, records day-1 and day-2 measurements, submits results   |
-| APHA Officer | APHA staff member who manages TB testing workorders and reviews test outcomes  | Reviews and manages TB test cases in Salesforce; does not use the cattle vaccination frontend directly             |
+| Role Type              | Brief Description                                                                                                     | Usage of the product                                                                                                                                       |
+|------------------------|-----------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Private Vet            | Veterinary surgeon who performs TB skin tests and vaccinations on behalf of the livestock keeper                      | Looks up cattle at a holding, records day-1 and day-2 skin measurements, submits results via the cattle vaccination frontend     |
+| VDP Vet                | Veterinary surgeon who performs TB skin testing on behalf of APHA                                                    | Views workorders and submits test results via VDP systems; does not directly use the cattle vaccination frontend                                            |
+| APHA Veterinary Officer | APHA staff member who administers vaccinations, performs tests, reviews completed tests and investigates breakdowns   | Reviews and manages TB test cases and vaccinations in Salesforce; will prepare for and record TB testing and vaccination site visits via the frontend (future) |
+| APHA Admin             | APHA staff member who manages TB aspects of TB testing                                                               | Reviews and manages TB testing and vaccination records via Salesforce case pages                                                                            |
+| APHA Epidemiologist    | APHA staff member supporting science and policy                                                                      | Queries TB data for science and reporting via cattleTbData and RADAR; no direct interaction with the cattle vaccination frontend                            |
 
 ---
 
