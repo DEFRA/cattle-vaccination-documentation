@@ -9,8 +9,8 @@ The Technology area is the entry point for the architecture of the Cattle Vaccin
 
 The Technology area is published to two surfaces in parallel so anyone can read it regardless of whether they have GitHub access. The content is identical between the two; the surfaces differ only in diagram fidelity and navigation:
 
-- **GitHub Pages** (link to be added) - for engineers and others with GitHub access. Interactive C4 diagrams with clickable navigation, zoom and pan.
-- **Confluence** (link to be added) - for the larger group of readers who don't typically have GitHub access: business analysts, product owners, user researchers, assurance, design authority, programme leadership, partner organisations. Static, lower-fidelity renders of the same diagrams; sits inside the team's existing service hierarchy.
+- **GitHub Pages** (https://defra.github.io/cattle-vaccination-documentation/) - for engineers and others with GitHub access. Interactive C4 diagrams with clickable navigation, zoom and pan.
+- **Confluence** (https://eaflood.atlassian.net/wiki/spaces/CVAC/pages/6287097924/Technology+View) - for the larger group of readers who don't typically have GitHub access: business analysts, product owners, user researchers, assurance, design authority, programme leadership, partner organisations. Static, lower-fidelity renders of the same diagrams; sits inside the team's existing service hierarchy.
 
 ## What's in Here
 
