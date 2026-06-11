@@ -1,6 +1,6 @@
 <!-- Space: CVAC -->
-<!-- Parent: Cattle Vaccination Service -->
-<!-- Parent: Technology -->
+<!-- Parent: Delivery Passport -->
+<!-- Parent: Technology View -->
 
 <!-- Macro: :box:([^:]+):([^:]*):(.+):
      Template: ac:box
@@ -32,10 +32,10 @@ timeline
 ## Discovery Governance Checklist
 
 - [x] Problem statement, scope and success outcomes agreed
-- [ ] Initial architecture principles, constraints and assumptions captured
-- [ ] Early architecture risks and dependencies identified
+- [x] Initial architecture principles, constraints and assumptions captured
+- [x] Early architecture risks and dependencies identified
 - [ ] High-impact decisions queued for ADRs
-- [ ] Governance and delivery owners confirmed
+- [x] Governance and delivery owners confirmed
 
 ## Alpha Readiness Checklist
 
@@ -46,7 +46,7 @@ timeline
 
 ## Private/Public Beta Readiness Checklist
 
-- [x] Service-level NFRs agreed and traceable to architecture views
+- [ ] Service-level NFRs agreed and traceable to architecture views
 - [ ] Dashboards and alerts reviewed with clear incident response ownership
 - [ ] Runbooks available for operational support and common failure modes
 - [ ] Critical dependencies mapped with fallback and escalation approach

@@ -1,6 +1,6 @@
 <!-- Space: CVAC -->
-<!-- Parent: Cattle Vaccination Service -->
-<!-- Parent: Technology -->
+<!-- Parent: Delivery Passport -->
+<!-- Parent: Technology View -->
 <!-- Parent: Integration Architecture -->
 <!-- Parent: Integration Interfaces -->
 
@@ -17,7 +17,7 @@
 
 ## Purpose
 
-When a vet selects a holding to test, the backend calls the Livestock API to retrieve the list of live cattle at that location. Dead animals are excluded from the response.
+Any time an up-to-date list of cattle on a holding is required this will be used to obtain that data.
 
 ## Endpoints Used
 
@@ -33,6 +33,8 @@ An HTTP proxy agent (`ProxyAgent` via `undici`) is used if `HTTP_PROXY` is confi
 
 ## Configuration
 
+NOTE: This is correct for the alpha prototype
+
 | Variable | Description |
 |---|---|
 | `LIVESTOCK_API_BASE_URL` | Base URL for the W3SI Livestock API |
@@ -42,7 +44,7 @@ An HTTP proxy agent (`ProxyAgent` via `undici`) is used if `HTTP_PROXY` is confi
 
 Before production release, this integration path should have:
 
-- [x] Livestock API failure alerts configured
-- [x] correlation IDs in requests and logs
+- [ ] Livestock API failure alerts configured
+- [ ] correlation IDs in requests and logs
 - [ ] token rotation process documented
 - [ ] Livestock API DR test scheduled

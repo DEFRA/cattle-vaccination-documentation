@@ -14,16 +14,16 @@ import LikeC4View from "../../components/LikeC4View.astro";
   <LinkButton href={`${import.meta.env.BASE_URL}technology/`} icon="right-arrow">
     Technology
   </LinkButton>
-  <LinkButton href="https://github.com/DEFRA/cattle-vaccination-docs" variant="secondary" icon="external">
+  <LinkButton href="https://github.com/DEFRA/cattle-vaccination-documentation" variant="secondary" icon="external">
     GitHub
   </LinkButton>
 </div>
 
 ## About the Solution
 
-Cattle Vaccination is a worked reference architecture that teams can adapt to their own service domain. It demonstrates a common **Applicant → Submission → Regulator** flow where users submit information, an internal team assesses and decides, and notifications keep participants informed as work moves through its lifecycle.
+Cattle Vaccination is a proposed solution to facilitate the tracking of bTB vaccinates and the assignment of appropriate bTB tests, in support of the goal of eradication of Bovine Tuberculosis.
 
-The model is organised into three delivery contexts: **Submission** (the external journey and API), **Regulation** (internal case handling and decisioning), and **Notifications** (event-driven communications). A planned **Post-decision self-service** context is included to show how the architecture can evolve beyond an initial release.
+The model is organised into three delivery contexts: **Vaccination** and **Testing** follow similar patterns and share dependencies on other domains such as **Single View of Customer**.
 
 ## One Model, Every View
 

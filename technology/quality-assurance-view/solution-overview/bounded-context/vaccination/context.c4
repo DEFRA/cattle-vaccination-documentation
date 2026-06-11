@@ -1,0 +1,10 @@
+model {
+    context vaccinationBoundedContext {
+        title "Vaccination Bounded Context"
+        description "Animal vaccinations in general"
+
+        context bTbVaccinationBoundedContext {
+            description "The cattle vaccination service — enables field vets to view TB testing workorders and submit TB skin test results."
+        }
+    }
+}

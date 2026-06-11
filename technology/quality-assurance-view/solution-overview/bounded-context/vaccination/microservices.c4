@@ -1,0 +1,55 @@
+model {
+    extend animalTestingBoundedContext.bTbTestingBoundedContext{}
+    
+    extend vaccinationBoundedContext.bTbVaccinationBoundedContext {
+
+        webFrontend tbVaxFrontend {
+            #future
+            title 'bTB Vaccination Vetinary Portal'
+            description "Web interface for vets to prepare for and record vaccinations"
+            technology "Node.js"
+            style {
+                icon tech:nodejs
+            }
+
+            tbVaxFrontend .futureRelationship bTBVaxBackend 'prepare and record vaccinations'
+        }
+
+
+        backend bTBVaxBackend {
+            #future
+            title "bTB Vaccination Internal API"
+            description "Stateless BFF proxying requests to APHA, Livestock and Salesforce APIs"
+            technology "Node.js / Hapi"
+            metadata {
+                // github "https://github.com/DEFRA/cattle-vaccination-backend"
+            }
+
+            component casesRoute {
+                title "Cases Route"
+                description "GET|POST /cases, GET /cases/{id} — creates and retrieves TB test cases in Salesforce"
+                technology "Node.js / Hapi"
+                this .futureRelationship bTbVaccinationBoundedContext.bTbVaxCase "manages cases" { technology 'HTTPS' }
+            }
+
+            this .futureRelationship aphaBoundedContext.awsCognito "obtains OAuth2 bearer token for APHA auth" { technology 'HTTPS' }
+        }
+
+        sfPage bTbVaxCasePage {
+            #future
+            title 'Case Page - bTB Vaccination'
+            this .futureRelationship bTbVaxCase 'manage cases'
+        }
+
+        sfObject bTbVaxCase {
+            #future
+            title 'Case - bTB Vaccination'
+            bTbVaxCase .futureRelationship svocBoundedContext.CPH 'Relates to'
+            bTbVaxCase .futureRelationship livestockBoundedContext.livestockApi 'GET cattleOnHolding'
+            bTbVaxCase .futureRelationship aphaBoundedContext.cattleTbData 'Provide data'
+            bTbVaxCase .futureRelationship aphaBoundedContext.RADAR 'Provide data'
+        }
+    }
+
+
+}

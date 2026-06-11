@@ -1,0 +1,6 @@
+model {
+    context vdpBoundedContext {
+        title "Vetinary Delivery Partner Bounded Context"
+        description "Vetinary Delivery Partners manage large-scale TB testing on behalf of APHA"
+    }
+}

@@ -1,6 +1,6 @@
 <!-- Space: CVAC -->
-<!-- Parent: Cattle Vaccination Service -->
-<!-- Parent: Technology -->
+<!-- Parent: Delivery Passport -->
+<!-- Parent: Technology View -->
 
 <!-- Macro: :status:([^:]+):([^:]*):(.+):
      Template: ac:status
@@ -12,10 +12,10 @@
 
 | System                                                               | Purpose                                          | Status                          | Notes                                       |
 |----------------------------------------------------------------------|--------------------------------------------------|---------------------------------|---------------------------------------------|
-| [APHA Integration Bridge](./interfaces/apha-integration-bridge-api.md) | Holdings lookup and workorders retrieval      | :status:Integrated:Green:false: | Bearer token via AWS Cognito                |
-| [AWS Cognito](./interfaces/aws-cognito.md)                          | OAuth2 token issuer for APHA auth                | :status:Integrated:Green:false: | Client credentials; token caching           |
-| [Livestock API](./interfaces/future-data-provider.md)               | Cattle-on-holding data                           | :status:Integrated:Green:false: | W3SI Defra gateway; bearer token            |
-| [Salesforce](./interfaces/salesforce.md)                            | Case management — cases, test parts, results     | :status:Integrated:Green:false: | OAuth2 client credentials; composite API    |
+| [APHA Integration Bridge](./interfaces/apha-integration-bridge.md) | Holdings lookup and workorders retrieval      | :status:Confirmed:Blue:false: | Bearer token via AWS Cognito                |
+| [AWS Cognito](./interfaces/aws-cognito.md)                          | OAuth2 token issuer for APHA auth                | :status:Confirmed:Blue:false: | Client credentials; token caching           |
+| [Livestock API](./interfaces/future-data-provider.md)               | Cattle-on-holding data                           | :status:Confirmed:Blue:false: | W3SI Defra gateway; bearer token            |
+| [Salesforce](./interfaces/salesforce.md)                            | Case management — cases, test parts, results     | :status:Confirmed:Blue:false: | OAuth2 client credentials; composite API    |
 
 ## Integration Status Descriptions
 

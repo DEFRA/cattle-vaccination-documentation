@@ -1,0 +1,55 @@
+model {
+    extend animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext{
+        webFrontend tbSkinTestFrontend {
+            #future
+            title 'bTB Skin Test Vetinary Portal'
+            description "Web interface for vets to prepare for and record skin testing"
+            technology "Node.js"
+            style {
+                icon tech:nodejs
+            }
+            
+
+            this .futureRelationship tbSkinTestBackend 'Prepare and record skin testing' {technology 'HTTPS'}
+        }
+
+        backend tbSkinTestExternalApi {
+            #future
+            title 'bTB Skin Testing External API'
+            description 'API for externals such as VDPs'
+            technology "Node.js / Hapi"
+        }
+
+        backend tbSkinTestBackend {
+            #future
+            title 'bTB Skin Testing Internal API'
+            description "Stateless BFF proxying requests to Salesforce"
+            technology "Node.js / Hapi"
+
+            component casesRoute {
+                title "Cases Route"
+                description "GET|POST /cases, GET /cases/{id} — creates and retrieves TB test cases in Salesforce"
+                technology "Node.js / Hapi"
+                this .futureRelationship bTbSkinTestingBoundedContext.bTbSkinTestCase "manages cases" { technology 'HTTPS' }
+            }
+
+            this .futureRelationship aphaBoundedContext.awsCognito "obtains OAuth2 bearer token for APHA auth" { technology 'HTTPS' }
+        }
+
+        sfPage bTbSkinTestCasePage {
+            #future
+            title 'Case Page - bTB Skin Testing'
+
+            this .futureRelationship bTbSkinTestCase 'Manage case'
+        }
+
+        sfObject bTbSkinTestCase {
+            #future
+            title 'Case - bTB Skin Testing'
+            bTbSkinTestCase .futureRelationship svocBoundedContext.CPH 'Relates to'
+            bTbSkinTestCase .futureRelationship livestockBoundedContext.livestockApi 'GET cattleOnHolding'
+            bTbSkinTestCase .futureRelationship aphaBoundedContext.cattleTbData 'Provide data'
+            bTbSkinTestCase .futureRelationship aphaBoundedContext.RADAR 'Provide data'
+        }
+    }
+}

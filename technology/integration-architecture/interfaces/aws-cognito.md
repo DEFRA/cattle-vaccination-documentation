@@ -1,6 +1,6 @@
 <!-- Space: CVAC -->
-<!-- Parent: Cattle Vaccination Service -->
-<!-- Parent: Technology -->
+<!-- Parent: Delivery Passport -->
+<!-- Parent: Technology View -->
 <!-- Parent: Integration Architecture -->
 <!-- Parent: Integration Interfaces -->
 
@@ -14,6 +14,8 @@
 # AWS Cognito
 
 **AWS Cognito** provides OAuth2 token issuance for authenticating the cattle vaccination backend to the **APHA Integration Bridge**.
+
+NOTE: At the time of writing this is correct for the alpha prototype only.
 
 ## Purpose
 

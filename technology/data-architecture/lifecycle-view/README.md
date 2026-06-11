@@ -1,12 +1,14 @@
 <!-- Space: CVAC -->
-<!-- Parent: Cattle Vaccination Service -->
-<!-- Parent: Technology -->
+<!-- Parent: Delivery Passport -->
+<!-- Parent: Technology View -->
 <!-- Parent: Data Architecture -->
 
 # Data Lifecycle View
 
 A _lifecycle view_ is the data counterpart of [Software Journey View](../../current-state-views/journey-view/README.md), showing how data is created, transformed, shared, archived and deleted.
 <!-- Include: ac:toc -->
+
+**BOILERPLATE BELOW - NEEDS UPDATING**
 
 ## Submission Data Lifecycle
 

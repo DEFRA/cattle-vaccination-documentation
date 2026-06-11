@@ -1,0 +1,13 @@
+views {
+    view apha_bounded_context_context of aphaBoundedContext {
+        title "CVAC Integrations / APHA / Context"
+        description "Shows the APHA bounded context and its relationships with other systems"
+        include * <-> aphaBoundedContext
+    }
+
+    view apha_bounded_context_container of aphaBoundedContext {
+        title "CVAC Integrations / APHA / Container"
+        description "Shows the APHA Integration Bridge, Cognito auth and underlying APHA API"
+        include *
+    }
+}

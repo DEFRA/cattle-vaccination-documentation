@@ -1,0 +1,6 @@
+model {
+    context aphaBoundedContext {
+        title "APHA Bounded Context"
+        description "APHA integration systems — the Integration Bridge, AWS Cognito auth, and the underlying APHA holdings and workorders APIs"
+    }
+}

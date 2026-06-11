@@ -1,0 +1,4 @@
+model {
+    // cattle-vaccination-backend is stateless — it owns no database, queue or topic.
+    // All persistent state lives in Salesforce (cases, test parts, results).
+}

@@ -1,0 +1,43 @@
+views {
+    dynamic view vaccination_case_creation {
+        // Used in solution-overview.md; changes to the view name affect the published document.
+        title "CVAC Bounded Contexts / Vaccination / Bovine TB Vaccination / Workflow / Case Creation"
+        description "Flow when a vet creates a new TB skin test case"
+
+        include vaccinationBoundedContext.bTbVaxCasePage
+        include vaccinationBoundedContext.bTbVaxCase
+
+        aphaAdmin .uses vaccinationBoundedContext.bTbVaxCasePage "initiates case creation"
+        vaccinationBoundedContext.bTbVaxCasePage .uses vaccinationBoundedContext.bTbVaxCase "Create"
+    }
+
+    dynamic view vaccination_preparation {
+        title 'CVAC Bounded Contexts / Vaccination / Bovine TB Vaccination / Workflow / Test Preparation'
+        description 'Flow when a vet prepares for a vaccination visit'
+
+        include aphaVet
+        include vaccinationBoundedContext.tbVaxFrontend
+        include vaccinationBoundedContext.bTBVaxBackend
+        include vaccinationBoundedContext.bTbVaxCase
+
+        aphaVet .uses vaccinationBoundedContext.tbVaxFrontend "prepare for visit"
+        vaccinationBoundedContext.tbVaxFrontend .uses vaccinationBoundedContext.bTBVaxBackend "POST /cases/{id}/prepare"
+        vaccinationBoundedContext.bTBVaxBackend .uses vaccinationBoundedContext.bTbVaxCase "Prepare"
+        vaccinationBoundedContext.bTbVaxCase .uses livestockBoundedContext.livestockApi "GET cattleOnHolding"
+    }
+
+    dynamic view vaccination_submission {
+        // Used in solution-overview.md; changes to the view name affect the published document.
+        title "CVAC Bounded Contexts / Vaccination / Bovine TB Vaccination / Workflow / Test Result Submission"
+        description "Flow when a vet submits TB vaccination records for a case"
+
+        include aphaVet
+        include vaccinationBoundedContext.tbVaxFrontend
+        include vaccinationBoundedContext.bTBVaxBackend
+        include vaccinationBoundedContext.bTbVaxCase
+
+        aphaVet .uses vaccinationBoundedContext.tbVaxFrontend "submits test measurements"
+        vaccinationBoundedContext.tbVaxFrontend .uses vaccinationBoundedContext.bTBVaxBackend "POST /cases/{id}/details"
+        vaccinationBoundedContext.bTBVaxBackend .uses vaccinationBoundedContext.bTbVaxCase "create detailed records"
+    }
+}
