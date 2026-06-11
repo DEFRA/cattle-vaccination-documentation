@@ -82,7 +82,7 @@ export default defineConfig({
       sidebar: [
         {
           label: "Technology",
-          link: `${basePath}technology/`,
+          link: "/technology/",
         },
         {
           label: "Current State Views",
@@ -123,11 +123,11 @@ export default defineConfig({
           items: [
             {
               label: "Integration Architecture",
-              link: `${basePath}technology/integration-architecture/`,
+              link: "/technology/integration-architecture/",
             },
             {
               label: "Integration Patterns",
-              link: `${basePath}technology/integration-architecture/patterns/`,
+              link: "/technology/integration-architecture/patterns/",
             },
             {
               label: "Integration Interfaces",
@@ -158,7 +158,7 @@ export default defineConfig({
         },
         {
           label: "Architecture Diagrams",
-          link: `${basePath}likec4/`,
+          link: "/likec4/",
           attrs: { target: "_blank", rel: "noopener" },
         },
       ],

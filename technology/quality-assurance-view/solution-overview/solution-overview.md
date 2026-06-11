@@ -236,13 +236,13 @@ objectives listed previously along with the prototypes that have been tested dur
 
 The following assurance deliverables will be created for the solution:
 
-- TBC
-<!-- - NCSC principles
-- OWASP ASVS
-- ITHC
-- Accreditation Packs – initial and pre-go-live
-- Protective Monitoring
-- GDPR & Data Privacy -->
+- TBC, but might include some or all of:
+  - NCSC principles
+  - OWASP ASVS
+  - ITHC
+  - Accreditation Packs – initial and pre-go-live
+  - Protective Monitoring
+  - GDPR & Data Privacy
 
 ---
 
