@@ -36,7 +36,7 @@ This journey shows how a vet submits TB skin test measurements and results for a
 
 This journey shows the end-to-end flow for creating a new TB vaccination case, from initiation through the backend BFF to Salesforce.
 
-![Case Creation Workflow](../structure-view/images/bounded-context/vaccination/vaccinationcase_creation.png)
+![Case Creation Workflow](../structure-view/images/bounded-context/vaccination/vaccination_case_creation.png)
 
 ### Test Visit Preparation Journey
 
