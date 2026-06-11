@@ -8,8 +8,8 @@ This repository publishes its contents to:
 
 | Destination  | URL                        | Trigger                                                                                                   |
 |--------------|----------------------------|-----------------------------------------------------------------------------------------------------------|
-| GitHub Pages | _TODO provide a link here_ | Automatic on push to `main` via [`.github/workflows/ci.yaml`](.github/workflows/ci.yaml)                    |
-| Confluence   | _TODO provide a link here_ | Manual via `npm run confluence:publish` (see [Confluence Publishing Scope](#confluence-publishing-scope)) |
+| GitHub Pages | https://defra.github.io/cattle-vaccination-documentation/ | Automatic on push to `main` via [`.github/workflows/ci.yaml`](.github/workflows/ci.yaml)                    |
+| Confluence   | https://eaflood.atlassian.net/wiki/spaces/CVAC/pages/6287097924/Technology+View | Manual via `npm run confluence:publish` (see [Confluence Publishing Scope](#confluence-publishing-scope)) |
 
 ## Features
 
