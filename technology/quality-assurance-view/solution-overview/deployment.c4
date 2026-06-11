@@ -95,6 +95,6 @@ deployment {
     }
     limsProd = node 'LIMS Production' {
         description 'production environment for LIMS'
-        instanceOf aphaBoundedContext.LIMS
+        instanceOf aphaBoundedContext.LIMS.SampleManager
     }
 }

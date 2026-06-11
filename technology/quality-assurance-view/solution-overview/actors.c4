@@ -13,7 +13,7 @@ model {
         vdpVet .uses aphaBoundedContext.sam 'Prepare and record TB testing'  { technology 'HTTPS' }
     }
     internalPerson aphaVet {
-        title "APHA Vet"
+        title "APHA Vetinary Officer"
         description "APHA staff member who administers vaccinations, performs tests, reviews completed tests and investigates breakdowns"
         aphaVet .futureRelationship vaccinationBoundedContext.bTbVaxCasePage "reviews and manages TB vaccinations via" { technology 'HTTPS' }
         aphaVet .futureRelationship vaccinationBoundedContext.tbVaxFrontend 'prepare for and record TB vaccination site visits' { technology 'HTTPS' }
