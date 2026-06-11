@@ -152,8 +152,7 @@ Outcomes, enterprise design principles, measurable objectives and constraints fo
 1. Assign SICCT testing to non-vaccinates​
     1. The existing SICCT skin test for bTB will remain in use for unvaccinated herds​
     1. The existing SICCT skin test should not be applied to vaccinated cattle since it will result in false positives​
-
-Record and review vaccinations and test results​
+1. Record and review vaccinations and test results​
 
 ---
 
@@ -178,11 +177,15 @@ These are taken from the [Strategic Architecture Principles](https://defra.share
 
 ### 3.2.3 Objectives
 
-TBD
+Objectives for the initial phase of private beta
 
-- **Objective 1 name** - Objective 1 description.
-- **Objective 2 name** - Objective 2 description.
-- **Objective 3 name** - Objective 3 description.
+1. **Cattle vaccination status**
+    1. Establish vaccination status registration & checker
+1. **bTB skin testing infrastucture outside of Sam**
+    1. Establish bTB test viewing function for admins (Salesforce)​
+    1. Establish vet testing service; SICCT only​
+    1. Establish vet testing service (API interface); SICCT only​
+    1. Establish bTB test scheduling function for admins; SICCT only​
 
 <div class="guidance">📌 <strong>Action:</strong> Add three measurable objectives that trace to the goals above.</div>
 
@@ -233,7 +236,7 @@ objectives listed previously along with the prototypes that have been tested dur
 
 The following assurance deliverables will be created for the solution:
 
-TBC
+- TBC
 <!-- - NCSC principles
 - OWASP ASVS
 - ITHC
