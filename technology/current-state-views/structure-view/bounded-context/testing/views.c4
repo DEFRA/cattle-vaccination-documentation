@@ -17,6 +17,13 @@ views {
         include * <-> bTbSkinTestingBoundedContext
     }
 
+    view  bTb_skin_testing_bounded_context_container of animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext {
+        title "CVAC Bounded Contexts / Animal Testing / Bovine TB Testing / Bovine TB Skin Testing / Container Diagram"
+        description "Shows the containers within the Cattle Vaccination bounded context"
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.*
+    }
+
+
 
     deployment view deployment_production_tb-testing {
         title "CVAC Bounded Contexts / Animal Testing / Bovine TB Testing / Bovine TB Skin Testing / Deployment Diagram"
