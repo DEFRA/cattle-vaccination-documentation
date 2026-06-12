@@ -1,0 +1,12 @@
+model {
+    extend defraBoundedContext {
+        externalSystem defraCustomerIdentity {
+            #future
+            title "Defra Customer Identity"
+            description "Identity system and source of customer identity data, enabling external users to authenticate via Government Gateway or GOV.UK One Login"
+
+            defraCustomerIdentity .futureRelationship governmentAuthBoundedContext.governmentGateway 'Delegates authentication to' { technology 'OIDC' }
+            defraCustomerIdentity .futureRelationship governmentAuthBoundedContext.govUkOneLogin 'Delegates authentication to' { technology 'OIDC' }
+        }
+    }
+}

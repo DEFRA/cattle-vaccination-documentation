@@ -478,6 +478,8 @@ The cattle vaccination backend integrates with three external systems:
 
 **Salesforce** — CRM for case management, authenticated via OAuth2 client credentials. Uses composite and composite graph requests for efficient batch operations. Stores cases, test parts and per-animal results.
 
+**Defra Customer Identity** — Authentication of external users.
+
 For CDP network and platform context, see [CDP Architectural Overview](https://portal.cdp-int.defra.cloud/documentation/architecture/architectural-overview.md).
 
 </div>

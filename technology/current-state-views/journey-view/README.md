@@ -16,17 +16,23 @@ This journey shows the end-to-end flow for creating a new TB skin test case, ini
 
 ![Case Creation Workflow](../structure-view/images/bounded-context/testing/skin_test_case_creation.png)
 
-### Test Visit Preparation Journey
+### Test Visit Preparation Journey (APHA)
 
-This journey shows how a vet prepares for a farm visit for bTB skin testing.
+This journey shows how an APHA vet prepares for a farm visit for bTB skin testing.
 
-![Test Visit Preparation Workflow](../structure-view/images/bounded-context/testing/skin_test_preparation.png)
+![Test Visit Preparation Workflow](../structure-view/images/bounded-context/testing/apha_skin_test_preparation.png)
 
-### Test Result Submission Journey
+### Test Result Submission Journey (APHA)
 
-This journey shows how a vet submits TB skin test measurements and results for a case, including the integration points used to store data in Salesforce.
+This journey shows how an APHA vet submits TB skin test measurements and results for a case, including the integration points used to store data in Salesforce.
 
-![Test Result Submission Workflow](../structure-view/images/bounded-context/testing/skin_test_submission.png)
+![Test Result Submission Workflow (APHA)](../structure-view/images/bounded-context/testing/apha_skin_test_submission.png)
+
+### Test Result Submission Journey (Private)
+
+This journey shows how a private vet submits TB skin test measurements and results for a case, including the integration points used to store data in Salesforce.
+
+![Test Result Submission Workflow (Private)](../structure-view/images/bounded-context/testing/private_skin_test_submission.png)
 
 
 

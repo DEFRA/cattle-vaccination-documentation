@@ -35,6 +35,7 @@ views {
             defra.prod.eu.publicVpc.alb,
             defra.prod.eu.publicVpc.publicFargate,
             defra.prod.eu.publicVpc.tbSkinTestFrontend,
+            defra.prod.eu.publicVpc.tbSkinTestExternalApi,
             defra.prod.eu.publicVpc.apiGateway,
             defra.prod.eu.protectedVpc.protectedFargate,
             defra.prod.eu.protectedVpc.tbSkinTestBackend

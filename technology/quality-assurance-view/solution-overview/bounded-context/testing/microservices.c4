@@ -18,6 +18,8 @@ model {
             title 'bTB Skin Testing External API'
             description 'API for externals such as VDPs'
             technology "Node.js / Hapi"
+
+            this .futureRelationship tbSkinTestBackend 'Prepare and record skin testing' {technology 'HTTPS'}
         }
 
         backend tbSkinTestBackend {

@@ -4,8 +4,10 @@ model {
         description "Veterinary surgeon who performs TB skin tests and vaccinations on behalf of the livestock keeper"
         privateVet .futureRelationship animalTestingBoundedContext.bTbSkinTestingBoundedContext.tbSkinTestFrontend "submit test results via" { technology 'HTTPS' }
         privateVet .futureRelationship vaccinationBoundedContext.tbVaxFrontend "submit vaccination records via" { technology 'HTTPS' }
+        privateVet .futureRelationship defraBoundedContext.defraCustomerIdentity 'Authenticate to access tbSkinTestFrontend and tbVaxFrontend' { technology 'OIDC' }
         privateVet .uses aphaBoundedContext.iSam 'Prepare and record TB testing'  { technology 'HTTPS' }
         privateVet .uses governmentAuthBoundedContext.governmentGateway 'Authenticate to access iSam' { technology 'HTTPS' }
+        privateVet .uses defraBoundedContext.defraCustomerIdentity 'Authenticate to access bTB portals' { technology 'HTTPS' }
     }
     externalPerson vdpVet {
         title "VDP Vet"

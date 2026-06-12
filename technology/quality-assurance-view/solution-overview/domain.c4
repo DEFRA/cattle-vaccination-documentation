@@ -67,6 +67,8 @@ views {
             aphaBoundedContext,
             livestockBoundedContext,
             vdpBoundedContext,
+            defraBoundedContext,
+            defraBoundedContext.defraCustomerIdentity,
             privateVet,
             vdpVet,
             aphaVet,
@@ -89,6 +91,7 @@ views {
             include aphaBoundedContext.*
             include livestockBoundedContext.*
             include vdpBoundedContext.*
+            include defraBoundedContext.*
             include privateVet.*
             include vdpVet.*
             include aphaVet.*

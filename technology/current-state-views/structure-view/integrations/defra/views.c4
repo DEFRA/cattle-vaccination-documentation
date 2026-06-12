@@ -1,0 +1,13 @@
+views {
+    view defra_bounded_context_context of defraBoundedContext {
+        title "CVAC Integrations / Defra / Context"
+        description "Shows the Defra bounded context and its relationships with other systems"
+        include * <-> defraBoundedContext
+    }
+
+    view defra_bounded_context_container of defraBoundedContext {
+        title "CVAC Integrations / Defra / Container"
+        description "Shows the Defra Customer Identity service"
+        include *
+    }
+}
