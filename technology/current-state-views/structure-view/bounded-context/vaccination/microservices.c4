@@ -3,6 +3,18 @@ model {
     
     extend vaccinationBoundedContext.bTbVaccinationBoundedContext {
 
+        webFrontend bTbVaxStatusChecker {
+            #future
+            title "bTB Vaccination Status Checker"
+            description "Public web interface accepting an ear-tag and returning the last vaccination date or 'unvaccinated'. No authentication required."
+            technology "Node.js"
+            style {
+                icon tech:nodejs
+            }
+
+            this .futureRelationship bTBVaxBackend "Query vaccination status by ear-tag" { technology 'HTTPS' }
+        }
+
         webFrontend tbVaxFrontend {
             #future
             title 'bTB Vaccination Vetinary Portal'

@@ -430,6 +430,7 @@ The diagram shows how data flows when a vet submits TB skin test measurements.
 |---------------------------------|-----------------------------------------------------------------------------------------------------------------------|
 | Cattle Vaccination Frontend     | Web interface for field vets; drives the workorder view, cattle lookup and test result submission journey             |
 | Cattle Vaccination Backend      | Stateless BFF; proxies and orchestrates calls to APHA Integration Bridge, Livestock API and Salesforce               |
+| bTB Vaccination Status Checker  | _(Future)_ Public-facing web interface; accepts an ear-tag and returns the last vaccination date or 'unvaccinated'. No authentication required. Deployed on CDP; calls the Cattle Vaccination Backend. |
 | APHA Integration Bridge         | CDP-hosted proxy to APHA APIs; provides holdings lookup and workorders retrieval                                       |
 | AWS Cognito                     | OAuth2 token issuer for APHA Integration Bridge authentication; client credentials flow                               |
 | Livestock API                   | W3SI Defra livestock gateway; returns live cattle at a given CPH holding                                              |
@@ -546,11 +547,12 @@ Environments: dev, test, perf-test, ext-test, prod — each with its own Cognito
 
 | Role Type              | Brief Description                                                                                                     | Usage of the product                                                                                                                                       |
 |------------------------|-----------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Private Vet            | Veterinary surgeon who performs TB skin tests and vaccinations on behalf of the livestock keeper                      | Looks up cattle at a holding, records day-1 and day-2 skin measurements, submits results via the cattle vaccination frontend     |
-| VDP Vet                | Veterinary surgeon who performs TB skin testing on behalf of APHA                                                    | Views workorders and submits test results via VDP systems; does not directly use the cattle vaccination frontend                                            |
+| Private Vet            | Veterinary surgeon who performs TB skin tests and vaccinations on behalf of the livestock keeper                      | Currently prepares and records TB testing via iSam (authenticated via Government Gateway). Will look up cattle, record skin measurements and submit results via the cattle vaccination frontend (future). |
+| VDP Vet                | Veterinary surgeon who performs TB skin testing on behalf of APHA                                                    | Currently prepares and records TB testing via iSam (authenticated via Government Gateway). Views workorders and submits test results via VDP systems.       |
 | APHA Veterinary Officer | APHA staff member who administers vaccinations, performs tests, reviews completed tests and investigates breakdowns   | Reviews and manages TB test cases and vaccinations in Salesforce; will prepare for and record TB testing and vaccination site visits via the frontend (future) |
 | APHA Admin             | APHA staff member who manages TB aspects of TB testing                                                               | Reviews and manages TB testing and vaccination records via Salesforce case pages                                                                            |
 | APHA Epidemiologist    | APHA staff member supporting science and policy                                                                      | Queries TB data for science and reporting via cattleTbData and RADAR; no direct interaction with the cattle vaccination frontend                            |
+| Public                 | Member of the public or industry participant checking cattle vaccination status                                       | _(Future)_ Checks the last vaccination date for a tagged animal via the bTB Vaccination Status Checker. No authentication required.                        |
 
 ---
 

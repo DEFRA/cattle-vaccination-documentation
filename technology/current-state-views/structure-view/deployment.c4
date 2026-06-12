@@ -52,6 +52,9 @@ deployment {
                     publicFargate = node 'ECS Fargate' {
                         icon aws:fargate
                         description 'Public zone Fargate cluster hosting the cattle vaccination frontend'
+                        instanceOf vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxStatusChecker {
+                            style { multiple true }
+                        }
                         instanceOf vaccinationBoundedContext.bTbVaccinationBoundedContext.tbVaxFrontend {
                             style { multiple true }
                         }

@@ -30,6 +30,11 @@ model {
         aphaAdmin .futureRelationship animalTestingBoundedContext.bTbSkinTestCasePage "reviews and manages TB testing via" { technology 'HTTPS' }
         aphaAdmin .uses aphaBoundedContext.sam 'Arrange and follow up from TB testing'  { technology 'HTTPS' }
     }
+    externalPerson public {
+        title "Public"
+        description "Member of the public checking cattle vaccination status"
+        public .futureRelationship vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxStatusChecker "Check vaccination status via" { technology 'HTTPS' }
+    }
     internalPerson aphaEpidemiologist {
         title 'APHA Epidemiologist'
         description 'APHA staff member supporting science and policy'

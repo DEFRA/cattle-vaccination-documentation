@@ -17,7 +17,7 @@ views {
     view cattle_vaccination_bounded_context_container of vaccinationBoundedContext {
         title "CVAC Bounded Contexts / Vaccination / Bovine TB Vaccination / Container Diagram"
         description "Shows the containers within the Cattle Vaccination bounded context"
-        include *
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext.*
     }
 
     view cattle_vaccination_backend_component of vaccinationBoundedContext.bTBVaxBackend {

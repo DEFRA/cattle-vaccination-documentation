@@ -70,7 +70,8 @@ views {
             privateVet,
             vdpVet,
             aphaVet,
-            aphaAdmin
+            aphaAdmin,
+            public
 
         exclude aphaBoundedContext.iSam
     }
@@ -92,6 +93,7 @@ views {
             include vdpVet.*
             include aphaVet.*
             include aphaAdmin.*
+            include public.*
 
             exclude aphaBoundedContext.sam
             exclude aphaBoundedContext.LIMS
