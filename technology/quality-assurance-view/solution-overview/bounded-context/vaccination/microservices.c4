@@ -1,5 +1,13 @@
 model {
-    extend animalTestingBoundedContext.bTbTestingBoundedContext{}
+    extend vaccinationBoundedContext{
+        sfObject VaccinationEvent {
+            #future
+            title 'Vaccination event'
+            description 'Record of a vaccination event, at the CPH-level'
+
+            this .futureRelationship svocBoundedContext.CPH 'Event location'
+        }
+    }
     
     extend vaccinationBoundedContext.bTbVaccinationBoundedContext {
 
@@ -56,10 +64,11 @@ model {
         sfObject bTbVaxCase {
             #future
             title 'Case - bTB Vaccination'
-            bTbVaxCase .futureRelationship svocBoundedContext.CPH 'Relates to'
-            bTbVaxCase .futureRelationship livestockBoundedContext.livestockApi 'GET cattleOnHolding'
-            bTbVaxCase .futureRelationship aphaBoundedContext.cattleTbData 'Provide data'
-            bTbVaxCase .futureRelationship aphaBoundedContext.RADAR 'Provide data'
+            this .futureRelationship svocBoundedContext.CPH 'Relates to'
+            this .futureRelationship livestockBoundedContext.livestockApi 'GET cattleOnHolding'
+            this .futureRelationship aphaBoundedContext.cattleTbData 'Provide data'
+            this .futureRelationship aphaBoundedContext.RADAR 'Provide data'
+            this .futureRelationship vaccinationBoundedContext.VaccinationEvent 'Record of vaccination'
         }
     }
 

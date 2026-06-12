@@ -10,5 +10,6 @@ views {
         description "Shows the Single View of Customer"
         include *
         include aphaBoundedContext.aphaIntegrationBridge.syncCph
+        include aphaBoundedContext.aphaIntegrationBridge.syncTest
     }
 }

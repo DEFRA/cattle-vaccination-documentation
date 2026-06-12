@@ -9,21 +9,15 @@ views {
 
         include aphaVet
         include aphaAdmin
-        include aphaEpidemiologist
         include aphaBoundedContext
         include aphaBoundedContext.aphaIntegrationBridge
         include aphaBoundedContext.sam
-        include aphaBoundedContext.cattleTbData
-        include aphaBoundedContext.RADAR
         include svocBoundedContext
         include svocBoundedContext.CPH
-        include livestockBoundedContext
-        include livestockBoundedContext.livestockApi
         include vaccinationBoundedContext
         include vaccinationBoundedContext.bTbVaccinationBoundedContext
         include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCasePage
         include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCase
-        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTBVaxBackend
     }
 
     deployment view cvac_evolution_1_vax_minimal_deployment {
@@ -34,6 +28,8 @@ views {
         include aphaSalesforce.gb.salesforce.cattleVaxApp
         include aphaSalesforce.gb.salesforce.bTbVaxCasePage
         include aphaSalesforce.gb.salesforce.bTbVaxCase
+        include aphaSalesforce.CPH
+        include defra.prod.eu.protectedFargate.aphaIntegrationBridge
         include samProd
         include samProd.sam
     }
@@ -50,8 +46,6 @@ views {
         include aphaAdmin
         include aphaEpidemiologist
         include aphaBoundedContext
-        include aphaBoundedContext.aphaIntegrationBridge
-        include aphaBoundedContext.sam
         include aphaBoundedContext.cattleTbData
         include aphaBoundedContext.RADAR
         include svocBoundedContext
@@ -82,11 +76,13 @@ views {
         include defra.prod.eu.publicVpc.apiGateway
         include defra.prod.eu.protectedVpc.protectedFargate
         include defra.prod.eu.protectedVpc.bTBVaxBackend
+        include defra.prod.eu.protectedFargate.aphaIntegrationBridge
 
         include aphaSalesforce, aphaSalesforce.gb, aphaSalesforce.gb.salesforce
         include aphaSalesforce.gb.salesforce.cattleVaxApp
         include aphaSalesforce.gb.salesforce.bTbVaxCasePage
         include aphaSalesforce.gb.salesforce.bTbVaxCase
+        include aphaSalesforce.gb.salesforce.CPH
 
         include samProd, samProd.sam
     }
@@ -99,13 +95,10 @@ views {
         description "Adds a public status checker for cattle vaccination status. No authentication required."
 
         include public
-        include aphaVet
-        include aphaAdmin
         include vaccinationBoundedContext
         include vaccinationBoundedContext.bTbVaccinationBoundedContext
         include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxStatusChecker
         include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTBVaxBackend
-        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCasePage
         include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCase
     }
 
@@ -140,11 +133,11 @@ views {
         include svocBoundedContext
         include svocBoundedContext.CPH
         include animalTestingBoundedContext
+        include animalTestingBoundedContext.Test
         include animalTestingBoundedContext.bTbTestingBoundedContext
         include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext
         include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.bTbSkinTestCasePage
         include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.bTbSkinTestCase
-        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.tbSkinTestBackend
     }
 
     deployment view cvac_evolution_4_test_viewing_deployment {
@@ -155,6 +148,10 @@ views {
         include aphaSalesforce.gb.salesforce.cattleVaxApp
         include aphaSalesforce.gb.salesforce.bTbSkinTestCasePage
         include aphaSalesforce.gb.salesforce.bTbSkinTestCase
+        include aphaSalesforce.gb.salesforce.Test
+        include aphaSalesforce.gb.salesforce.CPH
+
+        include defra.prod.aphaIntegrationBridge
 
         include samProd, samProd.sam
     }
@@ -171,8 +168,6 @@ views {
         include aphaAdmin
         include aphaEpidemiologist
         include aphaBoundedContext
-        include aphaBoundedContext.aphaIntegrationBridge
-        include aphaBoundedContext.sam
         include aphaBoundedContext.cattleTbData
         include aphaBoundedContext.RADAR
         include svocBoundedContext
@@ -180,6 +175,7 @@ views {
         include livestockBoundedContext
         include livestockBoundedContext.livestockApi
         include animalTestingBoundedContext
+        include animalTestingBoundedContext.Test
         include animalTestingBoundedContext.bTbTestingBoundedContext
         include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext
         include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.tbSkinTestFrontend
@@ -187,9 +183,7 @@ views {
         include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.bTbSkinTestCasePage
         include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.bTbSkinTestCase
         include vaccinationBoundedContext
-        include vaccinationBoundedContext.bTbVaccinationBoundedContext
-        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCasePage
-        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCase
+        include vaccinationBoundedContext.VaccinationEvent
         include defraBoundedContext
         include defraBoundedContext.defraCustomerIdentity
         include governmentAuthBoundedContext
@@ -210,11 +204,11 @@ views {
         include defra.prod.eu.protectedVpc.tbSkinTestBackend
 
         include aphaSalesforce, aphaSalesforce.gb, aphaSalesforce.gb.salesforce
-        include aphaSalesforce.gb.salesforce.cattleVaxApp
-        include aphaSalesforce.gb.salesforce.bTbSkinTestCasePage
         include aphaSalesforce.gb.salesforce.bTbSkinTestCase
 
-        include samProd, samProd.sam
+        include aphaSalesforce.gb.salesforce.CPH
+        include aphaSalesforce.gb.salesforce.Test
+        include aphaSalesforce.gb.salesforce.VaccinationEvent
     }
 
     // Stage 6: SICCT Testing (VDP API)
@@ -225,12 +219,9 @@ views {
         description "Adds a new External API for VDP systems (e.g. UK FarmCare TOM) to retrieve workorders and submit test results directly."
 
         include vdpVet
-        include aphaVet
-        include aphaAdmin
         include aphaEpidemiologist
         include aphaBoundedContext
-        include aphaBoundedContext.aphaIntegrationBridge
-        include aphaBoundedContext.sam
+        include aphaBoundedContext.awsCognito
         include aphaBoundedContext.cattleTbData
         include aphaBoundedContext.RADAR
         include svocBoundedContext
@@ -240,6 +231,7 @@ views {
         include vdpBoundedContext
         include vdpBoundedContext.vdpSystems
         include animalTestingBoundedContext
+        include animalTestingBoundedContext.Test
         include animalTestingBoundedContext.bTbTestingBoundedContext
         include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext
         include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.tbSkinTestExternalApi
@@ -247,9 +239,7 @@ views {
         include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.bTbSkinTestCasePage
         include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.bTbSkinTestCase
         include vaccinationBoundedContext
-        include vaccinationBoundedContext.bTbVaccinationBoundedContext
-        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCasePage
-        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCase
+        include vaccinationBoundedContext.VaccinationEvent
     }
 
     deployment view cvac_evolution_6_sicct_api_deployment {
@@ -265,11 +255,10 @@ views {
         include defra.prod.eu.protectedVpc.tbSkinTestBackend
 
         include aphaSalesforce, aphaSalesforce.gb, aphaSalesforce.gb.salesforce
-        include aphaSalesforce.gb.salesforce.cattleVaxApp
-        include aphaSalesforce.gb.salesforce.bTbSkinTestCasePage
         include aphaSalesforce.gb.salesforce.bTbSkinTestCase
-
-        include samProd, samProd.sam
+        include aphaSalesforce.gb.salesforce.CPH
+        include aphaSalesforce.gb.salesforce.Test
+        include aphaSalesforce.gb.salesforce.VaccinationEvent
     }
 
 }

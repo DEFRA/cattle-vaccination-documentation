@@ -19,10 +19,18 @@ model {
                 this .futureRelationship aphaBoundedContext.sam 'Query'
             }
 
+            component syncTest {
+                #future
+                title "Sync Test"
+                description "Mechanism to sync Test data from Sam to Salesforce"
+                technology "Node.js / Hapi"
+                this .futureRelationship aphaBoundedContext.sam 'Query'
+            }
+
         }
         externalSystem awsCognito {
             title "AWS Cognito"
-            description "OAuth2 token issuer for APHA Integration Bridge authentication; client credentials flow with automatic token caching and refresh"
+            description "OAuth2 token issuer for API authentication within CDP; client credentials flow with automatic token caching and refresh"
             icon aws:cognito
         }
         externalSystem sam {
