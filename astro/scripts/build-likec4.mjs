@@ -17,7 +17,7 @@ const astroDir = path.resolve(__dirname, "..");
 const repoRoot = path.resolve(astroDir, "..");
 
 const rawBase = process.env.PAGES_SITE_URL
-  ? "/"
+  ? new URL(process.env.PAGES_SITE_URL).pathname
   : process.env.BASE_PATH || "/cattle-vaccination-docs/";
 const astroBase = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
 const likec4Base = `${astroBase}likec4/`;

@@ -8,4 +8,4 @@ interface Props {
 const { viewId } = Astro.props;
 ---
 
-<ReactLikeC4View viewId={viewId} client:only="react" />
+<ReactLikeC4View viewId={viewId} colorScheme="dark" browser={{ background: "solid" }} client:only="react" />
