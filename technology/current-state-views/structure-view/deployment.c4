@@ -21,6 +21,8 @@ deployment {
                 }
 
                 instanceOf svocBoundedContext.CPH
+                instanceOf animalTestingBoundedContext.Test
+                instanceOf vaccinationBoundedContext.VaccinationEvent
             }
         }
     }
@@ -81,6 +83,7 @@ deployment {
                         instanceOf animalTestingBoundedContext.tbSkinTestBackend {
                             style { multiple true }
                         }
+                        instanceOf aphaBoundedContext.aphaIntegrationBridge
                     }
                 }
 

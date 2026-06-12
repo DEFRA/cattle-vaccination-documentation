@@ -1,0 +1,264 @@
+views {
+
+    // Stage 1: Minimal Vaccination Recording
+    // APHA internal staff record TB vaccinations via Salesforce internal screens.
+    // Integration Bridge syncs CPH data from Sam. No external vet portal.
+    view cvac_evolution_1_vax_minimal {
+        title "CVAC Evolution / Stage 1 / Minimal Vaccination Recording"
+        description "APHA Vets and Admins record TB vaccinations via internal Salesforce screens. Integration Bridge syncs CPH data from Sam. No external vet portal."
+
+        include aphaVet
+        include aphaAdmin
+        include aphaBoundedContext
+        include aphaBoundedContext.aphaIntegrationBridge
+        include aphaBoundedContext.sam
+        include svocBoundedContext
+        include svocBoundedContext.CPH
+        include vaccinationBoundedContext
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCasePage
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCase
+    }
+
+    deployment view cvac_evolution_1_vax_minimal_deployment {
+        title "CVAC Evolution / Stage 1 / Minimal Vaccination Recording — Deployment"
+        description "Salesforce hosts the vaccination records and case pages. Integration Bridge on CDP syncs CPH data from Sam."
+
+        include aphaSalesforce, aphaSalesforce.gb, aphaSalesforce.gb.salesforce
+        include aphaSalesforce.gb.salesforce.cattleVaxApp
+        include aphaSalesforce.gb.salesforce.bTbVaxCasePage
+        include aphaSalesforce.gb.salesforce.bTbVaxCase
+        include aphaSalesforce.CPH
+        include defra.prod.eu.protectedFargate.aphaIntegrationBridge
+        include samProd
+        include samProd.sam
+    }
+
+    // Stage 2: Vaccination with Vet Portal
+    // Adds a CDP-hosted frontend for private vets to prepare for and record vaccinations.
+    // Authentication via Defra Customer Identity (Government Gateway or GOV.UK One Login).
+    view cvac_evolution_2_vax {
+        title "CVAC Evolution / Stage 2 / Vaccination with Vet Portal"
+        description "Adds a CDP-hosted vet portal for private vets to prepare for and record vaccinations. Authentication via Defra Customer Identity."
+
+        include privateVet
+        include aphaVet
+        include aphaAdmin
+        include aphaEpidemiologist
+        include aphaBoundedContext
+        include aphaBoundedContext.cattleTbData
+        include aphaBoundedContext.RADAR
+        include svocBoundedContext
+        include svocBoundedContext.CPH
+        include livestockBoundedContext
+        include livestockBoundedContext.livestockApi
+        include vaccinationBoundedContext
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext.tbVaxFrontend
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTBVaxBackend
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCasePage
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCase
+        include defraBoundedContext
+        include defraBoundedContext.defraCustomerIdentity
+        include governmentAuthBoundedContext
+        include governmentAuthBoundedContext.governmentGateway
+        include governmentAuthBoundedContext.govUkOneLogin
+    }
+
+    deployment view cvac_evolution_2_vax_deployment {
+        title "CVAC Evolution / Stage 2 / Vaccination with Vet Portal — Deployment"
+        description "CDP hosts the vet portal frontend and vaccination backend BFF. Salesforce holds vaccination records."
+
+        include defra, defra.prod, defra.prod.eu
+        include defra.prod.eu.publicVpc.alb
+        include defra.prod.eu.publicVpc.publicFargate
+        include defra.prod.eu.publicVpc.tbVaxFrontend
+        include defra.prod.eu.publicVpc.apiGateway
+        include defra.prod.eu.protectedVpc.protectedFargate
+        include defra.prod.eu.protectedVpc.bTBVaxBackend
+        include defra.prod.eu.protectedFargate.aphaIntegrationBridge
+
+        include aphaSalesforce, aphaSalesforce.gb, aphaSalesforce.gb.salesforce
+        include aphaSalesforce.gb.salesforce.cattleVaxApp
+        include aphaSalesforce.gb.salesforce.bTbVaxCasePage
+        include aphaSalesforce.gb.salesforce.bTbVaxCase
+        include aphaSalesforce.gb.salesforce.CPH
+
+        include samProd, samProd.sam
+    }
+
+    // Stage 3: Public Vaccination Status
+    // Adds a public-facing status checker — any member of the public can look up
+    // the last vaccination date for a tagged animal. No authentication required.
+    view cvac_evolution_3_vax_public_status {
+        title "CVAC Evolution / Stage 3 / Public Vaccination Status"
+        description "Adds a public status checker for cattle vaccination status. No authentication required."
+
+        include public
+        include vaccinationBoundedContext
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxStatusChecker
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTBVaxBackend
+        include vaccinationBoundedContext.bTbVaccinationBoundedContext.bTbVaxCase
+    }
+
+    deployment view cvac_evolution_3_vax_public_status_deployment {
+        title "CVAC Evolution / Stage 3 / Public Vaccination Status — Deployment"
+        description "CDP hosts the public vaccination status checker and backend BFF. Salesforce holds vaccination records."
+
+        include defra, defra.prod, defra.prod.eu
+        include defra.prod.eu.publicVpc.alb
+        include defra.prod.eu.publicVpc.publicFargate
+        include defra.prod.eu.publicVpc.bTbVaxStatusChecker
+        include defra.prod.eu.publicVpc.apiGateway
+        include defra.prod.eu.protectedVpc.protectedFargate
+        include defra.prod.eu.protectedVpc.bTBVaxBackend
+
+        include aphaSalesforce, aphaSalesforce.gb, aphaSalesforce.gb.salesforce
+        include aphaSalesforce.gb.salesforce.bTbVaxCase
+    }
+
+    // Stage 4: Test Viewing
+    // APHA staff can view TB skin test data in Salesforce via new internal screens.
+    // Integration Bridge provides Sam data for test records and workorders.
+    view cvac_evolution_4_test_viewing {
+        title "CVAC Evolution / Stage 4 / Test Viewing"
+        description "APHA staff view TB skin test data via Salesforce internal screens. Integration Bridge provides test records from Sam."
+
+        include aphaVet
+        include aphaAdmin
+        include aphaBoundedContext
+        include aphaBoundedContext.aphaIntegrationBridge
+        include aphaBoundedContext.sam
+        include svocBoundedContext
+        include svocBoundedContext.CPH
+        include animalTestingBoundedContext
+        include animalTestingBoundedContext.Test
+        include animalTestingBoundedContext.bTbTestingBoundedContext
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.bTbSkinTestCasePage
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.bTbSkinTestCase
+    }
+
+    deployment view cvac_evolution_4_test_viewing_deployment {
+        title "CVAC Evolution / Stage 4 / Test Viewing — Deployment"
+        description "Salesforce hosts the test case pages and records. Integration Bridge on CDP syncs data from Sam."
+
+        include aphaSalesforce, aphaSalesforce.gb, aphaSalesforce.gb.salesforce
+        include aphaSalesforce.gb.salesforce.cattleVaxApp
+        include aphaSalesforce.gb.salesforce.bTbSkinTestCasePage
+        include aphaSalesforce.gb.salesforce.bTbSkinTestCase
+        include aphaSalesforce.gb.salesforce.Test
+        include aphaSalesforce.gb.salesforce.CPH
+
+        include defra.prod.aphaIntegrationBridge
+
+        include samProd, samProd.sam
+    }
+
+    // Stage 5: SICCT Testing (Vet Portal)
+    // Private vets and APHA vets submit SICCT skin test results via a new CDP-hosted testing portal.
+    // Authentication via Defra Customer Identity.
+    view cvac_evolution_5_sicct_ui {
+        title "CVAC Evolution / Stage 5 / SICCT Testing (Vet Portal)"
+        description "Adds a CDP-hosted vet portal for submitting SICCT skin test results. Private and APHA vets authenticate via Defra Customer Identity."
+
+        include privateVet
+        include aphaVet
+        include aphaAdmin
+        include aphaEpidemiologist
+        include aphaBoundedContext
+        include aphaBoundedContext.cattleTbData
+        include aphaBoundedContext.RADAR
+        include svocBoundedContext
+        include svocBoundedContext.CPH
+        include livestockBoundedContext
+        include livestockBoundedContext.livestockApi
+        include animalTestingBoundedContext
+        include animalTestingBoundedContext.Test
+        include animalTestingBoundedContext.bTbTestingBoundedContext
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.tbSkinTestFrontend
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.tbSkinTestBackend
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.bTbSkinTestCasePage
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.bTbSkinTestCase
+        include vaccinationBoundedContext
+        include vaccinationBoundedContext.VaccinationEvent
+        include defraBoundedContext
+        include defraBoundedContext.defraCustomerIdentity
+        include governmentAuthBoundedContext
+        include governmentAuthBoundedContext.governmentGateway
+        include governmentAuthBoundedContext.govUkOneLogin
+    }
+
+    deployment view cvac_evolution_5_sicct_ui_deployment {
+        title "CVAC Evolution / Stage 5 / SICCT Testing (Vet Portal) — Deployment"
+        description "CDP hosts the skin testing frontend and backend BFF. Salesforce holds test case records."
+
+        include defra, defra.prod, defra.prod.eu
+        include defra.prod.eu.publicVpc.alb
+        include defra.prod.eu.publicVpc.publicFargate
+        include defra.prod.eu.publicVpc.tbSkinTestFrontend
+        include defra.prod.eu.publicVpc.apiGateway
+        include defra.prod.eu.protectedVpc.protectedFargate
+        include defra.prod.eu.protectedVpc.tbSkinTestBackend
+
+        include aphaSalesforce, aphaSalesforce.gb, aphaSalesforce.gb.salesforce
+        include aphaSalesforce.gb.salesforce.bTbSkinTestCase
+
+        include aphaSalesforce.gb.salesforce.CPH
+        include aphaSalesforce.gb.salesforce.Test
+        include aphaSalesforce.gb.salesforce.VaccinationEvent
+    }
+
+    // Stage 6: SICCT Testing (VDP API)
+    // VDP systems (e.g. UK FarmCare TOM) can retrieve workorders and submit test results
+    // via a new External API endpoint. Complements the vet portal from Stage 5.
+    view cvac_evolution_6_sicct_api {
+        title "CVAC Evolution / Stage 6 / SICCT Testing (VDP API)"
+        description "Adds a new External API for VDP systems (e.g. UK FarmCare TOM) to retrieve workorders and submit test results directly."
+
+        include vdpVet
+        include aphaEpidemiologist
+        include aphaBoundedContext
+        include aphaBoundedContext.awsCognito
+        include aphaBoundedContext.cattleTbData
+        include aphaBoundedContext.RADAR
+        include svocBoundedContext
+        include svocBoundedContext.CPH
+        include livestockBoundedContext
+        include livestockBoundedContext.livestockApi
+        include vdpBoundedContext
+        include vdpBoundedContext.vdpSystems
+        include animalTestingBoundedContext
+        include animalTestingBoundedContext.Test
+        include animalTestingBoundedContext.bTbTestingBoundedContext
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.tbSkinTestExternalApi
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.tbSkinTestBackend
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.bTbSkinTestCasePage
+        include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.bTbSkinTestCase
+        include vaccinationBoundedContext
+        include vaccinationBoundedContext.VaccinationEvent
+    }
+
+    deployment view cvac_evolution_6_sicct_api_deployment {
+        title "CVAC Evolution / Stage 6 / SICCT Testing (VDP API) — Deployment"
+        description "CDP hosts the External API and backend BFF. Salesforce holds test records. VDP systems call the External API directly."
+
+        include defra, defra.prod, defra.prod.eu
+        include defra.prod.eu.publicVpc.alb
+        include defra.prod.eu.publicVpc.publicFargate
+        include defra.prod.eu.publicVpc.tbSkinTestExternalApi
+        include defra.prod.eu.publicVpc.apiGateway
+        include defra.prod.eu.protectedVpc.protectedFargate
+        include defra.prod.eu.protectedVpc.tbSkinTestBackend
+
+        include aphaSalesforce, aphaSalesforce.gb, aphaSalesforce.gb.salesforce
+        include aphaSalesforce.gb.salesforce.bTbSkinTestCase
+        include aphaSalesforce.gb.salesforce.CPH
+        include aphaSalesforce.gb.salesforce.Test
+        include aphaSalesforce.gb.salesforce.VaccinationEvent
+    }
+
+}

@@ -1,4 +1,15 @@
 model {
+    extend animalTestingBoundedContext {
+        sfObject Test {
+            #future
+            title 'Test'
+            description 'Test carried out on one or more animals at a CPH'
+            this .futureRelationship svocBoundedContext.CPH 'Test carried out on CPH' {technology: 'Salesforce LookUp'}
+            this .futureRelationship aphaBoundedContext.aphaIntegrationBridge.syncTest "Sync from Sam" { technology 'TBD' }
+
+        }
+    }
+
     extend animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext{
         webFrontend tbSkinTestFrontend {
             #future
@@ -34,8 +45,6 @@ model {
                 technology "Node.js / Hapi"
                 this .futureRelationship bTbSkinTestingBoundedContext.bTbSkinTestCase "manages cases" { technology 'HTTPS' }
             }
-
-            this .futureRelationship aphaBoundedContext.awsCognito "obtains OAuth2 bearer token for APHA auth" { technology 'HTTPS' }
         }
 
         sfPage bTbSkinTestCasePage {
@@ -43,15 +52,19 @@ model {
             title 'Case Page - bTB Skin Testing'
 
             this .futureRelationship bTbSkinTestCase 'Manage case'
+            this .futureRelationship Test 'Update/View'
         }
 
         sfObject bTbSkinTestCase {
             #future
             title 'Case - bTB Skin Testing'
-            bTbSkinTestCase .futureRelationship svocBoundedContext.CPH 'Relates to'
-            bTbSkinTestCase .futureRelationship livestockBoundedContext.livestockApi 'GET cattleOnHolding'
-            bTbSkinTestCase .futureRelationship aphaBoundedContext.cattleTbData 'Provide data'
-            bTbSkinTestCase .futureRelationship aphaBoundedContext.RADAR 'Provide data'
+            this .futureRelationship svocBoundedContext.CPH 'Relates to'
+            this .futureRelationship livestockBoundedContext.livestockApi 'GET cattleOnHolding'
+            this .futureRelationship aphaBoundedContext.cattleTbData 'Provide data'
+            this .futureRelationship aphaBoundedContext.RADAR 'Provide data'
+            this .futureRelationship Test 'Record of test'
+
+            this .futureRelationship vaccinationBoundedContext.VaccinationEvent 'Check vaccination status'
         }
     }
 }
