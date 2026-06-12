@@ -8,7 +8,7 @@
 A _structure view_ describes the decomposition of the solution into containers and the boundaries between them.
 <!-- Include: ac:toc -->
 
-The Cattle Vaccination domain is composed of two delivery bounded contexts — **Vaccination** (bTB vaccinations) and **Animal Testing** (bTB skin testing) — alongside a **Veterinary Delivery Partners** context for third-party VDP integration, supported by three external integration boundaries: **APHA** (the Integration Bridge, AWS Cognito and the Sam legacy CRM), **Livestock** (cattle-on-holding data) and **SVOC** (Single View of Customer / CPH data). The diagrams below are organised bounded-context-first, following the [C4 model](https://c4model.com/): each context shown with its own context and container views, then zooming out to whole-domain views.
+The Cattle Vaccination domain is composed of two delivery bounded contexts — **Vaccination** (bTB vaccinations) and **Animal Testing** (bTB skin testing) — alongside a **Veterinary Delivery Partners** context for third-party VDP integration, supported by six external integration boundaries: **APHA** (the Integration Bridge and the Sam legacy CRM), **CDP** (Defra's Core Delivery Platform, hosting AWS Cognito), **Defra** (Defra Customer Identity), **Government Authentication** (Government Gateway and GOV.UK One Login), **Livestock** (cattle-on-holding data) and **SVOC** (Single View of Customer / CPH data). The diagrams below are organised bounded-context-first, following the [C4 model](https://c4model.com/): each context shown with its own context and container views, then zooming out to whole-domain views.
 
 > **Note:** This view describes the proposed target architecture. All containers and relationships represent future state and are not yet in production.
 
@@ -24,7 +24,7 @@ The Vaccination bounded context groups all animal vaccination delivery. It curre
 
 #### bTB Vaccination
 
-The bTB Vaccination context delivers the cattle TB vaccination service. A web frontend lets field vets and APHA vets prepare for and record TB vaccination site visits. A stateless Node.js/Hapi BFF sits behind it, orchestrating calls to APHA (using Cognito for OAuth2 auth), Livestock and Salesforce.
+The bTB Vaccination context delivers the cattle TB vaccination service. A web frontend lets field vets and APHA vets prepare for and record TB vaccination site visits. A stateless Node.js/Hapi BFF sits behind it, orchestrating calls to APHA, Livestock and Salesforce. A separate public-facing web interface accepts an ear-tag and returns the vaccination status without requiring authentication.
 
 ##### Context
 
@@ -74,7 +74,7 @@ Salesforce is the shared persistent storage layer for both delivery bounded cont
 
 ### APHA
 
-The APHA bounded context groups the **APHA Integration Bridge** (a CDP-hosted proxy service), the **AWS Cognito** instance used for OAuth2 authentication, and **Sam** — APHA's legacy CRM and disease management system. The Integration Bridge queries Sam directly and includes a Sync CPH mechanism that pushes CPH data into Salesforce.
+The APHA bounded context groups the **APHA Integration Bridge** (a CDP-hosted proxy service), **Sam** — APHA's legacy CRM and disease management system — and its external-facing proxy **iSam**, along with **LIMS** (Laboratory Information Management System), **Cattle TB Data** and **RADAR** which support epidemiologist science and reporting. The Integration Bridge queries Sam directly and includes a Sync CPH mechanism that pushes CPH data into Salesforce and a Sync Test mechanism that pushes test data into Salesforce.
 
 #### Context
 
@@ -83,6 +83,42 @@ The APHA bounded context groups the **APHA Integration Bridge** (a CDP-hosted pr
 #### Container
 
 ![APHA Container](images/integrations/apha/apha_bounded_context_container.png)
+
+### CDP
+
+Defra's Core Delivery Platform hosts the **AWS Cognito** instance used as the OAuth2 token issuer for API authentication (client credentials flow with automatic token caching and refresh).
+
+#### Context
+
+![CDP Context](images/integrations/cdp/cdp_bounded_context_context.png)
+
+#### Container
+
+![CDP Container](images/integrations/cdp/cdp_bounded_context_container.png)
+
+### Defra
+
+The Defra bounded context provides **Defra Customer Identity** — the identity system that enables external users (such as private vets) to authenticate to the bTB portals. It delegates authentication to Government Gateway or GOV.UK One Login via OIDC.
+
+#### Context
+
+![Defra Context](images/integrations/defra/defra_bounded_context_context.png)
+
+#### Container
+
+![Defra Container](images/integrations/defra/defra_bounded_context_container.png)
+
+### Government Authentication
+
+Provides **Government Gateway** and **GOV.UK One Login** — the GOV.UK authentication services used to identify external users. VDP vets and private vets use Government Gateway to access iSam; Defra Customer Identity delegates to both services for bTB portal authentication.
+
+#### Context
+
+![Government Authentication Context](images/integrations/government-authentication/government_auth_context.png)
+
+#### Container
+
+![Government Authentication Container](images/integrations/government-authentication/government_auth_container.png)
 
 ### Livestock
 

@@ -1,0 +1,9 @@
+model {
+    extend cdpBoundedContext {
+        externalSystem awsCognito {
+            title "AWS Cognito"
+            description "OAuth2 token issuer for API authentication within CDP; client credentials flow with automatic token caching and refresh"
+            icon aws:cognito
+        }
+    }
+}

@@ -5,7 +5,7 @@ model {
             description 'Systems use by VDPs, such as UK FarmCare TOM'
             technology 'External'
 
-            this .uses aphaBoundedContext.awsCognito 'Authenticate for API access' { technology: 'HTTPS' }
+            this .uses cdpBoundedContext.awsCognito 'Authenticate for API access' { technology: 'HTTPS' }
             vdpSystems .futureRelationship animalTestingBoundedContext.bTbSkinTestingBoundedContext.tbSkinTestExternalApi 'Retrieve and manage work orders, submit results'
         }
      }

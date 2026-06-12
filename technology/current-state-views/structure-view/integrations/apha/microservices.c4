@@ -28,11 +28,6 @@ model {
             }
 
         }
-        externalSystem awsCognito {
-            title "AWS Cognito"
-            description "OAuth2 token issuer for API authentication within CDP; client credentials flow with automatic token caching and refresh"
-            icon aws:cognito
-        }
         externalSystem sam {
             title "Sam"
             description "APHA's legacy CRM and disease management system"
