@@ -4,13 +4,15 @@ model {
         description "Veterinary surgeon who performs TB skin tests and vaccinations on behalf of the livestock keeper"
         privateVet .futureRelationship animalTestingBoundedContext.bTbSkinTestingBoundedContext.tbSkinTestFrontend "submit test results via" { technology 'HTTPS' }
         privateVet .futureRelationship vaccinationBoundedContext.tbVaxFrontend "submit vaccination records via" { technology 'HTTPS' }
-        privateVet .uses aphaBoundedContext.sam 'Prepare and record TB testing'  { technology 'HTTPS' }
+        privateVet .uses aphaBoundedContext.iSam 'Prepare and record TB testing'  { technology 'HTTPS' }
+        privateVet .uses governmentAuthBoundedContext.governmentGateway 'Authenticate to access iSam' { technology 'HTTPS' }
     }
     externalPerson vdpVet {
         title "VDP Vet"
         description "Veterinary surgeon who performs TB skin testing on behalf of APHA"
         vdpVet .uses vdpBoundedContext.vdpSystems "views workorders and submits test results" { technology '<external>'}
-        vdpVet .uses aphaBoundedContext.sam 'Prepare and record TB testing'  { technology 'HTTPS' }
+        vdpVet .uses aphaBoundedContext.iSam 'Prepare and record TB testing'  { technology 'HTTPS' }
+        vdpVet .uses governmentAuthBoundedContext.governmentGateway 'Authenticate to access iSam' { technology 'HTTPS' }
     }
     internalPerson aphaVet {
         title "APHA Vetinary Officer"

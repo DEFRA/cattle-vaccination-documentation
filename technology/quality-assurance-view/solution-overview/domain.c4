@@ -7,6 +7,9 @@ views {
         include
             aphaBoundedContext,
             aphaBoundedContext.sam,
+            aphaBoundedContext.iSam,
+            governmentAuthBoundedContext,
+            governmentAuthBoundedContext.governmentGateway,
             aphaBoundedContext.LIMS,
             aphaBoundedContext.LIMS.SampleManager,
             aphaBoundedContext.cattleTbData,
@@ -29,6 +32,7 @@ views {
             include aphaBoundedContext.LIMS.*
             include aphaBoundedContext.cattleTbData.*
             include aphaBoundedContext.RADAR.*
+            include governmentAuthBoundedContext.*
             include livestockBoundedContext.*
             include livestockBoundedContext.livestockApi.*
             include privateVet.*
@@ -36,6 +40,9 @@ views {
             include aphaVet.*
             include aphaAdmin.*
             include aphaEpidemiologist.*
+
+            exclude aphaBoundedContext.aphaIntegrationBridge
+            exclude aphaBoundedContext.awsCognito
     }
 
     deployment view cvac_domain_current_deployment {
@@ -43,7 +50,7 @@ views {
         title "CVAC Subdomain / Deployment Diagrams / Current"
         description "Shows the deployments owned by the Cattle Vaccination team and closely related ones"
         
-        include samProd, samProd.sam
+        include samProd, samProd.sam, samProd.iSam
         include limsProd, limsProd.SampleManager
     }
 
@@ -64,6 +71,8 @@ views {
             vdpVet,
             aphaVet,
             aphaAdmin
+
+        exclude aphaBoundedContext.iSam
     }
 
     view cvac_domain_proposed_container {
@@ -86,6 +95,7 @@ views {
 
             exclude aphaBoundedContext.sam
             exclude aphaBoundedContext.LIMS
+            exclude aphaBoundedContext.iSam
     }
 
     deployment view cvac_domain_proposed_deployment {

@@ -33,6 +33,11 @@ model {
             this .uses cattleTbData 'Snapshot latest data' { technology: 'ETL' }
             this .uses RADAR 'Provide data' { technology: 'ETL' }
         }
+        externalSystem iSam {
+            title "iSam"
+            description "Proxy exposing a subset of Sam to external users, authenticated via Government Gateway"
+            this .uses sam 'Proxy subset of Sam functionality' { technology 'HTTPS' }
+        }
         externalSystem LIMS {
             title 'LIMS'
             description 'Laboratory Information Management System'
