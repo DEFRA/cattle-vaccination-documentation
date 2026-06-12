@@ -69,6 +69,7 @@ footer: '<span class="sensitivity">Official</span><span class="footer-summary">C
 <div class="contents-sub">4.8 Deployment Architecture</div>
 <div class="contents-sub">4.9 User Roles</div>
 <div class="contents-sub">4.10 Support</div>
+<div class="contents-sub">4.11 Architecture Evolution</div>
 <div>5. Patterns</div>
 <div class="contents-sub">5.1 Patterns Consumed</div>
 <div class="contents-sub">5.2 Patterns Exported</div>
@@ -563,6 +564,123 @@ Environments: dev, test, perf-test, ext-test, prod — each with its own Cognito
 For more details of supporting services on CDP, see [CDP Shared Support Model](https://portal.cdp-int.defra.cloud/documentation/onboarding/shared-responsibility-model.md).
 
 <div class="guidance">📌 <strong>Action:</strong> Spell out service hours, escalation paths and where incidents are logged (beyond the CDP shared model link).</div>
+
+---
+
+## 4.11 Architecture Evolution
+
+The solution is delivered incrementally across six stages from the current Sam-centric state to the full future architecture.
+
+| Stage | Capability Added |
+|-------|-----------------|
+| 1 | Minimal Vaccination Recording — APHA staff record vaccinations via internal Salesforce screens |
+| 2 | Vaccination Vet Portal — Private vets access a CDP-hosted portal; Defra Customer Identity auth |
+| 3 | Public Vaccination Status — Public ear-tag status checker; no authentication required |
+| 4 | Test Viewing — APHA staff view TB test data via Salesforce internal screens |
+| 5 | SICCT Testing (Vet Portal) — Private and APHA vets submit skin test results via a CDP-hosted portal |
+| 6 | SICCT Testing (VDP API) — VDP systems submit test results via an External API |
+
+---
+
+### Stage 1 — Minimal Vaccination Recording
+<!-- _class: split split-30-70 -->
+
+<div class="ldiv">
+
+APHA Vets and Admins record TB vaccinations via internal Salesforce screens. The APHA Integration Bridge syncs CPH data from Sam into the Single View of Customer. No external vet portal.
+
+</div>
+
+<div class="rdiv">
+
+![Stage 1 — Minimal Vaccination Recording](./images/evolution/cvac_evolution_1_vax_minimal.png)
+
+</div>
+
+---
+
+### Stage 2 — Vaccination with Vet Portal
+<!-- _class: split split-30-70 -->
+
+<div class="ldiv">
+
+Adds a CDP-hosted frontend for private vets to prepare for and record TB vaccination site visits. Authentication via Defra Customer Identity (Government Gateway or GOV.UK One Login).
+
+</div>
+
+<div class="rdiv">
+
+![Stage 2 — Vaccination with Vet Portal](./images/evolution/cvac_evolution_2_vax.png)
+
+</div>
+
+---
+
+### Stage 3 — Public Vaccination Status
+<!-- _class: split split-30-70 -->
+
+<div class="ldiv">
+
+Adds a public-facing status checker so that any member of the public can look up the last vaccination date for a tagged animal. No authentication required.
+
+</div>
+
+<div class="rdiv">
+
+![Stage 3 — Public Vaccination Status](./images/evolution/cvac_evolution_3_vax_public_status.png)
+
+</div>
+
+---
+
+### Stage 4 — Test Viewing
+<!-- _class: split split-30-70 -->
+
+<div class="ldiv">
+
+APHA staff can view TB skin test data in Salesforce via new internal case-management screens. The APHA Integration Bridge provides test records and workorder data from Sam.
+
+</div>
+
+<div class="rdiv">
+
+![Stage 4 — Test Viewing](./images/evolution/cvac_evolution_4_test_viewing.png)
+
+</div>
+
+---
+
+### Stage 5 — SICCT Testing (Vet Portal)
+<!-- _class: split split-30-70 -->
+
+<div class="ldiv">
+
+Adds a CDP-hosted testing portal for private vets and APHA vets to submit SICCT skin test results. Authentication via Defra Customer Identity.
+
+</div>
+
+<div class="rdiv">
+
+![Stage 5 — SICCT Testing (Vet Portal)](./images/evolution/cvac_evolution_5_sicct_ui.png)
+
+</div>
+
+---
+
+### Stage 6 — SICCT Testing (VDP API)
+<!-- _class: split split-30-70 -->
+
+<div class="ldiv">
+
+Adds a new External API for Veterinary Delivery Partner systems (e.g. UK FarmCare TOM) to retrieve workorders and submit test results programmatically, complementing the vet portal from Stage 5.
+
+</div>
+
+<div class="rdiv">
+
+![Stage 6 — SICCT Testing (VDP API)](./images/evolution/cvac_evolution_6_sicct_api.png)
+
+</div>
 
 ---
 
