@@ -45,8 +45,6 @@ model {
                 technology "Node.js / Hapi"
                 this .futureRelationship bTbSkinTestingBoundedContext.bTbSkinTestCase "manages cases" { technology 'HTTPS' }
             }
-
-            this .futureRelationship aphaBoundedContext.awsCognito "obtains OAuth2 bearer token for APHA auth" { technology 'HTTPS' }
         }
 
         sfPage bTbSkinTestCasePage {

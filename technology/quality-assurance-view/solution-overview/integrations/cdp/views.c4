@@ -1,0 +1,13 @@
+views {
+    view cdp_bounded_context_context of cdpBoundedContext {
+        title "CVAC Integrations / CDP / Context"
+        description "Shows the VDP bounded context and its relationships with other systems"
+        include * <-> cdpBoundedContext
+    }
+
+    view cdp_bounded_context_container of cdpBoundedContext {
+        title "CVAC Integrations / CDP / Container"
+        description "Shows the CDP-specific containers and their relationships with other systems"
+        include *
+    }
+}

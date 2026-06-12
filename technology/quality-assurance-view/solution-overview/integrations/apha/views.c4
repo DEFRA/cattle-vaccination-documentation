@@ -7,7 +7,7 @@ views {
 
     view apha_bounded_context_container of aphaBoundedContext {
         title "CVAC Integrations / APHA / Container"
-        description "Shows the APHA Integration Bridge, Cognito auth and underlying APHA API"
+        description "Shows APHA containers and their relationships with other systems"
         include *
     }
 }

@@ -42,7 +42,7 @@ views {
             include aphaEpidemiologist.*
 
             exclude aphaBoundedContext.aphaIntegrationBridge
-            exclude aphaBoundedContext.awsCognito
+            exclude cdpBoundedContext.awsCognito
     }
 
     deployment view cvac_domain_current_deployment {
