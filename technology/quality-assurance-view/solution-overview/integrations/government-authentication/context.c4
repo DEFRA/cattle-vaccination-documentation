@@ -1,0 +1,6 @@
+model {
+    context governmentAuthBoundedContext {
+        title "Government Authentication"
+        description "GOV.UK authentication services used to identify external users accessing government systems"
+    }
+}

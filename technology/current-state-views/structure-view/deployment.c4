@@ -92,6 +92,7 @@ deployment {
     samProd = node 'Sam Production' {
         description 'production environment for Sam'
         instanceOf aphaBoundedContext.sam
+        instanceOf aphaBoundedContext.iSam
     }
     limsProd = node 'LIMS Production' {
         description 'production environment for LIMS'

@@ -16,9 +16,11 @@ This deployment view shows the current runtime footprint of the cattle vaccinati
 
 ## Bounded Context Deployments
 
-### Cattle Vaccination Deployment
+To be filled in as the future becomes current.
 
-![Cattle Vaccination Production Deployment](../structure-view/images/bounded-context/cattle-vaccination/deployment_production_cattle_vaccination.png)
+<!-- ### Testing Domain Deployment
+
+![Cattle Vaccination Production Deployment](../structure-view/images/bounded-context/cattle-vaccination/deployment_production_cattle_vaccination.png) -->
 
 ## Operational Readiness Minimum
 

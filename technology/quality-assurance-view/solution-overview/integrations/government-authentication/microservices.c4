@@ -1,0 +1,8 @@
+model {
+    extend governmentAuthBoundedContext {
+        externalSystem governmentGateway {
+            title "Government Gateway"
+            description "GOV.UK authentication service used by external vets to access iSam"
+        }
+    }
+}

@@ -1,0 +1,13 @@
+views {
+    view government_auth_context of governmentAuthBoundedContext {
+        title "CVAC Integrations / Government Authentication / Context"
+        description "Shows the Government Authentication bounded context and its relationships with other systems"
+        include * <-> governmentAuthBoundedContext
+    }
+
+    view government_auth_container of governmentAuthBoundedContext {
+        title "CVAC Integrations / Government Authentication / Container"
+        description "Shows the Government Gateway authentication service"
+        include *
+    }
+}
