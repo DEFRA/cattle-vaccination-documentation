@@ -183,7 +183,7 @@ function rewriteRelativeMarkdownLinks(content, sourceAbsolutePath, titleIndex) {
   });
 }
 
-function rewriteRelativeImagePaths(content, sourceAbsolutePath) {
+function rewriteRelativeImagePaths(content, sourceAbsolutePath, tempFileAbsolutePath) {
   const imageLink = /!\[([^\]]*)\]\(([^)]+)\)/g;
   return content.replace(imageLink, (fullMatch, altText, rawTarget) => {
     const trimmedTarget = rawTarget.trim();
@@ -197,8 +197,8 @@ function rewriteRelativeImagePaths(content, sourceAbsolutePath) {
     }
 
     const resolvedAbs = path.resolve(path.dirname(sourceAbsolutePath), unwrappedTarget);
-    const containerPath = `/workspace/${path.relative(REPO_ROOT, resolvedAbs)}`;
-    return `![${altText}](${containerPath})`;
+    const newRelativePath = path.relative(path.dirname(tempFileAbsolutePath), resolvedAbs);
+    return `![${altText}](${newRelativePath})`;
   });
 }
 
@@ -214,9 +214,9 @@ function createTemporaryPublishFile(relativeFilePath, titleIndex) {
     };
   }
 
-  const contentWithImages = rewriteRelativeImagePaths(rewrittenContent, sourceAbsolutePath);
   const tempDirectory = mkdtempSync(path.join(REPO_ROOT, '.confluence-publish-'));
   const tempFilePath = path.join(tempDirectory, path.basename(relativeFilePath));
+  const contentWithImages = rewriteRelativeImagePaths(rewrittenContent, sourceAbsolutePath, tempFilePath);
   writeFileSync(tempFilePath, contentWithImages, 'utf8');
 
   return {
