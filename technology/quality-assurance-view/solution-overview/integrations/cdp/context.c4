@@ -1,0 +1,6 @@
+model {
+    context cdpBoundedContext {
+        title "CDP"
+        description "Defra's Core Delivery Platform"
+    }
+}

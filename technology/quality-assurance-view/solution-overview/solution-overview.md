@@ -411,11 +411,17 @@ The diagram shows how data flows when a vet creates a new TB skin test case.
 
 ---
 
-### 4.3.3 Data Flow — Test Result Submission
+### 4.3.3 Data Flow — Test Result Submission (APHA)
 
-The diagram shows how data flows when a vet submits TB skin test measurements.
+The diagram shows how data flows when an APHA vet submits TB skin test measurements.
 
-![Test Result Submission Workflow](./images/bounded-context/testing/skin_test_submission.png)
+![Test Result Submission Workflow](./images/bounded-context/testing/apha_skin_test_submission.png)
+
+### 4.3.3 Data Flow — Test Result Submission (private)
+
+The diagram shows how data flows when a private vet submits TB skin test measurements.
+
+![Test Result Submission Workflow](./images/bounded-context/testing/private_skin_test_submission.png)
 
 ---
 

@@ -221,7 +221,7 @@ views {
         include vdpVet
         include aphaEpidemiologist
         include aphaBoundedContext
-        include aphaBoundedContext.awsCognito
+        include cdpBoundedContext.awsCognito
         include aphaBoundedContext.cattleTbData
         include aphaBoundedContext.RADAR
         include svocBoundedContext
