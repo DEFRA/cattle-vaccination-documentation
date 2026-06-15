@@ -1,0 +1,23 @@
+views {
+    view livestock_bounded_context_context of livestockBoundedContext {
+        title "CVAC Integrations / Livestock / Context"
+        description "Shows the Livestock bounded context and its relationships with other systems"
+        include * <-> livestockBoundedContext
+    }
+
+    view livestock_bounded_context_container of livestockBoundedContext {
+        title "CVAC Integrations / Livestock / Container (Current)"
+        description "Shows the Livestock Integration Layer and the devolved cattle movement systems it aggregates — CTS (national legacy), ScotEID (Scotland), and planned systems for England (LIS), Wales (EID Cymru), and the cross-nation CADS"
+        include *
+        exclude cads
+        exclude lis
+        exclude eidCymru
+    }
+    view livestock_bounded_context_future_container of livestockBoundedContext {
+        title "CVAC Integrations / Livestock / Container (Future)"
+        description "Shows the Livestock Integration Layer and the devolved cattle movement systems it aggregates — CTS (national legacy), ScotEID (Scotland), and planned systems for England (LIS), Wales (EID Cymru), and the cross-nation CADS"
+        include *
+
+        exclude livestockApi
+    }
+}

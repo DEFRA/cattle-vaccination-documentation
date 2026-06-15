@@ -481,7 +481,9 @@ The cattle vaccination backend integrates with three external systems:
 
 **APHA Integration Bridge** — A CDP-hosted proxy authenticated via AWS Cognito (OAuth2 client credentials). Used to access data from Sam.
 
-**Livestock API** — W3SI Defra gateway accessed with a static bearer token. Returns live cattle at a given CPH holding (`GET /cattle-on-holding`).
+**Livestock API** — W3SI Defra gateway accessed with a static bearer token. Returns live cattle at a given CPH holding (`GET /cattle-on-holding`). Expected to be replaced by CADS.
+
+**Common Animal Data Store (CADS)** Future gateway to the livestock systems. Expected to be capable of publishing out vaccination status.
 
 **Salesforce** — CRM for case management, authenticated via OAuth2 client credentials. Uses composite and composite graph requests for efficient batch operations. Stores cases, test parts and per-animal results.
 

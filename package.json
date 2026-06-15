@@ -7,7 +7,7 @@
     "serve": "likec4 serve",
     "validate:structure-view": "likec4 validate technology/current-state-views/structure-view",
     "test:structure-view": "vitest run test/structure-view.spec.ts",
-    "export:structure-view": "likec4 export png technology/current-state-views/structure-view --outdir technology/current-state-views/structure-view/images",
+    "export:structure-view": "rm -rf technology/current-state-views/structure-view/images && likec4 export png technology/current-state-views/structure-view --outdir technology/current-state-views/structure-view/images",
     "snapshot:solution-overview": "node scripts/snapshot-solution-overview.js",
     "confluence:publish": "node scripts/publish-to-confluence.js",
     "confluence:publish:with-delivery-passport": "node scripts/publish-to-confluence.js --include-delivery-passport",
