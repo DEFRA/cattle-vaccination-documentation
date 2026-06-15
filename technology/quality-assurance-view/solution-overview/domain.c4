@@ -33,8 +33,7 @@ views {
             include aphaBoundedContext.cattleTbData.*
             include aphaBoundedContext.RADAR.*
             include governmentAuthBoundedContext.*
-            include livestockBoundedContext.*
-            include livestockBoundedContext.livestockApi.*
+            include livestockBoundedContext.livestockApi
             include privateVet.*
             include vdpVet.*
             include aphaVet.*
@@ -89,7 +88,7 @@ views {
             include animalTestingBoundedContext.bTbTestingBoundedContext.bTbSkinTestingBoundedContext.*
             include svocBoundedContext.*
             include aphaBoundedContext.*
-            include livestockBoundedContext.*
+            include livestockBoundedContext.livestockApi
             include vdpBoundedContext.*
             include defraBoundedContext.*
             include privateVet.*

@@ -3,6 +3,45 @@ model {
         externalSystem livestockApi {
             title "Livestock Integration Layer"
             description "W3SI Defra livestock gateway — GET /cattle-on-holding returns live cattle at a given holding (LocationID), excluding dead animals"
+
+            this .uses livestockBoundedContext.cts 'Query cattle movements' { technology 'HTTPS' }
+            this .uses livestockBoundedContext.scotEid 'Query Scottish cattle movements' { technology 'HTTPS' }
+            this .futureRelationship livestockBoundedContext.lis 'Query English cattle movements' { technology 'HTTPS' }
+            this .futureRelationship livestockBoundedContext.eidCymru 'Query Welsh cattle movements' { technology 'HTTPS' }
+        }
+
+        externalSystem cads {
+            #future
+            title "CADS"
+            description "Common Animal Data Store — a planned cross-nation system providing unified access to cattle movement data"
+
+            this .futureRelationship livestockBoundedContext.cts 'Query historical cattle movements' { technology 'HTTPS' }
+            this .futureRelationship livestockBoundedContext.scotEid 'Query Scottish cattle movements' { technology 'HTTPS' }
+            this .futureRelationship livestockBoundedContext.lis 'Query English cattle movements' { technology 'HTTPS' }
+            this .futureRelationship livestockBoundedContext.eidCymru 'Query Welsh cattle movements' { technology 'HTTPS' }
+        }
+
+        externalSystem cts {
+            #legacy
+            title "CTS"
+            description "British Cattle Tracing System — the legacy national system for recording cattle births, deaths and movements in Great Britain"
+        }
+
+        externalSystem scotEid {
+            title "ScotEID"
+            description "Scottish cattle movement system — the devolved system for recording cattle movements in Scotland"
+        }
+
+        externalSystem lis {
+            #future
+            title "LIS"
+            description "Livestock Information System — the planned devolved cattle movement system for England"
+        }
+
+        externalSystem eidCymru {
+            #future
+            title "EID Cymru"
+            description "Electronic Identification Wales — the planned devolved cattle movement system for Wales"
         }
     }
 }
