@@ -8,6 +8,10 @@
 A _structure view_ covers how information is organised: domains, conceptual and logical models, canonical definitions and how data is exchanged (events, APIs, files). It answers what the data is and how pieces relate, not yet where bytes live (see [Physical View](../physical-view/README.md)).
 <!-- Include: ac:toc -->
 
+## Legacy Data
+
+The legacy system is Sam. See [Data Structure View - Sam](./sam/README.md) for detailed information regarding the relevant areas of Sam.
+
 ## Conceptual Data Domains
 
 This conceptual view shows the primary data domains and ownership boundaries across the cattle vaccination landscape.
