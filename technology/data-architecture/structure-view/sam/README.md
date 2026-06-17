@@ -234,7 +234,7 @@ erDiagram
 
 ### Animal Identity
 
-`TEST_SUBJECT` links to `ANIMAL` via `ANIMAL_PK`, and `MATERIAL` records the animal from which a sample was taken.
+`TEST_SUBJECT` and `MATERIAL` both link to `ANIMAL` via `ANIMAL_PK`.
 
 ```mermaid
 erDiagram
@@ -269,17 +269,9 @@ erDiagram
     VARCHAR BREED_CODE
   }
 
-  MATERIAL {
-    NUMBER MATERIAL_PK PK
-    NUMBER ANIMAL_PK FK
-    VARCHAR MATERIAL_TYPE
-    VARCHAR SAMPLE_ID
-  }
-
   ANIMAL ||--o| INDVDLY_REGISTERED_ANIMAL : "is"
   INDVDLY_REGISTERED_ANIMAL ||--o{ INDVDL_ANML_IDENTFN_MECH : "identified by"
   ANIMAL }o--|| BREED : "of"
-  MATERIAL }o--o| ANIMAL : "sourced from"
 ```
 
 > **Note:** `BREED` lives in the AHBRP schema rather than brp06. `ANIMAL` denormalises the breed code via `BREED_CODE` to avoid cross-schema lookups.
