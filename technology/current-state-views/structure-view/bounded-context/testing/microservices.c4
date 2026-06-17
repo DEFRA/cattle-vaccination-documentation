@@ -61,8 +61,7 @@ model {
             this .futureRelationship svocBoundedContext.CPH 'Relates to'
             this .futureRelationship livestockBoundedContext.livestockApi 'GET cattleOnHolding'
             this .futureRelationship livestockBoundedContext.cads 'Get cattle on holding'
-            this .futureRelationship aphaBoundedContext.cattleTbData 'Provide data'
-            this .futureRelationship aphaBoundedContext.RADAR 'Provide data'
+            this .futureRelationship aphaBoundedContext.dataPlatform 'Publish data'
             this .futureRelationship Test 'Record of test'
 
             this .futureRelationship vaccinationBoundedContext.VaccinationEvent 'Check vaccination status'
