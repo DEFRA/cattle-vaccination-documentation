@@ -582,11 +582,11 @@ The solution is delivered incrementally across six stages from the current Sam-c
 | Stage | Capability Added |
 |-------|-----------------|
 | 1 | Minimal Vaccination Recording — APHA staff record vaccinations via internal Salesforce screens |
-| 2 | Vaccination Vet Portal — Private vets access a CDP-hosted portal; Defra Customer Identity auth |
-| 3 | Public Vaccination Status — Public ear-tag status checker; no authentication required |
-| 4 | Test Viewing — APHA staff view TB test data via Salesforce internal screens |
-| 5 | SICCT Testing (Vet Portal) — Private and APHA vets submit skin test results via a CDP-hosted portal |
-| 6 | SICCT Testing (VDP API) — VDP systems submit test results via an External API |
+| 2 | Public Vaccination Status — Public ear-tag status checker; no authentication required |
+| 3 | Test Viewing — APHA staff view TB test data via Salesforce internal screens |
+| 4 | SICCT Testing (Vet Portal) — Private and APHA vets submit skin test results via a CDP-hosted portal |
+| 5 | SICCT Testing (VDP API) — VDP systems submit test results via an External API |
+| 6 | Vaccination Vet Portal — Private vets access a CDP-hosted portal; Defra Customer Identity auth |
 
 ---
 
@@ -595,7 +595,7 @@ The solution is delivered incrementally across six stages from the current Sam-c
 
 <div class="ldiv">
 
-APHA Vets and Admins record TB vaccinations via internal Salesforce screens. The APHA Integration Bridge syncs CPH data from Sam into the Single View of Customer. No external vet portal.
+APHA Vets and Admins record TB vaccinations via internal Salesforce screens. The APHA Integration Bridge syncs CPH data from Sam into the Single View of Customer. No external vet portal. Data is available to consume by systems such as cattleTbData and RADAR via the APHA Data Platform.
 
 </div>
 
@@ -607,24 +607,7 @@ APHA Vets and Admins record TB vaccinations via internal Salesforce screens. The
 
 ---
 
-### Stage 2 — Vaccination with Vet Portal
-<!-- _class: split split-30-70 -->
-
-<div class="ldiv">
-
-Adds a CDP-hosted frontend for private vets to prepare for and record TB vaccination site visits. Authentication via Defra Customer Identity (Government Gateway or GOV.UK One Login).
-
-</div>
-
-<div class="rdiv">
-
-![Stage 2 — Vaccination with Vet Portal](./images/evolution/cvac_evolution_2_vax.png)
-
-</div>
-
----
-
-### Stage 3 — Public Vaccination Status
+### Stage 2 — Public Vaccination Status
 <!-- _class: split split-30-70 -->
 
 <div class="ldiv">
@@ -635,13 +618,13 @@ Adds a public-facing status checker so that any member of the public can look up
 
 <div class="rdiv">
 
-![Stage 3 — Public Vaccination Status](./images/evolution/cvac_evolution_3_vax_public_status.png)
+![Stage 2 — Public Vaccination Status](./images/evolution/cvac_evolution_3_vax_public_status.png)
 
 </div>
 
 ---
 
-### Stage 4 — Test Viewing
+### Stage 3 — Test Viewing
 <!-- _class: split split-30-70 -->
 
 <div class="ldiv">
@@ -652,13 +635,13 @@ APHA staff can view TB skin test data in Salesforce via new internal case-manage
 
 <div class="rdiv">
 
-![Stage 4 — Test Viewing](./images/evolution/cvac_evolution_4_test_viewing.png)
+![Stage 3 — Test Viewing](./images/evolution/cvac_evolution_4_test_viewing.png)
 
 </div>
 
 ---
 
-### Stage 5 — SICCT Testing (Vet Portal)
+### Stage 4 — SICCT Testing (Vet Portal)
 <!-- _class: split split-30-70 -->
 
 <div class="ldiv">
@@ -669,24 +652,41 @@ Adds a CDP-hosted testing portal for private vets and APHA vets to submit SICCT 
 
 <div class="rdiv">
 
-![Stage 5 — SICCT Testing (Vet Portal)](./images/evolution/cvac_evolution_5_sicct_ui.png)
+![Stage 4 — SICCT Testing (Vet Portal)](./images/evolution/cvac_evolution_5_sicct_ui.png)
 
 </div>
 
 ---
 
-### Stage 6 — SICCT Testing (VDP API)
+### Stage 5 — SICCT Testing (VDP API)
 <!-- _class: split split-30-70 -->
 
 <div class="ldiv">
 
-Adds a new External API for Veterinary Delivery Partner systems (e.g. UK FarmCare TOM) to retrieve workorders and submit test results programmatically, complementing the vet portal from Stage 5.
+Adds a new External API for Veterinary Delivery Partner systems (e.g. UK FarmCare TOM) to retrieve workorders and submit test results programmatically, complementing the vet portal from Stage 4.
 
 </div>
 
 <div class="rdiv">
 
-![Stage 6 — SICCT Testing (VDP API)](./images/evolution/cvac_evolution_6_sicct_api.png)
+![Stage 5 — SICCT Testing (VDP API)](./images/evolution/cvac_evolution_6_sicct_api.png)
+
+</div>
+
+---
+
+### Stage 6 — Vaccination with Vet Portal
+<!-- _class: split split-30-70 -->
+
+<div class="ldiv">
+
+Adds a CDP-hosted frontend for private vets to prepare for and record TB vaccination site visits. Authentication via Defra Customer Identity (Government Gateway or GOV.UK One Login).
+
+</div>
+
+<div class="rdiv">
+
+![Stage 6 — Vaccination with Vet Portal](./images/evolution/cvac_evolution_2_vax.png)
 
 </div>
 

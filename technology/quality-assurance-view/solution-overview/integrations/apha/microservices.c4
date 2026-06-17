@@ -50,6 +50,12 @@ model {
                 description 'Sample management interface for LIMS'
             }
         }
+        externalSystem dataPlatform {
+            title 'Data Platform'
+            description 'APHA Data Platform'
+            this .uses cattleTbData 'Provide data' { technology: "TBD" }
+            this .uses RADAR 'Provide data' { technology: "TBD" }
+        }
         externalSystem cattleTbData {
             title 'Cattle TB Data'
             description 'Database used by epidemiologists, supporting science and policy making.'

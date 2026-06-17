@@ -46,6 +46,7 @@ views {
         include aphaAdmin
         include aphaEpidemiologist
         include aphaBoundedContext
+        include aphaBoundedContext.dataPlatform
         include aphaBoundedContext.cattleTbData
         include aphaBoundedContext.RADAR
         include svocBoundedContext
@@ -168,6 +169,7 @@ views {
         include aphaAdmin
         include aphaEpidemiologist
         include aphaBoundedContext
+        include aphaBoundedContext.dataPlatform
         include aphaBoundedContext.cattleTbData
         include aphaBoundedContext.RADAR
         include svocBoundedContext
@@ -222,6 +224,7 @@ views {
         include aphaEpidemiologist
         include aphaBoundedContext
         include cdpBoundedContext.awsCognito
+        include aphaBoundedContext.dataPlatform
         include aphaBoundedContext.cattleTbData
         include aphaBoundedContext.RADAR
         include svocBoundedContext
