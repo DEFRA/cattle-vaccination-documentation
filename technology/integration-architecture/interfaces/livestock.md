@@ -21,7 +21,7 @@ Any time an up-to-date list of cattle on a holding is required this will be used
 
 ## Evolution
 
-It is expected that this will move to the Common Animal Data Store (CADS) over time.
+It is expected that this will move to the Common Animal Data Store (CADS) over time. This may present us with an opportunity to take a feed of movement so we know where vaccinated cattle end up.
 
 ### Current outline
 

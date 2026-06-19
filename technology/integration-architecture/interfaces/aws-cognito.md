@@ -13,9 +13,11 @@
 
 # AWS Cognito
 
+
+NOTE: At the time of writing this is correct for the alpha prototype only. It is likely that in practice this will only be a concern for Salesforce rather than our CDP-based services.
+
 **AWS Cognito** provides OAuth2 token issuance for authenticating the cattle vaccination backend to the **APHA Integration Bridge**.
 
-NOTE: At the time of writing this is correct for the alpha prototype only.
 
 ## Purpose
 
@@ -42,7 +44,7 @@ Each environment (dev, test, perf-test, ext-test, prod) has its own Cognito user
 
 Before production release, this integration path should have:
 
-- [x] token fetch failure alerting configured
-- [x] client credential rotation process documented
-- [x] token caching and auto-refresh validated under load
+- [ ] token fetch failure alerting configured
+- [ ] client credential rotation process documented
+- [ ] token caching and auto-refresh validated under load
 - [ ] Cognito outage fallback behaviour documented
