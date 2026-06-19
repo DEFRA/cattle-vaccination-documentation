@@ -71,32 +71,32 @@ Salesforce becomes the system of record for bTB vaccination data. The APHA Integ
 
 ![Stage 1 — Minimal Vaccination Recording](../../current-state-views/structure-view/images/evolution/cvac_evolution_1_vax_minimal.png)
 
-### Stage 2 — Public Vaccination Status
-
-Read-only public access to vaccination status is introduced. The bTB Vaccination Status Checker reads from Salesforce vaccination records via the BFF, exposing only the most recent vaccination date for a given ear-tag. No new data is written.
-
-![Stage 2 — Public Vaccination Status](../../current-state-views/structure-view/images/evolution/cvac_evolution_3_vax_public_status.png)
-
-### Stage 3 — Test Viewing
+### Stage 2 — Test Viewing
 
 Salesforce becomes the read surface for bTB test data that currently lives in Sam. The Integration Bridge provides test records and workorder data from Sam to the new internal Salesforce case pages. Data still originates in Sam; Salesforce provides a unified case management view.
 
-![Stage 3 — Test Viewing](../../current-state-views/structure-view/images/evolution/cvac_evolution_4_test_viewing.png)
+![Stage 2 — Test Viewing](../../current-state-views/structure-view/images/evolution/cvac_evolution_2_test_viewing.png)
 
-### Stage 4 — SICCT Testing (Vet Portal)
+### Stage 3 — SICCT Testing (Vet Portal)
 
 Salesforce becomes the system of record for bTB skin test results. Private vets write SICCT skin test results to Salesforce directly via the testing BFF. Epidemiological data targets (cattleTbData, RADAR) obtain test data via the APHA Data Platform in the steady state.
 
-![Stage 4 — SICCT Testing (Vet Portal)](../../current-state-views/structure-view/images/evolution/cvac_evolution_5_sicct_ui.png)
+![Stage 3 — SICCT Testing (Vet Portal)](../../current-state-views/structure-view/images/evolution/cvac_evolution_3_sicct_ui.png)
 
-### Stage 5 — SICCT Testing (VDP API)
+### Stage 4 — SICCT Testing (VDP API)
 
-VDP systems write test results via the External API, which in turn writes to the same Salesforce test case objects. The data model is the same as Stage 4; the new data flow is VDP system → External API → BFF → Salesforce.
+VDP systems write test results via the External API, which in turn writes to the same Salesforce test case objects. The data model is the same as Stage 3; the new data flow is VDP system → External API → BFF → Salesforce.
 
-![Stage 5 — SICCT Testing (VDP API)](../../current-state-views/structure-view/images/evolution/cvac_evolution_6_sicct_api.png)
+![Stage 4 — SICCT Testing (VDP API)](../../current-state-views/structure-view/images/evolution/cvac_evolution_4_sicct_api.png)
 
-### Stage 6 — Vaccination with Vet Portal
+### Stage 5 — Vaccination with Vet Portal
 
 Private vets can write vaccination data to Salesforce directly via the BFF. The data model is unchanged; new data flows are the vaccination frontend writing via the BFF to the vaccination case objects in Salesforce.
 
-![Stage 6 — Vaccination with Vet Portal](../../current-state-views/structure-view/images/evolution/cvac_evolution_2_vax.png)
+![Stage 5 — Vaccination with Vet Portal](../../current-state-views/structure-view/images/evolution/cvac_evolution_5_vax.png)
+
+### Stage 6 — Public Vaccination Status
+
+Read-only public access to vaccination status is introduced. The bTB Vaccination Status Checker reads from Salesforce vaccination records via the BFF, exposing only the most recent vaccination date for a given ear-tag. No new data is written.
+
+![Stage 6 — Public Vaccination Status](../../current-state-views/structure-view/images/evolution/cvac_evolution_6_vax_public_status.png)
