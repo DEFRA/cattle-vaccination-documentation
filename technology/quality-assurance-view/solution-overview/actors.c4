@@ -19,8 +19,10 @@ model {
     internalPerson aphaVet {
         title "APHA Vetinary Officer"
         description "APHA staff member who administers vaccinations, performs tests, reviews completed tests and investigates breakdowns"
-        aphaVet .futureRelationship vaccinationBoundedContext.bTbVaxCasePage "reviews and manages TB vaccinations via" { technology 'HTTPS' }
+        aphaVet .futureRelationship vaccinationBoundedContext.VaccinationEventPage "reviews and manages TB vaccination events via" { technology 'HTTPS' }
+        aphaVet .futureRelationship vaccinationBoundedContext.bTbVaxCasePage "reviews and manages TB vaccination cases via" { technology 'HTTPS' }
         aphaVet .futureRelationship vaccinationBoundedContext.tbVaxFrontend 'prepare for and record TB vaccination site visits' { technology 'HTTPS' }
+        aphaVet .futureRelationship animalTestingBoundedContext.TestPage "views TB skin test records via" { technology 'HTTPS' }
         aphaVet .futureRelationship animalTestingBoundedContext.bTbSkinTestCasePage "reviews and manages TB test cases via" { technology 'HTTPS' }
         aphaVet .futureRelationship animalTestingBoundedContext.tbSkinTestFrontend 'prepare for and record TB testing site visits' { technology 'HTTPS' }
         aphaVet .uses aphaBoundedContext.sam 'Prepare, record and review TB testing'  { technology 'HTTPS' }
@@ -28,7 +30,9 @@ model {
     internalPerson aphaAdmin {
         title "APHA Admin"
         description "APHA staff member who manages TB aspects of TB testing"
-        aphaAdmin .futureRelationship vaccinationBoundedContext.bTbVaxCasePage "reviews and manages TB vaccination via" { technology 'HTTPS' }
+        aphaAdmin .futureRelationship vaccinationBoundedContext.VaccinationEventPage "reviews and manages TB vaccination events via" { technology 'HTTPS' }
+        aphaAdmin .futureRelationship vaccinationBoundedContext.bTbVaxCasePage "reviews and manages TB vaccination cases via" { technology 'HTTPS' }
+        aphaAdmin .futureRelationship animalTestingBoundedContext.TestPage "views TB skin test records via" { technology 'HTTPS' }
         aphaAdmin .futureRelationship animalTestingBoundedContext.bTbSkinTestCasePage "reviews and manages TB testing via" { technology 'HTTPS' }
         aphaAdmin .uses aphaBoundedContext.sam 'Arrange and follow up from TB testing'  { technology 'HTTPS' }
     }

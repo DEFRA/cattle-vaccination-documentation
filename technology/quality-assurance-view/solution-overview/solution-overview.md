@@ -560,8 +560,8 @@ Environments: dev, test, perf-test, ext-test, prod — each with its own Cognito
 |------------------------|-----------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Private Vet            | Veterinary surgeon who performs TB skin tests and vaccinations on behalf of the livestock keeper                      | Currently prepares and records TB testing via iSam (authenticated via Government Gateway). Will look up cattle, record skin measurements and submit results via the cattle vaccination frontend (future). |
 | VDP Vet                | Veterinary surgeon who performs TB skin testing on behalf of APHA                                                    | Currently prepares and records TB testing via iSam (authenticated via Government Gateway). Views workorders and submits test results via VDP systems.       |
-| APHA Veterinary Officer | APHA staff member who administers vaccinations, performs tests, reviews completed tests and investigates breakdowns   | Reviews and manages TB test cases and vaccinations in Salesforce; will prepare for and record TB testing and vaccination site visits via the frontend (future) |
-| APHA Admin             | APHA staff member who manages TB aspects of TB testing                                                               | Reviews and manages TB testing and vaccination records via Salesforce case pages                                                                            |
+| APHA Veterinary Officer | APHA staff member who administers vaccinations, performs tests, reviews completed tests and investigates breakdowns   | Reviews and manages TB vaccinations via the Vaccination Event page in Salesforce (Stages 1–4); from Stage 5 also manages vaccination cases via the Salesforce Case Page and the vet portal. Views TB skin test records via the Test page in Salesforce (Stage 2); from Stage 3 also manages skin test cases via the Case Page and the vet portal. |
+| APHA Admin             | APHA staff member who manages TB aspects of TB testing                                                               | Reviews and manages TB vaccination events via the Vaccination Event page in Salesforce (Stages 1–4); from Stage 5 also manages vaccination cases via the Salesforce Case Page. Views TB skin test records via the Test page in Salesforce (Stage 2); from Stage 3 also manages skin test cases via the Salesforce Case Page. |
 | APHA Epidemiologist    | APHA staff member supporting science and policy                                                                      | Queries TB data for science and reporting via cattleTbData and RADAR; no direct interaction with the cattle vaccination frontend                            |
 | Public                 | Member of the public or industry participant checking cattle vaccination status                                       | _(Future)_ Checks the last vaccination date for a tagged animal via the bTB Vaccination Status Checker. No authentication required.                        |
 
@@ -581,11 +581,11 @@ The solution is delivered incrementally across six stages from the current Sam-c
 
 | Stage | Capability Added |
 |-------|-----------------|
-| 1 | Minimal Vaccination Recording — APHA staff record vaccinations via internal Salesforce screens |
-| 2 | Test Viewing — APHA staff view TB test data via Salesforce internal screens |
-| 3 | SICCT Testing (Vet Portal) — Private and APHA vets submit skin test results via a CDP-hosted portal |
+| 1 | Minimal Vaccination Recording — APHA staff record vaccination events via the Vaccination Event page in Salesforce |
+| 2 | Test Viewing — APHA staff view TB skin test records via the Test page in Salesforce |
+| 3 | SICCT Testing (Vet Portal) — Private and APHA vets submit skin test results via a CDP-hosted portal; introduces skin test Case and Case Page in Salesforce |
 | 4 | SICCT Testing (VDP API) — VDP systems submit test results via an External API |
-| 5 | Vaccination Vet Portal — Private vets access a CDP-hosted portal; Defra Customer Identity auth |
+| 5 | Vaccination Vet Portal — Private vets access a CDP-hosted portal; Defra Customer Identity auth; introduces vaccination Case and Case Page in Salesforce |
 | 6 | Public Vaccination Status — Public ear-tag status checker; no authentication required |
 
 ---
@@ -595,7 +595,7 @@ The solution is delivered incrementally across six stages from the current Sam-c
 
 <div class="ldiv">
 
-APHA Vets and Admins record TB vaccinations via internal Salesforce screens. The APHA Integration Bridge syncs CPH data from Sam into the Single View of Customer. No external vet portal. Data is available to consume by systems such as cattleTbData and RADAR via the APHA Data Platform.
+APHA Vets and Admins record TB vaccinations as Vaccination Events directly in Salesforce via the Vaccination Event page. The APHA Integration Bridge syncs CPH data from Sam into the Single View of Customer. No external vet portal. No Case or Case Page for bTB Vaccination at this stage. Data is available to consume by systems such as cattleTbData and RADAR via the APHA Data Platform.
 
 </div>
 
@@ -612,7 +612,7 @@ APHA Vets and Admins record TB vaccinations via internal Salesforce screens. The
 
 <div class="ldiv">
 
-APHA staff can view TB skin test data in Salesforce via new internal case-management screens. The APHA Integration Bridge provides test records and workorder data from Sam.
+APHA staff can view TB skin test records in Salesforce via the Test page. The APHA Integration Bridge syncs test records from Sam. No Case or Case Page for bTB Skin Testing at this stage.
 
 </div>
 
@@ -629,7 +629,7 @@ APHA staff can view TB skin test data in Salesforce via new internal case-manage
 
 <div class="ldiv">
 
-Adds a CDP-hosted testing portal for private vets and APHA vets to submit SICCT skin test results. Authentication via Defra Customer Identity.
+Adds a CDP-hosted testing portal for private vets and APHA vets to submit SICCT skin test results. Authentication via Defra Customer Identity. Introduces Case objects and a Case Page for bTB Skin Testing in Salesforce.
 
 </div>
 

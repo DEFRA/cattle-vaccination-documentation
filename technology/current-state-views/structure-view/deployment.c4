@@ -13,10 +13,14 @@ deployment {
 
                 cattleVaxApp = salesforceApp 'Cattle Vaccination App' {
                     summary 'Cattle Vaccination Salesforce App'
+                    instanceOf vaccinationBoundedContext.VaccinationEventPage
                     instanceOf vaccinationBoundedContext.bTbVaxCasePage
+                    instanceOf animalTestingBoundedContext.TestPage
                     instanceOf animalTestingBoundedContext.bTbSkinTestCasePage
 
+                    VaccinationEventPage .uses VaccinationEvent 'Manage'
                     bTbVaxCasePage .uses bTbVaxCase 'Manage'
+                    TestPage .uses Test 'View'
                     bTbSkinTestCasePage .uses bTbSkinTestCase 'Manage'
                 }
 

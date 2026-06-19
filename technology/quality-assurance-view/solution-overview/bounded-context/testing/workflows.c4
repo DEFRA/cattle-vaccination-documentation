@@ -1,8 +1,9 @@
 views {
     dynamic view skin_test_case_creation {
         // Used in solution-overview.md; changes to the view name affect the published document.
+        // Stage 3 onwards: APHA admin creates a skin test case via the Salesforce Case Page.
         title "CVAC Bounded Contexts / Animal Testing / Bovine TB Testing / Bovine TB Skin Testing / Workflow / Case Creation"
-        description "Flow when a vet creates a new TB skin test case"
+        description "Flow when APHA admin creates a new TB skin test case in Salesforce (Stage 3 onwards)"
 
         include animalTestingBoundedContext.bTbSkinTestCasePage
         include animalTestingBoundedContext.bTbSkinTestCase
@@ -55,6 +56,7 @@ views {
         privateVet .uses defraBoundedContext.defraCustomerIdentity 'Authenticate'
         privateVet .uses animalTestingBoundedContext.tbSkinTestFrontend "submits test measurements"
         animalTestingBoundedContext.tbSkinTestFrontend .uses animalTestingBoundedContext.tbSkinTestBackend "POST /cases/{id}/measurements"
-        animalTestingBoundedContext.tbSkinTestBackend .uses animalTestingBoundedContext.bTbSkinTestCase "create measurements"
+        animalTestingBoundedContext.tbSkinTestBackend .uses animalTestingBoundedContext.Test "create measurements"
+        animalTestingBoundedContext.tbSkinTestBackend .uses animalTestingBoundedContext.bTbSkinTestCase "Update case"
     }
 }

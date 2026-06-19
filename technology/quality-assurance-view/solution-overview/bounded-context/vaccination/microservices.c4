@@ -6,6 +6,14 @@ model {
             description 'Record of a vaccination event, at the CPH-level'
 
             this .futureRelationship svocBoundedContext.CPH 'Event location'
+            this .futureRelationship aphaBoundedContext.dataPlatform 'Publish data'
+        }
+
+        sfPage VaccinationEventPage {
+            #future
+            title 'Vaccination Event Page - bTB Vaccination'
+            description 'Salesforce page for APHA staff to record and view vaccination events'
+            this .futureRelationship VaccinationEvent 'Manage vaccination event'
         }
     }
     
@@ -47,9 +55,10 @@ model {
 
             component casesRoute {
                 title "Cases Route"
-                description "GET|POST /cases, GET /cases/{id} — creates and retrieves TB test cases in Salesforce"
+                description "GET|POST /cases, GET /cases/{id} — creates and retrieves TB vaccination cases in Salesforce"
                 technology "Node.js / Hapi"
                 this .futureRelationship bTbVaccinationBoundedContext.bTbVaxCase "manages cases" { technology 'HTTPS' }
+                this .futureRelationship vaccinationBoundedContext.VaccinationEvent "creates vaccination event records" { technology 'HTTPS' }
             }
         }
 
@@ -65,7 +74,6 @@ model {
             this .futureRelationship svocBoundedContext.CPH 'Relates to'
             this .futureRelationship livestockBoundedContext.livestockApi 'GET cattleOnHolding'
             this .futureRelationship livestockBoundedContext.cads 'Get cattle on holding'
-            this .futureRelationship aphaBoundedContext.dataPlatform 'Publish data'
             this .futureRelationship vaccinationBoundedContext.VaccinationEvent 'Record of vaccination'
         }
     }
