@@ -17,7 +17,7 @@
 
 ## Purpose
 
-For Cattle Vaccination, the APHA Integratino Bridge plays a key role in making data from Sam available, at least read-only, to view within Salesforce.
+For Cattle Vaccination, the APHA Integration Bridge plays a key role in making data from Sam available, at least read-only, to view within Salesforce.
 
 ## Endpoints Used
 NOTE: At the timing of writing this is from the alpha prototype only.
