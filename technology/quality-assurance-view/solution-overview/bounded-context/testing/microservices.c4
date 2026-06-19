@@ -6,7 +6,15 @@ model {
             description 'Test carried out on one or more animals at a CPH'
             this .futureRelationship svocBoundedContext.CPH 'Test carried out on CPH' {technology: 'Salesforce LookUp'}
             this .futureRelationship aphaBoundedContext.aphaIntegrationBridge.syncTest "Sync from Sam" { technology 'TBD' }
+            this .futureRelationship aphaBoundedContext.dataPlatform 'Publish data'
 
+        }
+
+        sfPage TestPage {
+            #future
+            title 'Test Page - bTB Skin Testing'
+            description 'Salesforce page for APHA staff to view TB skin test records synced from Sam (Stage 2)'
+            this .futureRelationship Test 'View test record'
         }
     }
 
@@ -44,6 +52,7 @@ model {
                 description "GET|POST /cases, GET /cases/{id} — creates and retrieves TB test cases in Salesforce"
                 technology "Node.js / Hapi"
                 this .futureRelationship bTbSkinTestingBoundedContext.bTbSkinTestCase "manages cases" { technology 'HTTPS' }
+                this .futureRelationship animalTestingBoundedContext.Test "create measurements" { technology 'HTTPS' }
             }
         }
 
@@ -61,7 +70,6 @@ model {
             this .futureRelationship svocBoundedContext.CPH 'Relates to'
             this .futureRelationship livestockBoundedContext.livestockApi 'GET cattleOnHolding'
             this .futureRelationship livestockBoundedContext.cads 'Get cattle on holding'
-            this .futureRelationship aphaBoundedContext.dataPlatform 'Publish data'
             this .futureRelationship Test 'Record of test'
 
             this .futureRelationship vaccinationBoundedContext.VaccinationEvent 'Check vaccination status'

@@ -1,8 +1,9 @@
 views {
     dynamic view vaccination_case_creation {
         // Used in solution-overview.md; changes to the view name affect the published document.
+        // Stage 5 onwards: APHA admin creates a vaccination case via the Salesforce Case Page.
         title "CVAC Bounded Contexts / Vaccination / Bovine TB Vaccination / Workflow / Case Creation"
-        description "Flow when a vet creates a new TB skin test case"
+        description "Flow when APHA admin creates a new TB vaccination case in Salesforce (Stage 5 onwards)"
 
         include vaccinationBoundedContext.bTbVaxCasePage
         include vaccinationBoundedContext.bTbVaxCase
@@ -35,9 +36,11 @@ views {
         include vaccinationBoundedContext.tbVaxFrontend
         include vaccinationBoundedContext.bTBVaxBackend
         include vaccinationBoundedContext.bTbVaxCase
+        include vaccinationBoundedContext.VaccinationEvent
 
         aphaVet .uses vaccinationBoundedContext.tbVaxFrontend "submits test measurements"
         vaccinationBoundedContext.tbVaxFrontend .uses vaccinationBoundedContext.bTBVaxBackend "POST /cases/{id}/details"
-        vaccinationBoundedContext.bTBVaxBackend .uses vaccinationBoundedContext.bTbVaxCase "create detailed records"
+        vaccinationBoundedContext.bTBVaxBackend .uses vaccinationBoundedContext.VaccinationEvent "create detailed records"
+        vaccinationBoundedContext.bTBVaxBackend .uses vaccinationBoundedContext.bTbVaxCase "Update case"
     }
 }

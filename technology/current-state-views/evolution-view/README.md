@@ -22,7 +22,7 @@ The future architecture evolves from the current Sam-centric state through six i
 
 ### Stage 1 — Minimal Vaccination Recording
 
-APHA Vets and Admins record TB vaccinations via internal Salesforce screens. The APHA Integration Bridge syncs CPH (County Parish Holding) data from Sam into the Single View of Customer. No external vet portal yet.
+APHA Vets and Admins record TB vaccinations as Vaccination Events directly in Salesforce via the Vaccination Event page. The APHA Integration Bridge syncs CPH (County Parish Holding) data from Sam into the Single View of Customer. No external vet portal yet; no Case or Case Page for bTB Vaccination at this stage.
 
 ![Stage 1 — Minimal Vaccination Recording](../structure-view/images/evolution/cvac_evolution_1_vax_minimal.png)
 
@@ -34,7 +34,7 @@ APHA Vets and Admins record TB vaccinations via internal Salesforce screens. The
 
 ### Stage 2 — Test Viewing
 
-APHA staff can view TB skin test data in Salesforce via new internal case-management screens. The APHA Integration Bridge provides test records and workorder data from Sam.
+APHA staff can view TB skin test records in Salesforce via the Test page. The APHA Integration Bridge syncs test records from Sam into the Single View of Customer. No Case or Case Page for bTB Skin Testing at this stage.
 
 ![Stage 2 — Test Viewing](../structure-view/images/evolution/cvac_evolution_2_test_viewing.png)
 

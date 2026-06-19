@@ -70,7 +70,7 @@ External systems (such as UK FarmCare TOM) used by Veterinary Delivery Partners 
 
 ### Salesforce
 
-Salesforce is the shared persistent storage layer for both delivery bounded contexts. The APHA Cattle Vaccination managed package hosts case objects and case management pages for both bTB Vaccination and bTB Skin Testing. APHA vets and admins manage cases directly via Salesforce pages; the delivery backend BFFs write case data via the Salesforce REST API.
+Salesforce is the shared persistent storage layer for both delivery bounded contexts. The APHA Cattle Vaccination managed package evolves progressively: from Stage 1 it hosts Vaccination Event records and a Vaccination Event page; from Stage 2 it also hosts Test records and a Test page for bTB Skin Testing synced from Sam; from Stage 3 it introduces Case objects and a Case Page for bTB Skin Testing to support the vet portal; and from Stage 5 it adds Case objects and a Case Page for bTB Vaccination. APHA vets and admins manage records directly via Salesforce pages; the delivery backend BFFs write data via the Salesforce REST API.
 
 ### APHA
 
