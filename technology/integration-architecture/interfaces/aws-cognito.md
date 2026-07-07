@@ -40,6 +40,10 @@ The backend uses the OAuth2 **client credentials** flow against the Cognito `/oa
 
 Each environment (dev, test, perf-test, ext-test, prod) has its own Cognito user pool URL and client credentials, configured via CDP secrets.
 
+## Failure modes & mitigations
+
+Failure to authenticate will prevent synchronous communication with the APHA Integration Bridge. Alerting and graceful error messaging to the user will be required.
+
 ## Operational Readiness Minimum
 
 Before production release, this integration path should have:
