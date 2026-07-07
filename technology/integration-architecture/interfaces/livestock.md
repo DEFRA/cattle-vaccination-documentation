@@ -53,6 +53,12 @@ NOTE: This is correct for the alpha prototype
 | `LIVESTOCK_API_BASE_URL` | Base URL for the W3SI Livestock API |
 | `LIVESTOCK_API_TOKEN` | Bearer token (sensitive) |
 
+## Failure modes & mitigations
+
+Initial integrations are HTTPS-based calls in response to direct requestes from the user. Failure will be reported to the user directly, and automated alerting will be put in place to trigger on persistent failures.
+
+Once CADS is in place there will be more options for integration including the potential for batch- or stream-based synchronisation. In this scenario failures will not cause an immediate inability for users to work, however it is important to implement alerting and there may be scenarios where out-of-date data need to generate a warning to the user so that they can make an informed decision on proceeding or waiting for the data to update.
+
 ## Operational Readiness Minimum
 
 Before production release, this integration path should have:

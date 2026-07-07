@@ -479,15 +479,17 @@ For more details, see [CDP Architectural Overview](https://portal.cdp-int.defra.
 
 The cattle vaccination backend integrates with three external systems:
 
-**APHA Integration Bridge** — A CDP-hosted proxy authenticated via AWS Cognito (OAuth2 client credentials). Used to access data from Sam.
+**APHA Integration Bridge** — A CDP-hosted proxy authenticated via AWS Cognito (OAuth2 client credentials). Used to access data from Sam. Currently exposes on-demand (RESTful) access only; target state adds Bulk (initial bootstrapping) and Batch (scheduled sync) mechanisms, transport TBC.
 
-**Livestock API** — W3SI Defra gateway accessed with a static bearer token. Returns live cattle at a given CPH holding (`GET /cattle-on-holding`). Expected to be replaced by CADS.
+**Livestock API** — W3SI Defra gateway accessed with a static bearer token. Returns live cattle at a given CPH holding (`GET /cattle-on-holding`). Expected to be replaced by CADS, which is also expected to introduce batch- or stream-based synchronisation options beyond today's on-demand calls.
 
 **Common Animal Data Store (CADS)** Future gateway to the livestock systems. Expected to be capable of publishing out vaccination status.
 
 **Salesforce** — CRM for case management, authenticated via OAuth2 client credentials. Uses composite and composite graph requests for efficient batch operations. Stores cases, test parts and per-animal results.
 
 **Defra Customer Identity** — Authentication of external users.
+
+Each integration follows a common resilience pattern to handle failure: alerting on repeated failures, retries with backoff for idempotent requests, correlation IDs propagated through requests and logs, and graceful degradation (a clear error to the user) rather than silent failure. Batch/bulk mechanisms additionally require freshness monitoring and load validation before cutover. See each interface's documentation page for mechanism-specific failure modes and mitigations.
 
 For CDP network and platform context, see [CDP Architectural Overview](https://portal.cdp-int.defra.cloud/documentation/architecture/architectural-overview.md).
 

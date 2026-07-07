@@ -53,6 +53,10 @@ NOTE: Correct for alpha prototype only.
 | `SALESFORCE_CLIENT_ID` | Connected app client ID (sensitive) |
 | `SALESFORCE_CLIENT_SECRET` | Connected app client secret (sensitive) |
 
+## Failure modes & mitigations
+
+All CDP-based operations will depend on Salesforce being available. If Salesforce is not reachable we need to alert and gracefully inform the user that the service is unavailable.
+
 ## Operational Readiness Minimum
 
 Before production release, this integration path should have:
