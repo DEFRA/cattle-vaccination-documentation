@@ -472,12 +472,6 @@ For more details, see [CDP Architectural Overview](https://portal.cdp-int.defra.
 
 </div>
 
-<div class="rdiv">
-
-![Cattle Vaccination Domain Containers](./images/cvac_domain_proposed_container.png)
-
-</div>
-
 ---
 
 ## 4.6 Integration Architecture
