@@ -511,6 +511,17 @@ For CDP network and platform context, see [CDP Architectural Overview](https://p
 
 ---
 
+### 4.6.1 Handheld Devices
+
+**Handheld devices are a significantly different integration mode**: they do not talk to the backend at all, and there is no live API in the exchange.
+
+- **TB Master** — a dedicated device — and **TB Pro** — an app-based system — are existing field tools used by vets to carry out SICCT skin testing today. They exchange data with Sam/iSam via a file upload/download
+- The exchange is **file-based, not request/response**: an XML workorder file (TB52 results form) is downloaded from Sam/iSam and uploaded to the device pre-populated with the animals assigned to a visit; the vet completes the skin measurements on the device; a corresponding XML file is then manually uploaded back into Sam/iSam.
+- Reproduciong this format for SICCT tests in the new system will allow SICCT tests using handhelds to continue as they do today.
+- The existing format only carries the two SICCT reagents (Avian, Bovine); it does not yet have a place for a third (DIVA) result, so a schema extension will be needed before this device path can support DIVA testing of vaccinated cattle.
+
+---
+
 ## 4.7 Security Architecture
 <!-- _class: split split-40-60 -->
 
