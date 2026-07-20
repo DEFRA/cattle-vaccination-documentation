@@ -204,6 +204,14 @@ Objectives for the initial phase of private beta
 
 The obligation to record vaccinations is expected to exist in all nations.
 
+4. System-level data constraints apply across the integration boundaries:
+
+    - **Data ownership and multi-master prevention** — Each data class has a single system of record; the service never writes back to read-only sources. Sam is the system of record for historical TB test data. Salesforce is the system of record for new vaccination records and, from Stage 3 onwards, new skin test cases. CTS (accessed via the Livestock API) is the system of record for cattle registration and movements. Keeping these boundaries clean prevents conflicting writes and avoids the complexity of conflict resolution.
+
+    - **CTS / Livestock API data freshness** — Cattle movements do not have to be reported to CTS on the day they occur; BCMS allow a grace period of several days. Holdings data returned by the Livestock API may therefore not reflect the most recent movements. The service accepts this latency for on-demand lookups. Where stale holdings data could affect a decision (for example, cattle recorded at a holding may have since moved), users should be informed and given the opportunity to proceed with caution or wait for the data to update.
+
+    - **Sam / APHA Integration Bridge data freshness** — On-demand access to the Integration Bridge provides a live fetch with no additional staleness. The target-state batch synchronisation mechanism (which will sync Sam data into Salesforce on a schedule) will introduce a staleness window. Once the batch frequency is defined, the maximum acceptable lag must be documented here and in the [APHA Integration Bridge](../../integration-architecture/interfaces/apha-integration-bridge.md) interface page, and surfaced to consumers via a data-freshness indicator.
+
 ---
 
 ## 3.3 Requirements Summary
@@ -740,12 +748,12 @@ Adds a public-facing status checker so that any member of the public can look up
 
 # 7. Architectural Dependencies
 
-| Dependency On          | Details                                                                                                                                                                                                                                | Supplier  |
-|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
-| Core Delivery Platform | Defra Cloud platform hosting provider — required to host dev, test and production environments. Provides foundation services for development, deployment and production security and monitoring.                                       | CDP       |
-| APHA Integration Bridge | CDP-hosted proxy to APHA APIs — required for workorder and holdings data.                                                                                                                                                             | APHA / CDP |
-| Livestock API          | W3SI Defra livestock gateway — required for cattle-on-holding data.                                                                                                                                                                   | Defra W3SI |
-| Salesforce             | CRM — required for case creation and test result storage.                                                                                                                                                                              | Salesforce |
+| Dependency On          | Details                                                                                                                                                                                                                                | Supplier   | Data Flow & Freshness |
+|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|------------------------|
+| Core Delivery Platform | Defra Cloud platform hosting provider — required to host dev, test and production environments. Provides foundation services for development, deployment and production security and monitoring.                                       | CDP        | Infrastructure only; no application data. |
+| APHA Integration Bridge | CDP-hosted proxy to APHA APIs — required for workorder and holdings data.                                                                                                                                                             | APHA / CDP | Read-only from this service (we never write to Sam). On-demand access today provides a live fetch with no additional staleness. Target-state batch sync will introduce a staleness window; frequency and maximum acceptable lag to be defined once the transport design is agreed. |
+| Livestock API          | W3SI Defra livestock gateway — required for cattle-on-holding data.                                                                                                                                                                   | Defra W3SI | Read-only from this service. Each call is a live fetch from CTS, but farmers may take several days to report cattle movements to BCMS/CTS, so the data may not reflect the most recent movements. |
+| Salesforce             | CRM — required for case creation and test result storage.                                                                                                                                                                              | Salesforce | Read-write; the system of record for vaccination events and new skin test cases. Data written by this service is always current at point of write. |
 
 ---
 
