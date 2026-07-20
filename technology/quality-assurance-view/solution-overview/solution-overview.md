@@ -644,7 +644,7 @@ APHA staff can view TB skin test records in Salesforce via the Test page. The AP
 
 <div class="ldiv">
 
-Adds a CDP-hosted testing portal for private vets and APHA vets to submit SICCT skin test results. Authentication via Defra Customer Identity. Introduces Case objects and a Case Page for bTB Skin Testing in Salesforce.
+Adds a CDP-hosted testing portal for private vets and APHA vets to submit SICCT skin test results. Authentication via Defra Customer Identity. Introduces Case objects and a Case Page for bTB Skin Testing in Salesforce. Also supports file-based transfer of results to/from handheld devices (e.g. TB Master) for vets using those devices.
 
 </div>
 
