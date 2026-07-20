@@ -46,7 +46,7 @@ APHA staff can view TB skin test records in Salesforce via the Test page. The AP
 
 ### Stage 3 — SICCT Testing (Vet Portal)
 
-Adds a CDP-hosted testing portal so that private vets and APHA vets can submit SICCT skin test results online. Authentication via Defra Customer Identity.
+Adds a CDP-hosted testing portal so that private vets and APHA vets can submit SICCT skin test results online. Authentication via Defra Customer Identity. Stage 3 also supports file-based transfer of SICCT results to and from [handheld devices](../../integration-architecture/interfaces/handheld-devices.md) such as TB Master, for vets who test using those devices.
 
 ![Stage 3 — SICCT Testing (Vet Portal)](../structure-view/images/evolution/cvac_evolution_3_sicct_ui.png)
 
