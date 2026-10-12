@@ -17,83 +17,185 @@ The legacy system is Sam. See [Data Structure View - Sam](./sam/README.md) for d
 This conceptual view shows the primary data domains and ownership boundaries across the cattle vaccination landscape.
 
 ```mermaid
-flowchart LR
-  Case(Case)
-  TestPart("Test Part")
-  TestPartResult("Test Part Result")
+---
+title: Conceptual Data Model
+---
+erDiagram
+    classDef external stroke:#666
 
-  Case -->|"Is carried out in one or more"| TestPart
-  TestPart -->|"has individual results for each animal"| TestPartResult
+    Keeper
+    Holding
+    Herd
+    Animal
+    Location
+    Vet
+    OfficialVet
+    AphaVet
+    VDP
+    VetVisit
+    Person
+
+
+
+
+    Keeper ||--o{ Holding : manages
+
+    Holding ||--o{ Herd : contains
+
+    Holding }o--|| Location : "is at" 
+
+    Herd ||--o{ Animal : contains
+
+    Vet ||--o{ VetVisit : conducts
+
+    VetVisit }o--|| Holding : "conducted at"
+
+
+    WorkOrder }o--|| Holding : "is for"
+
+    WorkOrder }o--o| VDP : "is assigned to"
+    WorkOrder }o--o| AphaVet : "is assigned to"
+
+    WorkList }o--o{ Animal : "part of"
+    
+    WorkOrder |o--o{ WorkList : "generates"
+
+    VetVisit ||--o{ AnimalVaccination : "carried out at"
+
+    AnimalVaccination }o--|| Animal: "given to"
+
+    AnimalVaccination ||--o{ OfficialVet : "administered by"
+
+    VaccineBatch ||--o{ AnimalVaccination: "used for"
+
+    DiluentBatch ||--o{ AnimalVaccination: "used for"
+
+    
+
 ```
+
+
 
 ## Logical Data Model
 
-This logical view describes how core entities relate across the TB skin test workflow.
+This logical view describes how core entities relate across the TB workflow.
+
+### Vaccination Work List
 
 ```mermaid
-flowchart LR
-  Case(Case)
-  TestPart("Test Part")
-  TestPartResult("Test Part Result")
+erDiagram
 
-  Case -->|"owns"| TestPart
-  TestPart -->|"owns"| TestPartResult
+  WorkList {
+    date dateCreated
+    datetime lastRefresh
+  }
+
+  WorkListAnimal {
+  }
+
+  WorkOrder {
+    date dueDate
+  }
+
+  Contact {
+    string firstName
+    string lastName
+    phone phone
+    email email
+  }
+
+  VaccinationVisit {
+    date dateOfVisit
+    boolean workListComplete
+  }
+
+  VaccineBatch {
+    string batchNumber UK
+    date expiryDate
+    enum vaccineType
+  }
+
+  DiluentBatch {
+    string batchNumber UK
+    date expiryDate
+  }
+
+  Animal {
+    string earTag UK
+  }
+
+  UnidentifiedAnimal {
+    string temporaryAnimalIdentifier
+    enum breed
+    enum sex
+    date dob
+  }
+
+  Location {
+    address address
+  }
+
+  CPH {
+    string cphCode UK
+  }
+
+  CPH }o--|| Location : "location"
+
+  WorkList }o--|| CPH : "is for"
+
+  WorkList ||--o{ WorkListAnimal : "includes"
+  WorkListAnimal }o--|| Animal : "is"
+
+  WorkList |o--o{ VaccinationVisit : "was carried out"
+
+  WorkOrder |o--o{ WorkList : "is for"
+  WorkOrder }o--|| CPH : "is for"
+  WorkOrder }o--o| Contact : "assigned to"
+
+  VaccinationVisit }o--|| Person : "administered by"
+  VaccinationVisit }o--|| Person : "countersigned by"
+
+  Vaccination {
+    string notes
+  }
+
+  VaccinationVisit ||--o{ Vaccination : "administered on"
+
+  Vaccination }o--|| VaccineBatch : "used"
+  Vaccination }o--|| DiluentBatch : "used"
+
+  Vaccination }o--o| Animal : "administered to"
+  Vaccination }o--o| UnidentifiedAnimal : "administered to"
+
 ```
 
 ## Salesforce Data Model
 
 This section defines the core Salesforce objects, their key fields and relationships in an ERD-style view.
-The current model as from the **alpha prototype** and we know it needs to change.
 
+### Work Order and Work List
 ```mermaid
 erDiagram
-  Case {
-    Lookup(CPH) APHA_CPH__c
-    Picklist APHA_ReasonForTest__c
-    Picklist Status
-    Date APHA_TestWindowEndDate__c
-    Date APHA_TestWindowStartDate__c
-    RollUpSummary(SUM_Test_Part) Total_Number_Not_Tested__c
-    RollUpSummary(SUM_Test_Part) APHA_TotalNumberOfInconclusiveReactors__c
-    RollUpSummary(SUM_Test_Part) APHA_TotalNumberOfReactors__c
-    RollUpSummary(SUM_Test_Part) APHA_TotalNumberOfTested__c
+  CV_WorkOrder__c {
+%%    Lookup(APHA_CPH__c) CV_CPH__c FK
+    Text CV_CPHCode__c
+    Lookup(Contact) CV_Assignee__c FK
+    Date CV_DueDate__c
   }
 
-  TestPart {
-    Master-Detail(Case) Case_c
-    Date APHA_Day1__c
-    Date APHA_Day2__c
-    Time Test_Start_Time__c
-    Text(255) APHA_IdentityOfCertifyingVet__c
-    Lookup(User) APHA_IdentityOfReviewer__c
-    Text(255) APHA_IdentityOfTester__c
-    RollUpSummary(COUNT_Test_Part_Result) Number_Not_Tested__c
-    RollUpSummary(COUNT_Test_Part_Result) APHA_NumberOfInconclusiveReactors__c
-    RollUpSummary(COUNT_Test_Part_Result) APHA_NumberOfReactors__c
-    RollUpSummary(COUNT_Test_Part_Result) APHA_NumberTested__c
+  CV_WorkList__c {
+    Text CV_CPHCode__c
+    DateTime CV_Created__c
+    Lookup(CV_WorkOrder__c) CV_WorkOrder__c FK
   }
 
-  TestPartResult {
-    Master-Detail(Test_Part) APHA_TestPart__c
-    Lookup(Case) Case__c
-    Text(20) APHA_BatchAvian__c
-    Text(20) APHA_BatchBovine__c
-    Text(20) APHA_BatchDIVA__c
-    Text(20) APHA_EarTagNo__c
-    Picklist Not_Tested_Reason__c
-    Picklist APHA_ResultAfterReview__c
-    Formula(Text) APHA_ResultCalculated__c
-    Number(3_0) APHA_TestDay1Avian__c
-    Number(3_0) APHA_TestDay1Bovine__c
-    Number(3_0) APHA_TestDay1DIVA__c
-    Number(3_0) APHA_TestDay2Avian__c
-    Number(3_0) APHA_TestDay2Bovine__c
-    Number(3_0) APHA_TestDay2DIVA__c
-    Picklist APHA_TestType__c
+  CV_WorkListAnimal__c {
+    Lookup(CV_WorkList__c) CV_WorkList__c FK
+    Lookup(APHA_CommodityAnimal__c) CV_Animal__c FK
   }
 
-  Case ||--o{ TestPart : "part of"
-  TestPart ||--o{ TestPartResult : "part of"
+  CV_WorkList__c }o--o| CV_WorkOrder__c : ""
+  CV_WorkListAnimal__c }o--|| CV_WorkList__c : ""
 ```
 
 ## Data Exchange Boundaries
