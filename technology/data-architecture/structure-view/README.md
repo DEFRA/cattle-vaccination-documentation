@@ -169,7 +169,7 @@ erDiagram
 
 ```
 
-## Salesforce Data Model
+## Salesforce (Physical) Data Model
 
 This section defines the core Salesforce objects, their key fields and relationships in an ERD-style view.
 
@@ -185,7 +185,7 @@ erDiagram
 
   CV_WorkList__c {
     Text CV_CPHCode__c
-    DateTime CV_Created__c
+    DateTime CV_LastRefreshed__c
     Lookup(CV_WorkOrder__c) CV_WorkOrder__c FK
   }
 
