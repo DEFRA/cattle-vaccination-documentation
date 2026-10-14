@@ -82,20 +82,23 @@ This logical view describes how core entities relate across the TB workflow.
 
 ### Vaccination Work List
 
+> Note: Future entities are shown in green
+
 ```mermaid
 erDiagram
-
   WorkList {
-    date dateCreated
-    datetime lastRefresh
+    datetime created
+    date visitDate
   }
 
   WorkListAnimal {
   }
 
   WorkOrder {
-    date dueDate
+    date issueDate
   }
+
+  style WorkList,WorkListAnimal,WorkOrder stroke:#090,stroke-width:4px
 
   Contact {
     string firstName
@@ -177,25 +180,33 @@ This section defines the core Salesforce objects, their key fields and relations
 ```mermaid
 erDiagram
   CV_WorkOrder__c {
-%%    Lookup(APHA_CPH__c) CV_CPH__c FK
-    Text CV_CPHCode__c
+    Lookup(APHA_CPH__c) CV_CPH__c FK
+    Picklist Status
     Lookup(Contact) CV_Assignee__c FK
-    Date CV_DueDate__c
+    Date CV_VisitDate__c
   }
 
   CV_WorkList__c {
-    Text CV_CPHCode__c
-    DateTime CV_LastRefreshed__c
+    Lookup(APHA_CPH__c) CV_CPH__c FK
     Lookup(CV_WorkOrder__c) CV_WorkOrder__c FK
+    Picklist Status
+    DateTime CV_AnimalListUpdated__c
   }
 
   CV_WorkListAnimal__c {
-    Lookup(CV_WorkList__c) CV_WorkList__c FK
-    Lookup(APHA_CommodityAnimal__c) CV_Animal__c FK
+    Master-Detail(CV_WorkList__c) CV_WorkList__c FK
+    Master-Detail(APHA_CommodityAnimal__c) CV_Animal__c FK
   }
 
+  CV_WorkOrder__c }o--|| APHA_CPH__c : ""
+  CV_WorkOrder__c }o--|| Contact : ""
+  CV_WorkList__c }o--|| APHA_CPH__c : ""
   CV_WorkList__c }o--o| CV_WorkOrder__c : ""
   CV_WorkListAnimal__c }o--|| CV_WorkList__c : ""
+  CV_WorkListAnimal__c }o--|| APHA_CommodityAnimal__c : ""
+
+  style CV_WorkOrder__c,CV_WorkList__c,CV_WorkListAnimal__c stroke:#090,stroke-width:4px
+
 ```
 
 ## Data Exchange Boundaries
