@@ -23,6 +23,7 @@ title: Conceptual Data Model
 erDiagram
     classDef external stroke:#666
 
+    %% Entities
     Keeper
     Holding
     Herd
@@ -33,11 +34,8 @@ erDiagram
     AphaVet
     VDP
     VetVisit
-    Person
 
-
-
-
+    %% Relationships
     Keeper ||--o{ Holding : manages
 
     Holding ||--o{ Herd : contains
@@ -100,7 +98,7 @@ erDiagram
 
   style WorkList,WorkListAnimal,WorkOrder stroke:#090,stroke-width:4px
 
-  Contact {
+  Vet {
     string firstName
     string lastName
     phone phone
@@ -153,10 +151,10 @@ erDiagram
 
   WorkOrder |o--o{ WorkList : "is for"
   WorkOrder }o--|| CPH : "is for"
-  WorkOrder }o--o| Contact : "assigned to"
+  WorkOrder }o--o| Vet : "assigned to"
 
-  VaccinationVisit }o--|| Person : "administered by"
-  VaccinationVisit }o--|| Person : "countersigned by"
+  VaccinationVisit }o--|| Vet : "administered by"
+  VaccinationVisit }o--|| Vet : "countersigned by"
 
   Vaccination {
     string notes
